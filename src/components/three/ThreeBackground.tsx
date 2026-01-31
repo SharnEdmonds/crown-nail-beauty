@@ -3,6 +3,7 @@
 import { useUIStore } from '@/lib/store';
 
 import { Canvas } from '@react-three/fiber';
+import { Loader } from '@react-three/drei';
 import HandScene from '@/components/three/HandScene';
 import ThreeErrorBoundary from '@/components/three/ThreeErrorBoundary';
 import { Suspense } from 'react';
@@ -24,6 +25,12 @@ export default function ThreeBackground() {
                         <HandScene />
                     </Suspense>
                 </Canvas>
+                <Loader
+                    containerStyles={{ backgroundColor: 'transparent' }}
+                    innerStyles={{ backgroundColor: 'rgba(255, 255, 255, 0.8)', width: '200px' }}
+                    barStyles={{ backgroundColor: '#C9A962' }} // Brushed gold
+                    dataStyles={{ color: '#2C2C2C', fontSize: '12px' }}
+                />
             </div>
         </ThreeErrorBoundary>
     );
