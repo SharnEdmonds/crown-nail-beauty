@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(test:*)",
+      "Bash(tree:*)",
+      "Bash(wc:*)",
+      "Bash(ls:*)",
+      "Bash(npm install:*)",
+      "Bash(npx next build)",
+      "Bash(node node_modules/next/dist/bin/next build:*)",
+      "Bash(npm ls:*)",
+      "Bash(node:*)",
+      "Bash(dir /X \"C:\\\\Users\\\\sharn\\\\OneDrive\\\\Desktop\"\" 2>&1 | findstr \"Crown \")",
+      "Bash(cmd //c 'dir /X C:\\\\Users\\\\sharn\\\\OneDrive\\\\Desktop\\\\ 2>&1')",
+      "Bash(npm run build:*)",
+      "Bash(rsync:*)",
+      "Bash(dir \"C:\\\\Users\\\\sharn\\\\OneDrive\\\\Desktop\\\\crown-nail-beauty\")",
+      "Bash(dir \"C:\\\\Users\\\\sharn\\\\OneDrive\\\\Desktop\\\\crown-nail-beauty\\\\src\")",
+      "Bash(dir:*)",
+      "Bash(findstr:*)",
+      "Bash(find:*)",
+      "mcp__Sanity__list_datasets",
+      "mcp__Sanity__list_sanity_rules",
+      "mcp__Sanity__get_schema",
+      "mcp__Sanity__get_sanity_rules",
+      "mcp__Sanity__deploy_schema",
+      "mcp__Sanity__create_documents_from_json",
+      "mcp__Sanity__publish_documents",
+      "Bash(curl:*)"
+    ]
+  }
+}
