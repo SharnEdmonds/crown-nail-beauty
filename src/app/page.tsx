@@ -1,10 +1,12 @@
 import NavBar from '@/components/layout/NavBar';
 import Footer from '@/components/layout/Footer';
-import ThreeBackground from '@/components/three/ThreeBackground';
 import Hero from '@/components/sections/Hero';
 import Services from '@/components/sections/Services'; // Keep static as likely near fold
 import JsonLd from '@/components/ui/JsonLd';
 import dynamic from 'next/dynamic';
+
+// ThreeBackground is heavy, so we lazy load it and disable SSR to avoid hydration mismatch and improve TTI
+const ThreeBackground = dynamic(() => import('@/components/three/ThreeBackground'), { ssr: false });
 
 const ServiceMenu = dynamic(() => import('@/components/sections/ServiceMenu'));
 const PortfolioGallery = dynamic(() => import('@/components/sections/PortfolioGallery'));
