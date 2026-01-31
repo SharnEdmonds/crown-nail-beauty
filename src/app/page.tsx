@@ -4,9 +4,7 @@ import Hero from '@/components/sections/Hero';
 import Services from '@/components/sections/Services'; // Keep static as likely near fold
 import JsonLd from '@/components/ui/JsonLd';
 import dynamic from 'next/dynamic';
-
-// ThreeBackground is heavy, so we lazy load it and disable SSR to avoid hydration mismatch and improve TTI
-const ThreeBackground = dynamic(() => import('@/components/three/ThreeBackground'), { ssr: false });
+import ThreeBackgroundWrapper from '@/components/three/ThreeBackgroundWrapper';
 
 const ServiceMenu = dynamic(() => import('@/components/sections/ServiceMenu'));
 const PortfolioGallery = dynamic(() => import('@/components/sections/PortfolioGallery'));
@@ -32,7 +30,7 @@ export default async function Home() {
     <>
       <JsonLd siteSettings={siteSettings} serviceCategories={serviceCategories} />
       <NavBar />
-      <ThreeBackground />
+      <ThreeBackgroundWrapper />
       <main id="main-content" className="relative">
         <div id="hand-journey">
           <Hero headline={siteSettings?.heroHeadline} />
