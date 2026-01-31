@@ -6,10 +6,12 @@ import { useGLTF, Environment } from '@react-three/drei';
 import * as THREE from 'three';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useUIStore } from '@/lib/store';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function HandScene() {
+    const setHandVisible = useUIStore((state) => state.setHandVisible);
     // using local draco decoder for speed
     const { scene } = useGLTF('/models/Hand-model-draco.glb', '/draco/');
     const handRef = useRef<THREE.Group>(null);
@@ -36,12 +38,24 @@ export default function HandScene() {
     useLayoutEffect(() => {
         if (!handRef.current) return;
 
+        // Force refresh to ensure DOM elements are found after lazy load
+        ScrollTrigger.refresh();
+
         const timeline = gsap.timeline({
             scrollTrigger: {
                 trigger: '#hand-journey',
                 start: 'top top',
-                end: 'bottom bottom',
-                scrub: 1.5,
+                endTrigger: '#services',
+                end: 'top center',
+                scrub: 1,
+                onLeave: () => {
+                    if (handRef.current) handRef.current.visible = false;
+                    setHandVisible(false); // Disable frameloop
+                },
+                onEnterBack: () => {
+                    if (handRef.current) handRef.current.visible = true;
+                    setHandVisible(true); // Enable frameloop
+                },
             },
         });
 
@@ -49,20 +63,22 @@ export default function HandScene() {
         handRef.current.position.set(2, -1, 0);
         handRef.current.rotation.set(0, -0.5, 0);
 
-        // Rotate and drift off-screen during hero scroll (position 0 → 1)
-        // By position 1 (start of Services), the hand is fully gone
+        // Ensure visible initially in case of reload
+        handRef.current.visible = true;
+
+        // Rotate and drift off-screen to the RIGHT
         timeline.to(handRef.current.rotation, {
-            y: Math.PI * 1.5,
-            x: 0.3,
-            z: 0.2,
+            y: Math.PI, // Full rotation
+            x: 0.2, // Slight tilt
+            z: -0.2,
             duration: 1,
             ease: 'power1.inOut',
         }, 0);
 
         timeline.to(handRef.current.position, {
-            x: -8,
-            y: 3,
-            z: -4,
+            x: 18,  // Move further RIGHT to ensure it clears screen quickly
+            y: -1,  // Keep height constant (no UP movement)
+            z: -5,
             duration: 1,
             ease: 'power2.in',
         }, 0);
@@ -76,6 +92,8 @@ export default function HandScene() {
     useFrame((_, delta) => {
         if (!handRef.current) return;
         idleTime.current += delta;
+
+        // Idle animation
         handRef.current.rotation.z += Math.sin(idleTime.current * 0.5) * 0.0005;
     });
 

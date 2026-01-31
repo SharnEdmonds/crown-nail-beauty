@@ -51,7 +51,7 @@ export default function Services({ categories }: { categories: ServiceCategory[]
     const displayCards = categories?.length ? groupCategories(categories) : [];
 
     return (
-        <section id="services" className="py-24 relative z-10 bg-clean-white/80 backdrop-blur-sm">
+        <section id="services" className="py-24 relative z-10 bg-clean-white/95">
             <div className="container mx-auto px-6">
                 <div className="mb-16 max-w-xl">
                     <h2 className="font-serif text-5xl mb-6">Our Artistry</h2>
