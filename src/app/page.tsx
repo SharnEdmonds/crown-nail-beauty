@@ -1,11 +1,11 @@
 import NavBar from '@/components/layout/NavBar';
 import Footer from '@/components/layout/Footer';
 import Hero from '@/components/sections/Hero';
-import Services from '@/components/sections/Services'; // Keep static as likely near fold
 import JsonLd from '@/components/ui/JsonLd';
 import dynamic from 'next/dynamic';
-import ThreeBackgroundWrapper from '@/components/three/ThreeBackgroundWrapper';
 
+const Services = dynamic(() => import('@/components/sections/Services'));
+const ThreeBackgroundWrapper = dynamic(() => import('@/components/three/ThreeBackgroundWrapper'), { ssr: false });
 const ServiceMenu = dynamic(() => import('@/components/sections/ServiceMenu'));
 const PortfolioGallery = dynamic(() => import('@/components/sections/PortfolioGallery'));
 const About = dynamic(() => import('@/components/sections/About'));
