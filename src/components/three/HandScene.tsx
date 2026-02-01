@@ -16,6 +16,7 @@ export default function HandScene() {
     // using local draco decoder for speed
     const { scene } = useGLTF('/models/Hand-model-draco.glb', '/draco/');
     const handRef = useRef<THREE.Group>(null);
+    const entranceRef = useRef<THREE.Group>(null);
 
     // Apply a simple, performant material to ensure visibility
     const texturedScene = useMemo(() => {
@@ -34,12 +35,22 @@ export default function HandScene() {
     }, [scene]);
 
     useLayoutEffect(() => {
-        if (!handRef.current) return;
+        if (!handRef.current || !entranceRef.current) return;
 
         // Force initial render
         invalidate();
 
+        // Entrance Animation: Float up from bottom
+        gsap.from(entranceRef.current.position, {
+            y: -5,
+            duration: 1.8,
+            ease: "power3.out",
+            onUpdate: invalidate,
+        });
+
         const mm = gsap.matchMedia();
+
+        // ... matchMedia logic continues ...
 
         mm.add({
             isDesktop: "(min-width: 768px)",
@@ -117,14 +128,16 @@ export default function HandScene() {
                 color="#ffcdb2"
             />
 
-            <primitive
-                object={texturedScene}
-                ref={handRef}
-                scale={2.5}
-                // Initial props will be overridden by GSAP/LayoutEffect but good defaults helps
-                position={[2, -1, 0]}
-                rotation={[0, -0.5, 0]}
-            />
+            <group ref={entranceRef}>
+                <primitive
+                    object={texturedScene}
+                    ref={handRef}
+                    scale={2.5}
+                    // Initial props will be overridden by GSAP/LayoutEffect but good defaults helps
+                    position={[2, -1, 0]}
+                    rotation={[0, -0.5, 0]}
+                />
+            </group>
         </>
     );
 }
