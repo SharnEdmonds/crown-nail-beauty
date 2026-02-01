@@ -28,7 +28,7 @@ export default function About({ siteSettings }: AboutProps) {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                     {/* Image with parallax */}
                     <motion.div
-                        className="relative h-[500px] lg:h-[650px] overflow-hidden"
+                        className="relative h-[500px] lg:h-[650px] overflow-hidden hidden md:block"
                         style={{ y: imageY }}
                     >
                         <Image

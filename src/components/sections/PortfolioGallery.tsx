@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useAnimationControls } from 'framer-motion';
-import { useRef, useState, useCallback } from 'react';
+import { useRef, useState, useCallback, useEffect } from 'react';
 import Image from 'next/image';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import ImageLightbox from '@/components/ui/ImageLightbox';
@@ -24,21 +24,61 @@ import { useUIStore } from '@/lib/store';
 export default function PortfolioGallery() {
     const containerRef = useRef<HTMLDivElement>(null);
     const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-    const [offset, setOffset] = useState(0);
-    const controls = useAnimationControls();
+    const [isMobile, setIsMobile] = useState(false);
+
+    // Restore deleted logic
     const setHandVisible = useUIStore((state) => state.setHandVisible);
 
-    const maxOffset = -(galleryImages.length * STEP - (containerRef.current?.clientWidth ?? STEP));
+    // Infinite Scroll: Triple the images to create seamless loop buffers
+    const infiniteImages = [...galleryImages, ...galleryImages, ...galleryImages];
+    const originalLength = galleryImages.length;
 
-    const scroll = useCallback((direction: 'left' | 'right') => {
-        setOffset((prev) => {
-            const next = direction === 'right'
-                ? Math.max(prev - STEP, maxOffset)
-                : Math.min(prev + STEP, 0);
-            controls.start({ x: next, transition: { type: 'spring', stiffness: 300, damping: 30 } });
-            return next;
+    const scrollToMiddle = useCallback(() => {
+        if (containerRef.current) {
+            // Scroll to the start of the middle set
+            const middleSetStart = originalLength * STEP;
+            containerRef.current.scrollLeft = middleSetStart;
+        }
+    }, [originalLength]);
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+
+        // Verify initial scroll position
+        scrollToMiddle();
+
+        return () => window.removeEventListener('resize', checkMobile);
+    }, [scrollToMiddle]);
+
+    const handleScroll = () => {
+        if (!containerRef.current) return;
+        const { scrollLeft, scrollWidth, clientWidth } = containerRef.current;
+        const singleSetWidth = originalLength * STEP;
+
+        // If scrolled past the second set (to the right), jump back to middle
+        if (scrollLeft >= singleSetWidth * 2) {
+            containerRef.current.scrollLeft = scrollLeft - singleSetWidth;
+        }
+        // If scrolled before the middle set (to the left), jump forward to middle
+        else if (scrollLeft < singleSetWidth) {
+            containerRef.current.scrollLeft = scrollLeft + singleSetWidth;
+        }
+    };
+
+    const scroll = (direction: 'left' | 'right') => {
+        if (!containerRef.current) return;
+        const currentScroll = containerRef.current.scrollLeft;
+        const targetScroll = direction === 'right'
+            ? currentScroll + STEP
+            : currentScroll - STEP;
+
+        containerRef.current.scrollTo({
+            left: targetScroll,
+            behavior: 'smooth'
         });
-    }, [controls, maxOffset]);
+    };
 
     return (
         <section id="gallery" aria-label="Portfolio gallery" className="py-32 relative z-10 bg-crown-black text-clean-white overflow-hidden">
@@ -51,51 +91,45 @@ export default function PortfolioGallery() {
                     <h2 className="font-serif text-5xl mb-2 text-clean-white">Selected Works</h2>
                     <p className="text-stone-grey">Drag or use arrows to explore our latest creations.</p>
                 </div>
-                <div className="flex items-center gap-4">
-                    <button
-                        onClick={() => scroll('left')}
-                        disabled={offset >= 0}
-                        aria-label="Previous"
-                        className="w-12 h-12 border border-clean-white/20 rounded-full flex items-center justify-center hover:bg-clean-white/10 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
-                    >
-                        <ChevronLeft size={20} />
-                    </button>
-                    <button
-                        onClick={() => scroll('right')}
-                        disabled={offset <= maxOffset}
-                        aria-label="Next"
-                        className="w-12 h-12 border border-clean-white/20 rounded-full flex items-center justify-center hover:bg-clean-white/10 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
-                    >
-                        <ChevronRight size={20} />
-                    </button>
-                </div>
+                {!isMobile && (
+                    <div className="flex items-center gap-4">
+                        <button
+                            onClick={() => scroll('left')}
+                            aria-label="Previous"
+                            className="w-12 h-12 border border-clean-white/20 rounded-full flex items-center justify-center hover:bg-clean-white/10 transition-colors"
+                        >
+                            <ChevronLeft size={20} />
+                        </button>
+                        <button
+                            onClick={() => scroll('right')}
+                            aria-label="Next"
+                            className="w-12 h-12 border border-clean-white/20 rounded-full flex items-center justify-center hover:bg-clean-white/10 transition-colors"
+                        >
+                            <ChevronRight size={20} />
+                        </button>
+                    </div>
+                )}
             </div>
 
-            <div ref={containerRef} className="container mx-auto px-6 overflow-x-hidden cursor-grab active:cursor-grabbing">
+            <div
+                ref={containerRef}
+                onScroll={handleScroll}
+                className="container mx-auto px-6 overflow-x-auto md:overflow-x-hidden cursor-grab active:cursor-grabbing scrollbar-hide touch-pan-x"
+            >
                 <motion.div
-                    className="flex w-fit"
+                    className="flex w-fit snap-x snap-mandatory"
                     style={{ gap: CARD_GAP }}
-                    drag="x"
-                    dragConstraints={containerRef}
-                    animate={controls}
-                    whileTap={{ cursor: "grabbing" }}
-                    onDragEnd={(_, info) => {
-                        const newOffset = Math.max(Math.min(offset + info.offset.x, 0), maxOffset);
-                        const snapped = Math.round(newOffset / STEP) * STEP;
-                        setOffset(snapped);
-                        controls.start({ x: snapped, transition: { type: 'spring', stiffness: 300, damping: 30 } });
-                    }}
                 >
-                    {galleryImages.map((image, index) => (
+                    {infiniteImages.map((image, index) => (
                         <motion.div
                             key={index}
-                            className="relative w-[300px] h-[400px] md:w-[400px] md:h-[550px] flex-shrink-0 bg-warm-black overflow-hidden group cursor-pointer"
+                            className="relative w-[300px] h-[400px] md:w-[400px] md:h-[550px] flex-shrink-0 bg-warm-black overflow-hidden group cursor-pointer snap-center"
                             initial={{ opacity: 0, x: 60 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
-                            transition={{ delay: index * 0.1, duration: 0.5 }}
+                            transition={{ delay: (index % originalLength) * 0.1, duration: 0.5 }}
                             whileHover={{ scale: 0.98 }}
-                            onClick={() => setLightboxIndex(index)}
+                            onClick={() => setLightboxIndex(index % originalLength)}
                         >
                             <Image
                                 src={image.src}

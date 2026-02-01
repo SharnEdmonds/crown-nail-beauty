@@ -38,66 +38,67 @@ export default function HandScene() {
     useLayoutEffect(() => {
         if (!handRef.current) return;
 
-        // Force refresh to ensure DOM elements are found after lazy load
-        ScrollTrigger.refresh();
+        const mm = gsap.matchMedia();
 
-        const timeline = gsap.timeline({
-            scrollTrigger: {
-                trigger: '#hand-journey',
-                start: 'top top',
-                endTrigger: '#services',
-                end: 'top center',
-                scrub: 0.5,
-                onLeave: () => {
-                    if (handRef.current) handRef.current.visible = false;
-                    setHandVisible(false); // Hide container
+        mm.add({
+            isDesktop: "(min-width: 768px)",
+            isMobile: "(max-width: 767.98px)",
+        }, (context) => {
+            const { isMobile } = context.conditions as { isMobile: boolean };
+
+            // Define precise Start and End states for both contexts
+            const startConfig = isMobile
+                ? { pos: { x: 0, y: -2, z: -2 }, rot: { x: 0, y: -0.5, z: 0 } }
+                : { pos: { x: 2, y: -1, z: 0 }, rot: { x: 0, y: -0.5, z: 0 } };
+
+            const endConfig = isMobile
+                ? { pos: { x: 8, y: -2, z: -5 }, rot: { x: 0.2, y: Math.PI, z: -0.2 } }
+                : { pos: { x: 18, y: -1, z: -5 }, rot: { x: 0.2, y: Math.PI, z: -0.2 } };
+
+            // Ensure visibility is reset
+            if (handRef.current) handRef.current.visible = true;
+
+            const timeline = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '#hand-journey',
+                    start: 'top top',
+                    endTrigger: '#services',
+                    end: 'top center',
+                    scrub: 0.5,
+                    invalidateOnRefresh: true, // Key: forces re-recording of values on resize
+                    onLeave: () => {
+                        if (handRef.current) handRef.current.visible = false;
+                        setHandVisible(false);
+                    },
+                    onEnterBack: () => {
+                        if (handRef.current) handRef.current.visible = true;
+                        setHandVisible(true);
+                    },
                 },
-                onEnterBack: () => {
-                    if (handRef.current) handRef.current.visible = true;
-                    setHandVisible(true); // Enable frameloop
-                },
-            },
+            });
+
+            // Use fromTo to strictly enforce the path regardless of current state
+            timeline.fromTo(handRef.current!.rotation,
+                { ...startConfig.rot },
+                { ...endConfig.rot, duration: 1, ease: 'power1.inOut' },
+                0
+            );
+
+            timeline.fromTo(handRef.current!.position,
+                { ...startConfig.pos },
+                { ...endConfig.pos, duration: 1, ease: 'power2.in' },
+                0
+            );
         });
 
-        // Visible on load, rotation starts at 0px scroll
-        handRef.current.position.set(2, -1, 0);
-        handRef.current.rotation.set(0, -0.5, 0);
-
-        // Ensure visible initially in case of reload
-        handRef.current.visible = true;
-
-        // Rotate and drift off-screen to the RIGHT
-        timeline.to(handRef.current.rotation, {
-            y: Math.PI, // Full rotation
-            x: 0.2, // Slight tilt
-            z: -0.2,
-            duration: 1,
-            ease: 'power1.inOut',
-        }, 0);
-
-        timeline.to(handRef.current.position, {
-            x: 18,  // Move further RIGHT to ensure it clears screen quickly
-            y: -1,  // Keep height constant (no UP movement)
-            z: -5,
-            duration: 1,
-            ease: 'power2.in',
-        }, 0);
-
-        return () => {
-            ScrollTrigger.getAll().forEach(t => t.kill());
-        };
+        return () => mm.revert();
     }, []);
 
     // Subtle idle animation
     useFrame((_, delta) => {
         if (!handRef.current) return;
         idleTime.current += delta;
-
-        // Idle animation
         handRef.current.rotation.z += Math.sin(idleTime.current * 0.5) * 0.0005;
-
-        // Removed visibility culling (x < 9) as it conflicts with re-entry animation.
-        // The global frameloop toggle (isHandVisible) now handles performance.
     });
 
     return (
@@ -124,6 +125,7 @@ export default function HandScene() {
                 object={texturedScene}
                 ref={handRef}
                 scale={2.5}
+                // Initial props will be overridden by GSAP/LayoutEffect but good defaults helps
                 position={[2, -1, 0]}
                 rotation={[0, -0.5, 0]}
             />

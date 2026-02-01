@@ -10,7 +10,7 @@ const ServiceMenu = dynamic(() => import('@/components/sections/ServiceMenu'));
 const PortfolioGallery = dynamic(() => import('@/components/sections/PortfolioGallery'));
 const About = dynamic(() => import('@/components/sections/About'));
 const Testimonials = dynamic(() => import('@/components/sections/Testimonials'));
-const Booking = dynamic(() => import('@/BOOKING/Booking'));
+const BookingCTA = dynamic(() => import('@/components/sections/BookingCTA'));
 import { client } from '@/sanity/lib/client';
 import {
   SITE_SETTINGS_QUERY,
@@ -40,7 +40,7 @@ export default async function Home() {
         <ServiceMenu categories={serviceCategories} openingHours={siteSettings?.openingHours} phone={siteSettings?.phone} />
         <About siteSettings={siteSettings} />
         <Testimonials testimonials={testimonials} />
-        <Booking categories={serviceCategories} phone={siteSettings?.phone} />
+        <BookingCTA />
       </main>
       <Footer siteSettings={siteSettings} />
     </>

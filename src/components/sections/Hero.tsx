@@ -74,7 +74,7 @@ export default function Hero({ headline }: HeroProps) {
             <div className="container mx-auto px-6">
                 <div className="max-w-4xl">
                     <motion.h1
-                        className="font-serif leading-[0.9] text-crown-black mb-8"
+                        className="font-serif leading-[0.9] text-crown-black mb-6 md:mb-8"
                         variants={containerVariants}
                         initial="hidden"
                         animate="visible"
@@ -87,7 +87,7 @@ export default function Hero({ headline }: HeroProps) {
                                 <motion.span
                                     key={i}
                                     variants={wordVariants}
-                                    className={`inline-block mr-[0.3em] ${word.italic ? 'italic pl-12 md:pl-24' : ''}`}
+                                    className={`inline-block mr-[0.3em] ${word.italic ? 'italic pl-4 md:pl-24' : ''}`}
                                 >
                                     {word.text}
                                 </motion.span>
@@ -96,13 +96,13 @@ export default function Hero({ headline }: HeroProps) {
                     </motion.h1>
 
                     <motion.div
-                        className="flex flex-col md:flex-row gap-6 mt-12 pl-2"
+                        className="flex flex-col md:flex-row gap-4 md:gap-6 mt-8 md:mt-12 pl-2"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
                     >
                         <a
-                            href="#booking"
+                            href="/"
                             className="px-8 py-4 bg-warm-black text-clean-white tracking-widest text-sm hover:bg-crown-black transition-colors duration-300 rounded-sm inline-block text-center"
                         >
                             RESERVE EXPERIENCE
@@ -119,7 +119,7 @@ export default function Hero({ headline }: HeroProps) {
 
             {/* Scroll Indicator */}
             <motion.div
-                className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+                className="absolute bottom-4 md:bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1, duration: 1 }}

@@ -39,11 +39,31 @@ function groupCategories(categories: ServiceCategory[]) {
     const permanent = filterBySlug(permanentSlugs);
 
     return [
-        { title: 'Nail Artistry', description: 'Gel, acrylic, builder gel, dipping powder and bespoke designs.', price: lowestPrice(nail) },
-        { title: 'Lash Studio', description: 'Classic, Hybrid, and Volume extensions.', price: lowestPrice(lash) },
-        { title: 'Wax & Tint', description: 'Precision waxing and tinting services.', price: lowestPrice(waxTint) },
-        { title: 'Facial Care', description: 'Rejuvenating express and deluxe facials.', price: lowestPrice(facial) },
-        { title: 'Permanent Makeup', description: 'Eyebrow shading, hairstroke, eyeliners and lips.', price: lowestPrice(permanent) },
+        {
+            title: 'Nail Artistry',
+            description: 'Experience full structural enhancement with our signature builder gel and dipping powder systems, or express yourself with bespoke hand-painted nail art.',
+            price: lowestPrice(nail)
+        },
+        {
+            title: 'Lash Studio',
+            description: 'Transform your gaze with our premium lash extensions, ranging from subtle classic enhancements to full, dramatic volume sets tailored to your eye shape.',
+            price: lowestPrice(lash)
+        },
+        {
+            title: 'Wax & Tint',
+            description: 'Refine your features with precision facial waxing and custom-blended tinting for defined brows and lashes that frame your face perfectly.',
+            price: lowestPrice(waxTint)
+        },
+        {
+            title: 'Facial Care',
+            description: 'Rejuvenate your skin with our curated menu of express and deluxe facials, designed to deep cleanse, hydrate, and restore your natural glow.',
+            price: lowestPrice(facial)
+        },
+        {
+            title: 'Permanent Makeup',
+            description: 'Wake up flawless with our semi-permanent solutions. Expertly applied micro-shading, eyeliner, and lip blush for long-lasting, natural beauty.',
+            price: lowestPrice(permanent)
+        },
     ];
 }
 
@@ -51,16 +71,16 @@ export default function Services({ categories }: { categories: ServiceCategory[]
     const displayCards = categories?.length ? groupCategories(categories) : [];
 
     return (
-        <section id="services" className="py-24 relative z-10 bg-clean-white/95">
+        <section id="services" className="py-12 md:py-24 relative z-10 bg-clean-white/95">
             <div className="container mx-auto px-6">
                 <div className="mb-16 max-w-xl">
-                    <h2 className="font-serif text-5xl mb-6">Our Artistry</h2>
+                    <h2 className="font-serif text-4xl md:text-5xl mb-6">Our Artistry</h2>
                     <p className="text-charcoal-grey">
                         A comprehensive menu of premium treatments designed to enhance your natural beauty.
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-[250px]">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-[320px]">
                     {displayCards.map((service, index) => (
                         <motion.a
                             key={service.title}
@@ -73,13 +93,13 @@ export default function Services({ categories }: { categories: ServiceCategory[]
                         >
                             <div className="relative z-10 h-full flex flex-col justify-between">
                                 <div>
-                                    <h3 className="font-serif text-2xl mb-2 group-hover:text-warm-black transition-colors">{service.title}</h3>
-                                    <p className="text-stone-grey text-sm max-w-[80%]">{service.description}</p>
+                                    <h3 className="font-serif text-3xl mb-3 text-warm-black font-medium">{service.title}</h3>
+                                    <p className="text-charcoal-grey/90 text-base leading-relaxed max-w-[95%]">{service.description}</p>
                                 </div>
 
                                 <div className="flex justify-between items-end border-t border-stone-grey/10 pt-4 mt-4">
                                     <span className="text-xs tracking-widest uppercase text-stone-grey">Starting from</span>
-                                    <span className="font-serif text-xl">${service.price}</span>
+                                    <span className="font-serif text-2xl">${service.price}</span>
                                 </div>
                             </div>
 

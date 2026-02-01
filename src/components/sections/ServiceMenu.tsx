@@ -117,40 +117,7 @@ export default function ServiceMenu({ categories, openingHours, phone }: Service
                 </div>
 
                 {/* Opening Hours & Contact Banner */}
-                {(openingHours || phone) && (
-                    <motion.div
-                        className="mt-20 max-w-3xl mx-auto bg-crown-black text-clean-white p-10 flex flex-col md:flex-row justify-between items-center gap-8"
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6 }}
-                    >
-                        {openingHours && (
-                            <div className="flex items-start gap-4">
-                                <Clock size={20} className="text-brushed-gold mt-0.5 flex-shrink-0" />
-                                <div>
-                                    <h5 className="text-xs tracking-[0.2em] uppercase text-brushed-gold mb-3">Opening Hours</h5>
-                                    {openingHours.map((oh, i) => (
-                                        <p key={i} className="text-sm text-stone-grey">
-                                            <span className="text-clean-white font-medium">{oh.days}:</span> {oh.hours}
-                                        </p>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-                        {phone && (
-                            <div className="flex items-center gap-4">
-                                <Phone size={20} className="text-brushed-gold flex-shrink-0" />
-                                <div>
-                                    <h5 className="text-xs tracking-[0.2em] uppercase text-brushed-gold mb-1">Book Now</h5>
-                                    <a href={`tel:${phone.replace(/[^+\d]/g, '')}`} className="text-lg font-serif hover:text-brushed-gold transition-colors">
-                                        {phone}
-                                    </a>
-                                </div>
-                            </div>
-                        )}
-                    </motion.div>
-                )}
+
             </div>
         </section>
     );

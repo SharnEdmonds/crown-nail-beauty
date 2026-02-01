@@ -40,15 +40,16 @@ export default function ImageLightbox({ images, currentIndex, onClose }: ImageLi
                 <motion.div
                     role="dialog"
                     aria-label="Image lightbox"
-                    className="fixed inset-0 z-[60] flex items-center justify-center bg-crown-black/95"
+                    className="fixed inset-0 z-[60] flex items-center justify-center bg-crown-black/95 backdrop-blur-sm"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     onClick={onClose}
                 >
+                    {/* Top Right Close */}
                     <button
                         onClick={onClose}
-                        className="absolute top-6 right-6 text-clean-white/70 hover:text-clean-white transition-colors z-10"
+                        className="fixed top-6 right-6 text-clean-white/70 hover:text-clean-white transition-colors z-[70] p-2"
                         aria-label="Close lightbox"
                     >
                         <X size={32} />
@@ -71,6 +72,14 @@ export default function ImageLightbox({ images, currentIndex, onClose }: ImageLi
                             priority
                         />
                     </motion.div>
+
+                    {/* Bottom Close Button (Mobile Friendly) */}
+                    <button
+                        onClick={onClose}
+                        className="fixed bottom-8 left-1/2 -translate-x-1/2 z-[70] px-6 py-3 bg-white/10 backdrop-blur-md rounded-full text-clean-white text-sm tracking-widest uppercase hover:bg-white/20 transition-colors"
+                    >
+                        Close
+                    </button>
                 </motion.div>
             )}
         </AnimatePresence>
