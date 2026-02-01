@@ -5,7 +5,7 @@ import JsonLd from '@/components/ui/JsonLd';
 import dynamic from 'next/dynamic';
 
 const Services = dynamic(() => import('@/components/sections/Services'));
-const ThreeBackgroundWrapper = dynamic(() => import('@/components/three/ThreeBackgroundWrapper'), { ssr: false });
+const ThreeBackgroundWrapper = dynamic(() => import('@/components/three/ThreeBackgroundWrapper'));
 const ServiceMenu = dynamic(() => import('@/components/sections/ServiceMenu'));
 const PortfolioGallery = dynamic(() => import('@/components/sections/PortfolioGallery'));
 const About = dynamic(() => import('@/components/sections/About'));
