@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useLayoutEffect, useMemo } from 'react';
-import { useFrame } from '@react-three/fiber';
+import { useThree } from '@react-three/fiber';
 import { useGLTF, Environment } from '@react-three/drei';
 import * as THREE from 'three';
 import gsap from 'gsap';
@@ -12,10 +12,10 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function HandScene() {
     const setHandVisible = useUIStore((state) => state.setHandVisible);
+    const { invalidate } = useThree();
     // using local draco decoder for speed
     const { scene } = useGLTF('/models/Hand-model-draco.glb', '/draco/');
     const handRef = useRef<THREE.Group>(null);
-    const idleTime = useRef(0);
 
     // Apply a simple, performant material to ensure visibility
     const texturedScene = useMemo(() => {
@@ -35,6 +35,9 @@ export default function HandScene() {
 
     useLayoutEffect(() => {
         if (!handRef.current) return;
+
+        // Force initial render
+        invalidate();
 
         const mm = gsap.matchMedia();
 
@@ -67,12 +70,15 @@ export default function HandScene() {
                     onLeave: () => {
                         if (handRef.current) handRef.current.visible = false;
                         setHandVisible(false);
+                        invalidate();
                     },
                     onEnterBack: () => {
                         if (handRef.current) handRef.current.visible = true;
                         setHandVisible(true);
+                        invalidate();
                     },
                 },
+                onUpdate: invalidate, // Trigger render only when animation updates
             });
 
             // Use fromTo to strictly enforce the path regardless of current state
@@ -90,14 +96,7 @@ export default function HandScene() {
         });
 
         return () => mm.revert();
-    }, []);
-
-    // Subtle idle animation
-    useFrame((_, delta) => {
-        if (!handRef.current) return;
-        idleTime.current += delta;
-        handRef.current.rotation.z += Math.sin(idleTime.current * 0.5) * 0.0005;
-    });
+    }, [invalidate]);
 
     return (
         <>
