@@ -30,6 +30,10 @@
     "tailwind-merge": "^2.6.0",
     "three": "^0.172.0"
   },
+  "browserslist": [
+    "defaults",
+    "not IE 11"
+  ],
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^19",

@@ -132,5 +132,3 @@ export default function HandScene() {
         </>
     );
 }
-
-useGLTF.preload('/models/Hand-model-draco.glb', '/draco/');
