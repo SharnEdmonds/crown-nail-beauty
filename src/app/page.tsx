@@ -11,7 +11,7 @@ const PortfolioGallery = dynamic(() => import('@/components/sections/PortfolioGa
 const About = dynamic(() => import('@/components/sections/About'));
 const Testimonials = dynamic(() => import('@/components/sections/Testimonials'));
 const Booking = dynamic(() => import('@/BOOKING/Booking'));
-import { client } from '@/lib/sanity';
+import { client } from '@/sanity/lib/client';
 import {
   SITE_SETTINGS_QUERY,
   SERVICE_CATEGORIES_QUERY,
