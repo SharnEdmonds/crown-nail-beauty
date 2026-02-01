@@ -1,13 +1,12 @@
 'use client';
 
 import dynamic from 'next/dynamic';
+import { useState, useEffect } from 'react';
 
 const ThreeBackground = dynamic(() => import('./ThreeBackground'), {
     ssr: false,
     loading: () => null // Optional: Add a localized loader or null here since it's background
 });
-
-import { useState, useEffect } from 'react';
 
 export default function ThreeBackgroundWrapper() {
     const [isReady, setIsReady] = useState(false);
