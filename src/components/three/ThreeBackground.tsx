@@ -20,7 +20,7 @@ export default function ThreeBackground() {
                     frameloop="demand"
                     dpr={[1, 1.5]}
                     camera={{ position: [0, 0, 5], fov: 45 }}
-                    gl={{ alpha: true, antialias: false, powerPreference: "high-performance" }}
+                    gl={{ alpha: true, antialias: false, powerPreference: "default" }}
                     shadows={false}
                 >
                     <Suspense fallback={null}>
