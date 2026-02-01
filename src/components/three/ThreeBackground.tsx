@@ -17,7 +17,7 @@ export default function ThreeBackground() {
                 className="fixed inset-0 z-0 pointer-events-none transition-opacity duration-700 ease-in-out opacity-100"
             >
                 <Canvas
-                    frameloop="always"
+                    frameloop="demand"
                     dpr={[1, 1.5]}
                     camera={{ position: [0, 0, 5], fov: 45 }}
                     gl={{ alpha: true, antialias: false, powerPreference: "high-performance" }}
