@@ -10,7 +10,7 @@ const ServiceMenu = dynamic(() => import('@/components/sections/ServiceMenu'));
 const PortfolioGallery = dynamic(() => import('@/components/sections/PortfolioGallery'));
 const About = dynamic(() => import('@/components/sections/About'));
 const Testimonials = dynamic(() => import('@/components/sections/Testimonials'));
-const Booking = dynamic(() => import('@/components/sections/Booking'));
+const Booking = dynamic(() => import('@/BOOKING/Booking'));
 import { client } from '@/lib/sanity';
 import {
   SITE_SETTINGS_QUERY,

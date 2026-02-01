@@ -47,10 +47,10 @@ export default function HandScene() {
                 start: 'top top',
                 endTrigger: '#services',
                 end: 'top center',
-                scrub: 1,
+                scrub: 0.5,
                 onLeave: () => {
                     if (handRef.current) handRef.current.visible = false;
-                    setHandVisible(false); // Disable frameloop
+                    setHandVisible(false); // Hide container
                 },
                 onEnterBack: () => {
                     if (handRef.current) handRef.current.visible = true;
@@ -95,6 +95,9 @@ export default function HandScene() {
 
         // Idle animation
         handRef.current.rotation.z += Math.sin(idleTime.current * 0.5) * 0.0005;
+
+        // Removed visibility culling (x < 9) as it conflicts with re-entry animation.
+        // The global frameloop toggle (isHandVisible) now handles performance.
     });
 
     return (

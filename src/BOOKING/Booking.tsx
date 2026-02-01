@@ -267,19 +267,17 @@ export default function Booking({ categories, phone }: BookingProps) {
                                             className={`flex items-center gap-2 transition-colors ${s.num < step ? 'cursor-pointer' : 'cursor-default'}`}
                                         >
                                             <span
-                                                className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium transition-all duration-300 ${
-                                                    s.num === step
+                                                className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium transition-all duration-300 ${s.num === step
                                                         ? 'bg-brushed-gold text-clean-white'
                                                         : s.num < step
                                                             ? 'bg-brushed-gold/20 text-brushed-gold'
                                                             : 'bg-stone-grey/10 text-stone-grey'
-                                                }`}
+                                                    }`}
                                             >
                                                 {s.num < step ? <Check size={14} /> : s.num}
                                             </span>
-                                            <span className={`text-xs tracking-wider uppercase hidden sm:block ${
-                                                s.num === step ? 'text-crown-black' : 'text-stone-grey'
-                                            }`}>
+                                            <span className={`text-xs tracking-wider uppercase hidden sm:block ${s.num === step ? 'text-crown-black' : 'text-stone-grey'
+                                                }`}>
                                                 {s.label}
                                             </span>
                                         </button>
@@ -315,11 +313,10 @@ export default function Booking({ categories, phone }: BookingProps) {
                                                                 setSelectedCategoryId(cat._id);
                                                                 setSelectedServiceKey(null);
                                                             }}
-                                                            className={`relative p-5 border rounded-sm text-center transition-all duration-300 hover:-translate-y-1 ${
-                                                                selectedCategoryId === cat._id
+                                                            className={`relative p-5 border rounded-sm text-center transition-all duration-300 hover:-translate-y-1 ${selectedCategoryId === cat._id
                                                                     ? 'border-brushed-gold bg-brushed-gold/5 shadow-sm'
                                                                     : 'border-stone-grey/15 bg-clean-white/60 hover:border-soft-rose'
-                                                            }`}
+                                                                }`}
                                                         >
                                                             <IconComp size={22} className={`mx-auto mb-3 ${selectedCategoryId === cat._id ? 'text-brushed-gold' : 'text-stone-grey'}`} />
                                                             <p className="font-sans font-medium text-sm text-crown-black leading-tight">{cat.title}</p>
@@ -357,11 +354,10 @@ export default function Booking({ categories, phone }: BookingProps) {
                                                                 key={service._key}
                                                                 type="button"
                                                                 onClick={() => setSelectedServiceKey(service._key)}
-                                                                className={`flex justify-between items-center p-5 border rounded-sm text-left transition-all duration-200 ${
-                                                                    selectedServiceKey === service._key
+                                                                className={`flex justify-between items-center p-5 border rounded-sm text-left transition-all duration-200 ${selectedServiceKey === service._key
                                                                         ? 'border-brushed-gold bg-brushed-gold/5'
                                                                         : 'border-stone-grey/15 bg-clean-white/60 hover:border-soft-rose'
-                                                                }`}
+                                                                    }`}
                                                             >
                                                                 <div className="flex-1 min-w-0 mr-3">
                                                                     <p className="text-sm font-medium text-crown-black truncate">{service.name}</p>
@@ -421,15 +417,14 @@ export default function Booking({ categories, phone }: BookingProps) {
                                                         type="button"
                                                         disabled={!cell.available}
                                                         onClick={() => cell.available && cell.day && setSelectedDay(cell.day)}
-                                                        className={`py-2.5 rounded-sm text-sm transition-all duration-200 ${
-                                                            cell.day === null
+                                                        className={`py-2.5 rounded-sm text-sm transition-all duration-200 ${cell.day === null
                                                                 ? 'cursor-default'
                                                                 : cell.day === selectedDay
                                                                     ? 'bg-brushed-gold text-clean-white font-medium scale-110'
                                                                     : cell.available
                                                                         ? 'text-crown-black bg-soft-rose/20 cursor-pointer hover:bg-soft-rose/40'
                                                                         : 'text-stone-grey/30 cursor-default line-through'
-                                                        }`}
+                                                            }`}
                                                     >
                                                         {cell.day}
                                                     </button>
@@ -460,11 +455,10 @@ export default function Booking({ categories, phone }: BookingProps) {
                                                         key={slot}
                                                         type="button"
                                                         onClick={() => setSelectedTime(slot)}
-                                                        className={`py-3 px-2 border rounded-sm text-xs tracking-wider transition-all duration-200 ${
-                                                            selectedTime === slot
+                                                        className={`py-3 px-2 border rounded-sm text-xs tracking-wider transition-all duration-200 ${selectedTime === slot
                                                                 ? 'border-brushed-gold bg-brushed-gold text-clean-white font-medium'
                                                                 : 'border-stone-grey/15 text-charcoal-grey hover:border-soft-rose hover:bg-soft-rose/10'
-                                                        }`}
+                                                            }`}
                                                     >
                                                         {slot}
                                                     </button>
@@ -513,16 +507,14 @@ export default function Booking({ categories, phone }: BookingProps) {
                                                             key={tech.name}
                                                             type="button"
                                                             onClick={() => setSelectedTech(tech.name)}
-                                                            className={`w-full text-left p-4 border rounded-sm transition-all duration-200 ${
-                                                                selectedTech === tech.name
+                                                            className={`w-full text-left p-4 border rounded-sm transition-all duration-200 ${selectedTech === tech.name
                                                                     ? 'border-brushed-gold bg-brushed-gold/5'
                                                                     : 'border-stone-grey/15 hover:border-soft-rose'
-                                                            }`}
+                                                                }`}
                                                         >
                                                             <div className="flex items-center gap-4">
-                                                                <span className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
-                                                                    selectedTech === tech.name ? 'bg-brushed-gold/15' : 'bg-marble-stone'
-                                                                }`}>
+                                                                <span className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${selectedTech === tech.name ? 'bg-brushed-gold/15' : 'bg-marble-stone'
+                                                                    }`}>
                                                                     <TechIcon size={18} className={selectedTech === tech.name ? 'text-brushed-gold' : 'text-stone-grey'} />
                                                                 </span>
                                                                 <div className="flex-1">
@@ -556,11 +548,10 @@ export default function Booking({ categories, phone }: BookingProps) {
                                                 {premiumAddOns.map((addon) => (
                                                     <label
                                                         key={addon.id}
-                                                        className={`flex items-center justify-between p-3.5 border rounded-sm cursor-pointer transition-all duration-200 ${
-                                                            selectedAddOns.includes(addon.id)
+                                                        className={`flex items-center justify-between p-3.5 border rounded-sm cursor-pointer transition-all duration-200 ${selectedAddOns.includes(addon.id)
                                                                 ? 'border-brushed-gold bg-brushed-gold/5'
                                                                 : 'border-stone-grey/15 hover:border-soft-rose'
-                                                        }`}
+                                                            }`}
                                                     >
                                                         <div className="flex items-center gap-3">
                                                             <input
@@ -735,11 +726,10 @@ export default function Booking({ categories, phone }: BookingProps) {
                                                 <button
                                                     onClick={handleSubmit}
                                                     disabled={!canProceed()}
-                                                    className={`w-full py-4 tracking-widest text-sm rounded-sm transition-all duration-300 ${
-                                                        canProceed()
+                                                    className={`w-full py-4 tracking-widest text-sm rounded-sm transition-all duration-300 ${canProceed()
                                                             ? 'bg-warm-black text-clean-white hover:bg-crown-black cursor-pointer'
                                                             : 'bg-warm-black/40 text-clean-white/60 cursor-not-allowed'
-                                                    }`}
+                                                        }`}
                                                 >
                                                     CONFIRM BOOKING
                                                 </button>
@@ -767,9 +757,8 @@ export default function Booking({ categories, phone }: BookingProps) {
                             <div className="flex justify-between items-center max-w-5xl mx-auto mt-10">
                                 <button
                                     onClick={prevStep}
-                                    className={`flex items-center gap-2 px-6 py-3 border border-stone-grey/20 rounded-sm text-sm tracking-wider text-charcoal-grey hover:border-warm-black hover:text-crown-black transition-colors ${
-                                        step === 1 ? 'invisible' : ''
-                                    }`}
+                                    className={`flex items-center gap-2 px-6 py-3 border border-stone-grey/20 rounded-sm text-sm tracking-wider text-charcoal-grey hover:border-warm-black hover:text-crown-black transition-colors ${step === 1 ? 'invisible' : ''
+                                        }`}
                                 >
                                     <ChevronLeft size={16} />
                                     BACK
@@ -779,11 +768,10 @@ export default function Booking({ categories, phone }: BookingProps) {
                                     <button
                                         onClick={nextStep}
                                         disabled={!canProceed()}
-                                        className={`flex items-center gap-2 px-8 py-3 rounded-sm text-sm tracking-widest transition-all duration-300 ${
-                                            canProceed()
+                                        className={`flex items-center gap-2 px-8 py-3 rounded-sm text-sm tracking-widest transition-all duration-300 ${canProceed()
                                                 ? 'bg-warm-black text-clean-white hover:bg-crown-black cursor-pointer'
                                                 : 'bg-warm-black/30 text-clean-white/50 cursor-not-allowed'
-                                        }`}
+                                            }`}
                                     >
                                         NEXT
                                         <ChevronRight size={16} />
