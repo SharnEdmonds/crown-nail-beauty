@@ -110,7 +110,6 @@ export default function HandScene() {
 
     return (
         <>
-            <Environment preset="studio" />
             <ambientLight intensity={0.8} />
             <spotLight
                 position={[10, 10, 10]}
