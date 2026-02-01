@@ -7,12 +7,11 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import ImageLightbox from '@/components/ui/ImageLightbox';
 
 const galleryImages = [
-    { src: '/images/572791113_18488579968075791_4675245809445354990_n.jpg', alt: 'Intricate floral nail art design with pastel tones' },
-    { src: '/images/575677176_18489162850075791_657924404083559544_n.jpg', alt: 'Elegant gel extension set with chrome finish' },
-    { src: '/images/600870254_18496869700075791_5913245550080983424_n.jpg', alt: 'Detailed hand-painted nail design with gold accents' },
-    { src: '/images/599840595_18496425970075791_2748077999527591059_n.jpg', alt: 'Classic French manicure with a modern twist' },
-    { src: '/images/572891681_18488579977075791_5777883336068587512_n.jpg', alt: 'Luxury nail art featuring marble texture' },
-    { src: '/images/573661992_18489015919075791_2345851513932796461_n.jpg', alt: 'Bold statement nail design with geometric patterns' },
+    { src: '/images/Gallery_img1.webp', alt: 'Premium nail artistry detailing' },
+    { src: '/images/Gallery_img2.webp', alt: 'Elegant manicure finish' },
+    { src: '/images/Gallery_img3.webp', alt: 'Structural builder gel enhancement' },
+    { src: '/images/Gallery_img4.webp', alt: 'Bespoke hand-painted design' },
+    { src: '/images/Gallery_img5.webp', alt: 'Luxury pedicure texture' },
 ];
 
 const CARD_WIDTH = 400;

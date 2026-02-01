@@ -32,8 +32,8 @@ export default function About({ siteSettings }: AboutProps) {
                         style={{ y: imageY }}
                     >
                         <Image
-                            src="/images/601435027_18496425961075791_2538926982322102080_n.jpg"
-                            alt="Crown Nail & Beauty studio showcasing our attention to detail"
+                            src="/images/Gallery_img2.webp"
+                            alt="Crown Nail & Beauty studio - The Crown Philosophy"
                             fill
                             sizes="(max-width: 1024px) 100vw, 50vw"
                             className="object-cover"

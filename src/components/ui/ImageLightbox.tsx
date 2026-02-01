@@ -16,8 +16,13 @@ interface ImageLightboxProps {
     onClose: () => void;
 }
 
+import { useUIStore } from '@/lib/store';
+
+// ... (imports)
+
 export default function ImageLightbox({ images, currentIndex, onClose }: ImageLightboxProps) {
     const isOpen = currentIndex !== null;
+    const setScrollLocked = useUIStore((state) => state.setScrollLocked);
 
     const handleKeyDown = useCallback((e: KeyboardEvent) => {
         if (e.key === 'Escape') onClose();
@@ -25,14 +30,16 @@ export default function ImageLightbox({ images, currentIndex, onClose }: ImageLi
 
     useEffect(() => {
         if (isOpen) {
+            setScrollLocked(true);
             document.addEventListener('keydown', handleKeyDown);
             document.body.style.overflow = 'hidden';
         }
         return () => {
+            setScrollLocked(false);
             document.removeEventListener('keydown', handleKeyDown);
             document.body.style.overflow = '';
         };
-    }, [isOpen, handleKeyDown]);
+    }, [isOpen, handleKeyDown, setScrollLocked]);
 
     return (
         <AnimatePresence>
@@ -40,7 +47,7 @@ export default function ImageLightbox({ images, currentIndex, onClose }: ImageLi
                 <motion.div
                     role="dialog"
                     aria-label="Image lightbox"
-                    className="fixed inset-0 z-[60] flex items-center justify-center bg-crown-black/95 backdrop-blur-sm"
+                    className="fixed inset-0 z-[100] flex items-center justify-center bg-crown-black/95 backdrop-blur-sm"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
@@ -49,7 +56,7 @@ export default function ImageLightbox({ images, currentIndex, onClose }: ImageLi
                     {/* Top Right Close */}
                     <button
                         onClick={onClose}
-                        className="fixed top-6 right-6 text-clean-white/70 hover:text-clean-white transition-colors z-[70] p-2"
+                        className="fixed top-6 right-6 text-clean-white/70 hover:text-clean-white transition-colors z-[110] p-2"
                         aria-label="Close lightbox"
                     >
                         <X size={32} />
@@ -61,7 +68,6 @@ export default function ImageLightbox({ images, currentIndex, onClose }: ImageLi
                         animate={{ scale: 1, opacity: 1 }}
                         exit={{ scale: 0.9, opacity: 0 }}
                         transition={{ duration: 0.3 }}
-                        onClick={(e) => e.stopPropagation()}
                     >
                         <Image
                             src={images[currentIndex].src}
@@ -76,7 +82,7 @@ export default function ImageLightbox({ images, currentIndex, onClose }: ImageLi
                     {/* Bottom Close Button (Mobile Friendly) */}
                     <button
                         onClick={onClose}
-                        className="fixed bottom-8 left-1/2 -translate-x-1/2 z-[70] px-6 py-3 bg-white/10 backdrop-blur-md rounded-full text-clean-white text-sm tracking-widest uppercase hover:bg-white/20 transition-colors"
+                        className="fixed bottom-8 left-1/2 -translate-x-1/2 z-[110] px-6 py-3 bg-white/10 backdrop-blur-md rounded-full text-clean-white text-sm tracking-widest uppercase hover:bg-white/20 transition-colors"
                     >
                         Close
                     </button>

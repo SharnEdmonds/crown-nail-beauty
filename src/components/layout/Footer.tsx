@@ -1,4 +1,5 @@
 import { Instagram, Facebook } from 'lucide-react';
+import Image from 'next/image';
 import type { SiteSettings } from '@/lib/types';
 
 interface FooterProps {

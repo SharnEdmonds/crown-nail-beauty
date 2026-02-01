@@ -268,10 +268,10 @@ export default function Booking({ categories, phone }: BookingProps) {
                                         >
                                             <span
                                                 className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium transition-all duration-300 ${s.num === step
-                                                        ? 'bg-brushed-gold text-clean-white'
-                                                        : s.num < step
-                                                            ? 'bg-brushed-gold/20 text-brushed-gold'
-                                                            : 'bg-stone-grey/10 text-stone-grey'
+                                                    ? 'bg-brushed-gold text-clean-white'
+                                                    : s.num < step
+                                                        ? 'bg-brushed-gold/20 text-brushed-gold'
+                                                        : 'bg-stone-grey/10 text-stone-grey'
                                                     }`}
                                             >
                                                 {s.num < step ? <Check size={14} /> : s.num}
@@ -314,8 +314,8 @@ export default function Booking({ categories, phone }: BookingProps) {
                                                                 setSelectedServiceKey(null);
                                                             }}
                                                             className={`relative p-5 border rounded-sm text-center transition-all duration-300 hover:-translate-y-1 ${selectedCategoryId === cat._id
-                                                                    ? 'border-brushed-gold bg-brushed-gold/5 shadow-sm'
-                                                                    : 'border-stone-grey/15 bg-clean-white/60 hover:border-soft-rose'
+                                                                ? 'border-brushed-gold bg-brushed-gold/5 shadow-sm'
+                                                                : 'border-stone-grey/15 bg-clean-white/60 hover:border-soft-rose'
                                                                 }`}
                                                         >
                                                             <IconComp size={22} className={`mx-auto mb-3 ${selectedCategoryId === cat._id ? 'text-brushed-gold' : 'text-stone-grey'}`} />
@@ -355,8 +355,8 @@ export default function Booking({ categories, phone }: BookingProps) {
                                                                 type="button"
                                                                 onClick={() => setSelectedServiceKey(service._key)}
                                                                 className={`flex justify-between items-center p-5 border rounded-sm text-left transition-all duration-200 ${selectedServiceKey === service._key
-                                                                        ? 'border-brushed-gold bg-brushed-gold/5'
-                                                                        : 'border-stone-grey/15 bg-clean-white/60 hover:border-soft-rose'
+                                                                    ? 'border-brushed-gold bg-brushed-gold/5'
+                                                                    : 'border-stone-grey/15 bg-clean-white/60 hover:border-soft-rose'
                                                                     }`}
                                                             >
                                                                 <div className="flex-1 min-w-0 mr-3">
@@ -418,12 +418,12 @@ export default function Booking({ categories, phone }: BookingProps) {
                                                         disabled={!cell.available}
                                                         onClick={() => cell.available && cell.day && setSelectedDay(cell.day)}
                                                         className={`py-2.5 rounded-sm text-sm transition-all duration-200 ${cell.day === null
-                                                                ? 'cursor-default'
-                                                                : cell.day === selectedDay
-                                                                    ? 'bg-brushed-gold text-clean-white font-medium scale-110'
-                                                                    : cell.available
-                                                                        ? 'text-crown-black bg-soft-rose/20 cursor-pointer hover:bg-soft-rose/40'
-                                                                        : 'text-stone-grey/30 cursor-default line-through'
+                                                            ? 'cursor-default'
+                                                            : cell.day === selectedDay
+                                                                ? 'bg-brushed-gold text-clean-white font-medium scale-110'
+                                                                : cell.available
+                                                                    ? 'text-crown-black bg-soft-rose/20 cursor-pointer hover:bg-soft-rose/40'
+                                                                    : 'text-stone-grey/30 cursor-default line-through'
                                                             }`}
                                                     >
                                                         {cell.day}
@@ -456,8 +456,8 @@ export default function Booking({ categories, phone }: BookingProps) {
                                                         type="button"
                                                         onClick={() => setSelectedTime(slot)}
                                                         className={`py-3 px-2 border rounded-sm text-xs tracking-wider transition-all duration-200 ${selectedTime === slot
-                                                                ? 'border-brushed-gold bg-brushed-gold text-clean-white font-medium'
-                                                                : 'border-stone-grey/15 text-charcoal-grey hover:border-soft-rose hover:bg-soft-rose/10'
+                                                            ? 'border-brushed-gold bg-brushed-gold text-clean-white font-medium'
+                                                            : 'border-stone-grey/15 text-charcoal-grey hover:border-soft-rose hover:bg-soft-rose/10'
                                                             }`}
                                                     >
                                                         {slot}
@@ -508,8 +508,8 @@ export default function Booking({ categories, phone }: BookingProps) {
                                                             type="button"
                                                             onClick={() => setSelectedTech(tech.name)}
                                                             className={`w-full text-left p-4 border rounded-sm transition-all duration-200 ${selectedTech === tech.name
-                                                                    ? 'border-brushed-gold bg-brushed-gold/5'
-                                                                    : 'border-stone-grey/15 hover:border-soft-rose'
+                                                                ? 'border-brushed-gold bg-brushed-gold/5'
+                                                                : 'border-stone-grey/15 hover:border-soft-rose'
                                                                 }`}
                                                         >
                                                             <div className="flex items-center gap-4">
@@ -549,8 +549,8 @@ export default function Booking({ categories, phone }: BookingProps) {
                                                     <label
                                                         key={addon.id}
                                                         className={`flex items-center justify-between p-3.5 border rounded-sm cursor-pointer transition-all duration-200 ${selectedAddOns.includes(addon.id)
-                                                                ? 'border-brushed-gold bg-brushed-gold/5'
-                                                                : 'border-stone-grey/15 hover:border-soft-rose'
+                                                            ? 'border-brushed-gold bg-brushed-gold/5'
+                                                            : 'border-stone-grey/15 hover:border-soft-rose'
                                                             }`}
                                                     >
                                                         <div className="flex items-center gap-3">
@@ -727,8 +727,8 @@ export default function Booking({ categories, phone }: BookingProps) {
                                                     onClick={handleSubmit}
                                                     disabled={!canProceed()}
                                                     className={`w-full py-4 tracking-widest text-sm rounded-sm transition-all duration-300 ${canProceed()
-                                                            ? 'bg-warm-black text-clean-white hover:bg-crown-black cursor-pointer'
-                                                            : 'bg-warm-black/40 text-clean-white/60 cursor-not-allowed'
+                                                        ? 'bg-warm-black text-clean-white hover:bg-crown-black cursor-pointer'
+                                                        : 'bg-warm-black/40 text-clean-white/60 cursor-not-allowed'
                                                         }`}
                                                 >
                                                     CONFIRM BOOKING
@@ -769,8 +769,8 @@ export default function Booking({ categories, phone }: BookingProps) {
                                         onClick={nextStep}
                                         disabled={!canProceed()}
                                         className={`flex items-center gap-2 px-8 py-3 rounded-sm text-sm tracking-widest transition-all duration-300 ${canProceed()
-                                                ? 'bg-warm-black text-clean-white hover:bg-crown-black cursor-pointer'
-                                                : 'bg-warm-black/30 text-clean-white/50 cursor-not-allowed'
+                                            ? 'bg-warm-black text-clean-white hover:bg-crown-black cursor-pointer'
+                                            : 'bg-warm-black/30 text-clean-white/50 cursor-not-allowed'
                                             }`}
                                     >
                                         NEXT

@@ -2,8 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import MotionLink from '@/components/ui/MotionLink';
+
 
 export default function NavBar() {
     const [isScrolled, setIsScrolled] = useState(false);
