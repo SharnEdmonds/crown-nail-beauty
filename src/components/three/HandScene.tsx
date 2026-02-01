@@ -28,8 +28,6 @@ export default function HandScene() {
                     roughness: 0.7,
                     metalness: 0.1,
                 });
-                mesh.castShadow = true;
-                mesh.receiveShadow = true;
             }
         });
         return scene;
@@ -110,7 +108,6 @@ export default function HandScene() {
                 angle={0.15}
                 penumbra={1}
                 intensity={1.2}
-                castShadow
             />
             {/* Secondary light - no shadow for performance */}
             <spotLight

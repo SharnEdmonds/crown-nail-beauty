@@ -17,9 +17,10 @@ export default function ThreeBackground() {
                 className={`fixed inset-0 z-0 pointer-events-none transition-opacity duration-700 ease-in-out ${isHandVisible ? 'opacity-100' : 'opacity-0 hidden'}`}
             >
                 <Canvas
-                    dpr={[1, 1]}
+                    dpr={[1, 1.5]}
                     camera={{ position: [0, 0, 5], fov: 45 }}
-                    gl={{ alpha: true, antialias: true }}
+                    gl={{ alpha: true, antialias: false, powerPreference: "high-performance" }}
+                    shadows={false}
                 >
                     <Suspense fallback={null}>
                         <HandScene />
