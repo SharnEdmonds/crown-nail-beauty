@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useLayoutEffect, useMemo } from 'react';
+import { useRef, useLayoutEffect, useMemo, useEffect } from 'react';
 import { useThree } from '@react-three/fiber';
 import { useGLTF, Environment } from '@react-three/drei';
 import * as THREE from 'three';
@@ -41,16 +41,14 @@ export default function HandScene() {
         invalidate();
 
         // Entrance Animation: Float up from bottom
-        gsap.from(entranceRef.current.position, {
-            y: -5,
-            duration: 1.8,
-            ease: "power3.out",
-            onUpdate: invalidate,
-        });
+        // gsap.from(entranceRef.current.position, {
+        //     y: -5,
+        //     duration: 1.8,
+        //     ease: "power3.out",
+        //     onUpdate: invalidate,
+        // });
 
         const mm = gsap.matchMedia();
-
-        // ... matchMedia logic continues ...
 
         mm.add({
             isDesktop: "(min-width: 768px)",
@@ -77,22 +75,11 @@ export default function HandScene() {
                     endTrigger: '#services',
                     end: 'top center',
                     scrub: 0.5,
-                    invalidateOnRefresh: true, // Key: forces re-recording of values on resize
-                    onLeave: () => {
-                        if (handRef.current) handRef.current.visible = false;
-                        setHandVisible(false);
-                        invalidate();
-                    },
-                    onEnterBack: () => {
-                        if (handRef.current) handRef.current.visible = true;
-                        setHandVisible(true);
-                        invalidate();
-                    },
+                    invalidateOnRefresh: true,
                 },
-                onUpdate: invalidate, // Trigger render only when animation updates
+                onUpdate: invalidate,
             });
 
-            // Use fromTo to strictly enforce the path regardless of current state
             timeline.fromTo(handRef.current!.rotation,
                 { ...startConfig.rot },
                 { ...endConfig.rot, duration: 1, ease: 'power1.inOut' },
@@ -107,6 +94,18 @@ export default function HandScene() {
         });
 
         return () => mm.revert();
+    }, []);
+
+    useEffect(() => {
+        // Safety kick: Force multiple frames on mount to ensure the model renders 
+        // even if the animation timeline has a hiccup or demand loop sleeps too early.
+        let count = 0;
+        const interval = setInterval(() => {
+            invalidate();
+            count++;
+            if (count > 20) clearInterval(interval);
+        }, 50); // Fast ticks
+        return () => clearInterval(interval);
     }, [invalidate]);
 
     return (

@@ -12,10 +12,9 @@ export default function ThreeBackgroundWrapper() {
     const [isReady, setIsReady] = useState(false);
 
     useEffect(() => {
-        // Defer 3D loading to prioritize initial page load and interaction
         const timer = setTimeout(() => {
             setIsReady(true);
-        }, 1500);
+        }, 500);
         return () => clearTimeout(timer);
     }, []);
 

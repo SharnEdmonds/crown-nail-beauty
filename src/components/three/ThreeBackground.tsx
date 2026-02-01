@@ -14,10 +14,10 @@ export default function ThreeBackground() {
     return (
         <ThreeErrorBoundary>
             <div
-                className={`fixed inset-0 z-0 pointer-events-none transition-opacity duration-700 ease-in-out ${isHandVisible ? 'opacity-100' : 'opacity-0 hidden'}`}
+                className="fixed inset-0 z-0 pointer-events-none transition-opacity duration-700 ease-in-out opacity-100"
             >
                 <Canvas
-                    frameloop="demand"
+                    frameloop="always"
                     dpr={[1, 1.5]}
                     camera={{ position: [0, 0, 5], fov: 45 }}
                     gl={{ alpha: true, antialias: false, powerPreference: "high-performance" }}
