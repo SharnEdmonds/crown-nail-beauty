@@ -1,7 +1,7 @@
 'use client';
 
-import { useRef, useLayoutEffect, useMemo, useEffect } from 'react';
-import { useThree } from '@react-three/fiber';
+import { useRef, useLayoutEffect, useMemo } from 'react';
+import { useFrame } from '@react-three/fiber';
 import { useGLTF, Environment } from '@react-three/drei';
 import * as THREE from 'three';
 import gsap from 'gsap';
@@ -12,11 +12,10 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function HandScene() {
     const setHandVisible = useUIStore((state) => state.setHandVisible);
-    const { invalidate } = useThree();
     // using local draco decoder for speed
     const { scene } = useGLTF('/models/Hand-model-draco.glb', '/draco/');
     const handRef = useRef<THREE.Group>(null);
-    const entranceRef = useRef<THREE.Group>(null);
+    const idleTime = useRef(0);
 
     // Apply a simple, performant material to ensure visibility
     const texturedScene = useMemo(() => {
@@ -35,18 +34,7 @@ export default function HandScene() {
     }, [scene]);
 
     useLayoutEffect(() => {
-        if (!handRef.current || !entranceRef.current) return;
-
-        // Force initial render
-        invalidate();
-
-        // Entrance Animation: Float up from bottom
-        // gsap.from(entranceRef.current.position, {
-        //     y: -5,
-        //     duration: 1.8,
-        //     ease: "power3.out",
-        //     onUpdate: invalidate,
-        // });
+        if (!handRef.current) return;
 
         const mm = gsap.matchMedia();
 
@@ -75,11 +63,19 @@ export default function HandScene() {
                     endTrigger: '#services',
                     end: 'top center',
                     scrub: 0.5,
-                    invalidateOnRefresh: true,
+                    invalidateOnRefresh: true, // Key: forces re-recording of values on resize
+                    onLeave: () => {
+                        if (handRef.current) handRef.current.visible = false;
+                        setHandVisible(false);
+                    },
+                    onEnterBack: () => {
+                        if (handRef.current) handRef.current.visible = true;
+                        setHandVisible(true);
+                    },
                 },
-                onUpdate: invalidate,
             });
 
+            // Use fromTo to strictly enforce the path regardless of current state
             timeline.fromTo(handRef.current!.rotation,
                 { ...startConfig.rot },
                 { ...endConfig.rot, duration: 1, ease: 'power1.inOut' },
@@ -96,20 +92,16 @@ export default function HandScene() {
         return () => mm.revert();
     }, []);
 
-    useEffect(() => {
-        // Safety kick: Force multiple frames on mount to ensure the model renders 
-        // even if the animation timeline has a hiccup or demand loop sleeps too early.
-        let count = 0;
-        const interval = setInterval(() => {
-            invalidate();
-            count++;
-            if (count > 20) clearInterval(interval);
-        }, 50); // Fast ticks
-        return () => clearInterval(interval);
-    }, [invalidate]);
+    // Subtle idle animation
+    useFrame((_, delta) => {
+        if (!handRef.current) return;
+        idleTime.current += delta;
+        handRef.current.rotation.z += Math.sin(idleTime.current * 0.5) * 0.0005;
+    });
 
     return (
         <>
+            <Environment preset="studio" />
             <ambientLight intensity={0.8} />
             <spotLight
                 position={[10, 10, 10]}
@@ -126,16 +118,14 @@ export default function HandScene() {
                 color="#ffcdb2"
             />
 
-            <group ref={entranceRef}>
-                <primitive
-                    object={texturedScene}
-                    ref={handRef}
-                    scale={2.5}
-                    // Initial props will be overridden by GSAP/LayoutEffect but good defaults helps
-                    position={[2, -1, 0]}
-                    rotation={[0, -0.5, 0]}
-                />
-            </group>
+            <primitive
+                object={texturedScene}
+                ref={handRef}
+                scale={2.5}
+                // Initial props will be overridden by GSAP/LayoutEffect but good defaults helps
+                position={[2, -1, 0]}
+                rotation={[0, -0.5, 0]}
+            />
         </>
     );
 }

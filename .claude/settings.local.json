@@ -26,7 +26,8 @@
       "mcp__Sanity__deploy_schema",
       "mcp__Sanity__create_documents_from_json",
       "mcp__Sanity__publish_documents",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "WebFetch(domain:crown-nail-beauty-exx5c2bgt-sharnedmonds2020-gmailcoms-projects.vercel.app)"
     ]
   }
 }
