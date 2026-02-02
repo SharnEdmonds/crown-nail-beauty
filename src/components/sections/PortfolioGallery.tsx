@@ -134,7 +134,7 @@ export default function PortfolioGallery() {
                                 src={image.src}
                                 alt={image.alt}
                                 fill
-                                sizes="(max-width: 768px) 300px, 400px"
+                                sizes="(max-width: 768px) 90vw, 400px"
                                 className="object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500 group-hover:scale-105 transform"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">

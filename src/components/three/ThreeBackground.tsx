@@ -20,7 +20,6 @@ export default function ThreeBackground() {
                     dpr={[1, 1.5]}
                     camera={{ position: [0, 0, 5], fov: 45 }}
                     gl={{ alpha: true, antialias: false, powerPreference: "high-performance" }}
-                    shadows={false}
                 >
                     <Suspense fallback={null}>
                         <HandScene />

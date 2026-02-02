@@ -65,6 +65,10 @@ export const metadata: Metadata = {
   },
 };
 
+
+
+// ... (existing imports)
+
 export default function RootLayout({
   children,
 }: Readonly<{

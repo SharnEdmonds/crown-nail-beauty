@@ -3,7 +3,7 @@
 import { useRef, useLayoutEffect, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { useGLTF, Environment } from '@react-three/drei';
-import * as THREE from 'three';
+import { Group, Mesh, MeshStandardMaterial } from 'three';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useUIStore } from '@/lib/store';
@@ -14,20 +14,22 @@ export default function HandScene() {
     const setHandVisible = useUIStore((state) => state.setHandVisible);
     // using local draco decoder for speed
     const { scene } = useGLTF('/models/Hand-model-draco.glb', '/draco/');
-    const handRef = useRef<THREE.Group>(null);
+    const handRef = useRef<Group>(null);
     const idleTime = useRef(0);
 
     // Apply a simple, performant material to ensure visibility
     const texturedScene = useMemo(() => {
         scene.traverse((child) => {
-            if ((child as THREE.Mesh).isMesh) {
-                const mesh = child as THREE.Mesh;
+            if ((child as Mesh).isMesh) {
+                const mesh = child as Mesh;
                 // Switched to MeshStandardMaterial for max performance/visibility
-                mesh.material = new THREE.MeshStandardMaterial({
+                mesh.material = new MeshStandardMaterial({
                     color: 0xe8beac,
                     roughness: 0.7,
                     metalness: 0.1,
                 });
+                mesh.castShadow = true;
+                mesh.receiveShadow = true;
             }
         });
         return scene;
@@ -63,7 +65,7 @@ export default function HandScene() {
                     endTrigger: '#services',
                     end: 'top center',
                     scrub: 0.5,
-                    invalidateOnRefresh: true, // Key: forces re-recording of values on resize
+                    invalidateOnRefresh: true,
                     onLeave: () => {
                         if (handRef.current) handRef.current.visible = false;
                         setHandVisible(false);
@@ -101,13 +103,14 @@ export default function HandScene() {
 
     return (
         <>
-            <Environment preset="studio" />
+            <Environment files="/hdri/studio_small_03_1k.hdr" />
             <ambientLight intensity={0.8} />
             <spotLight
                 position={[10, 10, 10]}
                 angle={0.15}
                 penumbra={1}
                 intensity={1.2}
+                castShadow
             />
             {/* Secondary light - no shadow for performance */}
             <spotLight
