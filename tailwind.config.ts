@@ -25,6 +25,9 @@ const config: Config = {
             backgroundImage: {
                 "marble-pattern": "url('/images/marble-bg.jpg')", // Placeholder if needed
             },
+            padding: {
+                safe: "env(safe-area-inset-top)",
+            },
         },
     },
     plugins: [],

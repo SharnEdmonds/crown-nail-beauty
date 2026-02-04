@@ -72,7 +72,7 @@ export default function Hero({ headline }: HeroProps) {
                 className="absolute inset-0 pointer-events-none"
             />
             <div className="container mx-auto px-6">
-                <div className="max-w-4xl lg:max-w-4xl mx-auto lg:mx-0 text-center lg:text-left">
+                <div className="max-w-4xl">
                     <motion.h1
                         className="font-serif leading-[0.9] text-crown-black mb-6 md:mb-8"
                         variants={containerVariants}
@@ -87,7 +87,7 @@ export default function Hero({ headline }: HeroProps) {
                                 <motion.span
                                     key={i}
                                     variants={wordVariants}
-                                    className={`inline-block mr-[0.3em] ${word.italic ? 'italic lg:pl-24' : ''}`}
+                                    className={`inline-block mr-[0.3em] ${word.italic ? 'italic pl-4 md:pl-24' : ''}`}
                                 >
                                     {word.text}
                                 </motion.span>
@@ -96,7 +96,7 @@ export default function Hero({ headline }: HeroProps) {
                     </motion.h1>
 
                     <motion.div
-                        className="flex flex-col md:flex-row gap-4 md:gap-6 mt-8 md:mt-12 lg:pl-2 justify-center lg:justify-start"
+                        className="flex flex-col md:flex-row gap-4 md:gap-6 mt-8 md:mt-12 pl-2"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
