@@ -63,6 +63,11 @@ export const metadata: Metadata = {
     description:
       "Where meticulous craftsmanship meets serene luxury. Premium nail and beauty services in Glendene, Auckland.",
   },
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    viewportFit: 'cover',
+  },
 };
 
 

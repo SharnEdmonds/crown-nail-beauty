@@ -22,7 +22,7 @@ export default function About({ siteSettings }: AboutProps) {
         <section
             id="about"
             ref={sectionRef}
-            className="relative py-32 z-10 bg-marble-stone overflow-hidden marble-texture"
+            className="relative py-32 z-10 bg-marble-stone overflow-hidden"
         >
             <div className="container mx-auto px-6">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">

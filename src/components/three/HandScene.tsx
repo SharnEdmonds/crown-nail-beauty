@@ -41,19 +41,24 @@ export default function HandScene() {
         const mm = gsap.matchMedia();
 
         mm.add({
-            isDesktop: "(min-width: 768px)",
+            isDesktop: "(min-width: 1024px)",
+            isTablet: "(min-width: 768px) and (max-width: 1023.98px)",
             isMobile: "(max-width: 767.98px)",
         }, (context) => {
-            const { isMobile } = context.conditions as { isMobile: boolean };
+            const { isMobile, isTablet } = context.conditions as { isMobile: boolean; isTablet: boolean };
 
-            // Define precise Start and End states for both contexts
+            // Define precise Start and End states for all contexts
             const startConfig = isMobile
                 ? { pos: { x: 0, y: -2, z: -2 }, rot: { x: 0, y: -0.5, z: 0 } }
-                : { pos: { x: 2, y: -1, z: 0 }, rot: { x: 0, y: -0.5, z: 0 } };
+                : isTablet
+                    ? { pos: { x: 0, y: -1.5, z: -1 }, rot: { x: 0, y: -0.5, z: 0 } }
+                    : { pos: { x: 2, y: -1, z: 0 }, rot: { x: 0, y: -0.5, z: 0 } };
 
             const endConfig = isMobile
                 ? { pos: { x: 8, y: -2, z: -5 }, rot: { x: 0.2, y: Math.PI, z: -0.2 } }
-                : { pos: { x: 18, y: -1, z: -5 }, rot: { x: 0.2, y: Math.PI, z: -0.2 } };
+                : isTablet
+                    ? { pos: { x: 12, y: -1.5, z: -5 }, rot: { x: 0.2, y: Math.PI, z: -0.2 } }
+                    : { pos: { x: 18, y: -1, z: -5 }, rot: { x: 0.2, y: Math.PI, z: -0.2 } };
 
             // Ensure visibility is reset
             if (handRef.current) handRef.current.visible = true;

@@ -25,7 +25,7 @@ export default function NavBar() {
             <motion.nav
                 aria-label="Main navigation"
                 className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'glass py-4 shadow-sm' : 'py-8 bg-transparent'
-                    }`}
+                    } pt-[env(safe-area-inset-top)]`}
                 initial={{ y: -100 }}
                 animate={{ y: 0 }}
                 transition={{ duration: 0.8, ease: [0.33, 1, 0.68, 1] }}
@@ -44,7 +44,7 @@ export default function NavBar() {
                     </Link>
 
                     {/* Desktop Links */}
-                    <div className="hidden md:flex items-center space-x-12 font-sans text-sm tracking-widest uppercase">
+                    <div className="hidden lg:flex items-center space-x-12 font-sans text-sm tracking-widest uppercase">
                         <MotionLink href="#services">Services</MotionLink>
                         <MotionLink href="#menu">Menu</MotionLink>
                         <MotionLink href="#gallery">Gallery</MotionLink>
@@ -60,7 +60,7 @@ export default function NavBar() {
 
                     {/* Mobile Menu Button */}
                     <button
-                        className="md:hidden z-50 p-2 space-y-1.5"
+                        className="lg:hidden z-50 p-2 space-y-1.5"
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                         aria-expanded={isMobileMenuOpen}
                         aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
@@ -90,7 +90,7 @@ export default function NavBar() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-40 bg-marble-stone flex flex-col justify-center items-center"
+                        className="fixed inset-0 z-40 bg-marble-stone flex flex-col justify-center items-center pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]"
                     >
                         <div className="flex flex-col items-center space-y-8 font-serif text-4xl">
                             <MotionLink href="#hero" onClick={() => setIsMobileMenuOpen(false)}>Home</MotionLink>
