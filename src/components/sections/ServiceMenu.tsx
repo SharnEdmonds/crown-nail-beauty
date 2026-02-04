@@ -67,7 +67,7 @@ export default function ServiceMenu({ categories, openingHours, phone }: Service
                             {nailCategories.map((category, catIdx) => (
                                 <motion.div
                                     key={category._id}
-                                    className="bg-marble-stone/40 border border-stone-grey/10 p-8"
+                                    className="bg-marble-stone/40 border border-stone-grey/10 p-6 md:p-8"
                                     initial={{ opacity: 0, y: 20 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
@@ -95,7 +95,7 @@ export default function ServiceMenu({ categories, openingHours, phone }: Service
                     {otherCategories.map((category, catIdx) => (
                         <motion.div
                             key={category._id}
-                            className="bg-marble-stone/40 border border-stone-grey/10 p-8"
+                            className="bg-marble-stone/40 border border-stone-grey/10 p-6 md:p-8"
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}

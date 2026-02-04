@@ -15,9 +15,9 @@ export default function Footer({ siteSettings }: FooterProps) {
 
     return (
         <footer className="bg-crown-black text-clean-white py-20 px-6">
-            <div className="container mx-auto grid grid-cols-1 md:grid-cols-12 gap-12">
+            <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12">
                 {/* Brand */}
-                <div className="md:col-span-4 space-y-6">
+                <div className="lg:col-span-4 space-y-6">
                     <div className="flex flex-col">
                         <span className="font-serif text-3xl tracking-wide">CROWN</span>
                         <span className="text-xs tracking-[0.2em] text-stone-grey">NAIL & BEAUTY</span>
@@ -38,7 +38,7 @@ export default function Footer({ siteSettings }: FooterProps) {
                 </div>
 
                 {/* Links */}
-                <div className="md:col-span-2 md:col-start-7 space-y-6">
+                <div className="lg:col-span-2 lg:col-start-7 space-y-6">
                     <h4 className="text-sm tracking-widest uppercase text-brushed-gold">Explore</h4>
                     <ul className="space-y-4 text-stone-grey">
                         <li><a href="#services" className="hover:text-clean-white transition-colors">Services</a></li>
@@ -50,7 +50,7 @@ export default function Footer({ siteSettings }: FooterProps) {
                 </div>
 
                 {/* Contact */}
-                <div className="md:col-span-3 space-y-6">
+                <div className="lg:col-span-3 space-y-6">
                     <h4 className="text-sm tracking-widest uppercase text-brushed-gold">Visit</h4>
                     <div className="space-y-2 text-stone-grey">
                         {address ? (

@@ -80,12 +80,12 @@ export default function Services({ categories }: { categories: ServiceCategory[]
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-[320px]">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-[280px] md:auto-rows-[320px]">
                     {displayCards.map((service, index) => (
                         <motion.a
                             key={service.title}
                             href="#menu"
-                            className={`group relative p-8 bg-clean-white border border-stone-grey/20 hover:border-soft-rose transition-all duration-300 overflow-hidden hover:-translate-y-2 ${gridAreas[index] || ''}`}
+                            className={`group relative p-6 md:p-8 bg-clean-white border border-stone-grey/20 hover:border-soft-rose transition-all duration-300 overflow-hidden hover:-translate-y-2 ${index === 0 ? 'md:col-span-2 md:row-span-2' : ''}`}
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
@@ -93,13 +93,13 @@ export default function Services({ categories }: { categories: ServiceCategory[]
                         >
                             <div className="relative z-10 h-full flex flex-col justify-between">
                                 <div>
-                                    <h3 className="font-serif text-3xl mb-3 text-warm-black font-medium">{service.title}</h3>
-                                    <p className="text-charcoal-grey/90 text-base leading-relaxed max-w-[95%]">{service.description}</p>
+                                    <h3 className="font-serif text-2xl md:text-3xl mb-3 text-warm-black font-medium">{service.title}</h3>
+                                    <p className="text-charcoal-grey/90 text-sm md:text-base leading-relaxed max-w-[95%]">{service.description}</p>
                                 </div>
 
                                 <div className="flex justify-between items-end border-t border-stone-grey/10 pt-4 mt-4">
                                     <span className="text-xs tracking-widest uppercase text-stone-grey">Starting from</span>
-                                    <span className="font-serif text-2xl">${service.price}</span>
+                                    <span className="font-serif text-xl md:text-2xl">${service.price}</span>
                                 </div>
                             </div>
 
