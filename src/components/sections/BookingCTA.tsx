@@ -15,11 +15,11 @@ export default function BookingCTA() {
                     <span className="block text-sm tracking-[0.2em] text-stone-grey mb-6 uppercase">
                         Start Your Journey
                     </span>
-                    <h2 className="text-3xl md:text-6xl font-serif mb-8 leading-tight">
+                    <h2 className="text-3xl md:text-6xl font-serif mb-8 leading-tight text-clean-white">
                         Ready to Experience <br />
-                        <span className="italic text-gray-400">Excellence?</span>
+                        <span className="italic text-brushed-gold">Excellence?</span>
                     </h2>
-                    <p className="max-w-xl mx-auto text-gray-400 mb-12 font-light leading-relaxed">
+                    <p className="max-w-xl mx-auto text-marble-stone/80 mb-12 font-light leading-relaxed">
                         Secure your appointment today and let us treat you to the finest nail and beauty care in a serene, luxurious setting.
                     </p>
 

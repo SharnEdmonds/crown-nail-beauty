@@ -27,19 +27,21 @@ export default function About({ siteSettings }: AboutProps) {
             <div className="container mx-auto px-6">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                     {/* Image with parallax */}
-                    <motion.div
-                        className="relative h-[500px] lg:h-[650px] overflow-hidden hidden md:block"
-                        style={{ y: imageY }}
-                    >
-                        <Image
-                            src="/images/Gallery_img2.webp"
-                            alt="Crown Nail & Beauty studio - The Crown Philosophy"
-                            fill
-                            sizes="(max-width: 1024px) 100vw, 50vw"
-                            className="object-cover"
-                        />
+                    <div className="relative h-[500px] lg:h-[650px] overflow-hidden rounded-sm hidden md:block">
+                        <motion.div
+                            className="absolute inset-[-80px] inset-x-0"
+                            style={{ y: imageY }}
+                        >
+                            <Image
+                                src="/images/Gallery_img2.webp"
+                                alt="Crown Nail & Beauty studio - The Crown Philosophy"
+                                fill
+                                sizes="(max-width: 1024px) 100vw, 50vw"
+                                className="object-cover"
+                            />
+                        </motion.div>
                         <div className="absolute inset-0 bg-gradient-to-t from-crown-black/20 to-transparent" />
-                    </motion.div>
+                    </div>
 
                     {/* Text content with mask reveal */}
                     <div className="space-y-8">

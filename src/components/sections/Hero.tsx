@@ -125,13 +125,11 @@ export default function Hero({ headline }: HeroProps) {
                 transition={{ delay: 1, duration: 1 }}
             >
                 <span className="text-[10px] tracking-[0.2em] text-stone-grey uppercase">Scroll</span>
-                <div className="w-[1px] h-12 bg-gray-300 relative overflow-hidden">
-                    <motion.div
-                        className="absolute top-0 left-0 w-full h-1/2 bg-warm-black"
-                        animate={{ y: ['-100%', '200%'] }}
-                        transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
-                    />
-                </div>
+                <motion.div
+                    className="w-[1px] h-8 bg-warm-black origin-top"
+                    animate={{ scaleY: [0, 1, 0] }}
+                    transition={{ duration: 2.5, repeat: Infinity, ease: [0.45, 0, 0.55, 1], times: [0, 0.5, 1] }}
+                />
             </motion.div>
         </section>
     );

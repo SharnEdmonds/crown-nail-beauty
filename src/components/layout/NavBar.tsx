@@ -22,9 +22,12 @@ export default function NavBar() {
 
     return (
         <>
+            {/* Safe area background fill for notch devices */}
+            <div className="fixed top-0 left-0 right-0 z-50 h-[env(safe-area-inset-top)] glass" />
+
             <motion.nav
                 aria-label="Main navigation"
-                className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 pt-safe glass ${isScrolled ? 'py-4 shadow-sm' : 'py-8'
+                className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 glass ${isScrolled ? 'pt-[calc(env(safe-area-inset-top)+16px)] pb-5 shadow-sm' : 'pt-[calc(env(safe-area-inset-top)+28px)] pb-8'
                     }`}
                 initial={{ y: -100 }}
                 animate={{ y: 0 }}
