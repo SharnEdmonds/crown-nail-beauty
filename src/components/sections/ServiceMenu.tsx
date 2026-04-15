@@ -1,22 +1,21 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Clock, Phone } from 'lucide-react';
-import type { ServiceCategory } from '@/lib/types';
+import type { ServiceCategory, ServiceMenuSection } from '@/lib/types';
 
 interface ServiceMenuProps {
     categories: ServiceCategory[];
+    section: ServiceMenuSection | null;
     openingHours?: { days: string; hours: string }[];
     phone?: string;
 }
 
-export default function ServiceMenu({ categories, openingHours, phone }: ServiceMenuProps) {
-    if (!categories?.length) return null;
+export default function ServiceMenu({ categories, section }: ServiceMenuProps) {
+    if (!categories?.length || !section) return null;
 
-    // Group into nail vs other for visual layout
-    const nailSlugs = ['gel-polish', 'normal-polish', 'builder-gel', 'dipping-powder'];
-    const nailCategories = categories.filter(c => nailSlugs.includes(c.slug?.current));
-    const otherCategories = categories.filter(c => !nailSlugs.includes(c.slug?.current));
+    const nailSlugs = section.nailCategorySlugs ?? [];
+    const nailCategories = categories.filter((c) => nailSlugs.includes(c.slug?.current));
+    const otherCategories = categories.filter((c) => !nailSlugs.includes(c.slug?.current));
 
     return (
         <section id="menu" className="py-32 relative z-10 bg-clean-white">
@@ -29,7 +28,7 @@ export default function ServiceMenu({ categories, openingHours, phone }: Service
                         whileInView={{ opacity: 1 }}
                         viewport={{ once: true }}
                     >
-                        Full Menu
+                        {section.eyebrow}
                     </motion.span>
                     <motion.h2
                         className="font-serif text-5xl lg:text-6xl mb-4"
@@ -38,7 +37,7 @@ export default function ServiceMenu({ categories, openingHours, phone }: Service
                         viewport={{ once: true }}
                         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                     >
-                        Our <span className="italic">Services</span>
+                        {section.headingStart} <span className="italic">{section.headingItalic}</span>
                     </motion.h2>
                     <motion.p
                         className="text-charcoal-grey max-w-lg mx-auto"
@@ -47,7 +46,7 @@ export default function ServiceMenu({ categories, openingHours, phone }: Service
                         viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
                     >
-                        Every treatment crafted with precision and care. All prices in NZD.
+                        {section.intro}
                     </motion.p>
                 </div>
 
@@ -61,7 +60,7 @@ export default function ServiceMenu({ categories, openingHours, phone }: Service
                         transition={{ duration: 0.6 }}
                     >
                         <h3 className="font-serif text-3xl mb-10 text-center">
-                            Nail <span className="italic">Services</span>
+                            {section.nailSectionHeadingStart} <span className="italic">{section.nailSectionHeadingItalic}</span>
                         </h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
                             {nailCategories.map((category, catIdx) => (

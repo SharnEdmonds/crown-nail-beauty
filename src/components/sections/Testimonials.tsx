@@ -2,13 +2,15 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import type { Testimonial } from '@/lib/types';
+import type { Testimonial, TestimonialsSection } from '@/lib/types';
 
 interface TestimonialsProps {
     testimonials: Testimonial[];
+    section: TestimonialsSection | null;
 }
 
-export default function Testimonials({ testimonials }: TestimonialsProps) {
+export default function Testimonials({ testimonials, section }: TestimonialsProps) {
+    if (!testimonials?.length) return null;
     const [current, setCurrent] = useState(0);
     const [isPaused, setIsPaused] = useState(false);
 
@@ -30,7 +32,7 @@ export default function Testimonials({ testimonials }: TestimonialsProps) {
                 onMouseLeave={() => setIsPaused(false)}
             >
                 <span className="text-xs tracking-[0.3em] uppercase text-brushed-gold mb-8 block">
-                    Testimonials
+                    {section?.eyebrow}
                 </span>
 
                 <div className="relative min-h-[280px] flex items-center justify-center" aria-live="polite">

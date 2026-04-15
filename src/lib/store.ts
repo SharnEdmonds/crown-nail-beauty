@@ -5,6 +5,8 @@ interface UIState {
   setHandVisible: (visible: boolean) => void;
   isScrollLocked: boolean;
   setScrollLocked: (locked: boolean) => void;
+  isLoading: boolean;
+  setLoading: (loading: boolean) => void;
 }
 
 export const useUIStore = create<UIState>((set) => ({
@@ -12,4 +14,6 @@ export const useUIStore = create<UIState>((set) => ({
   setHandVisible: (visible) => set({ isHandVisible: visible }),
   isScrollLocked: false,
   setScrollLocked: (locked) => set({ isScrollLocked: locked }),
+  isLoading: true,
+  setLoading: (loading) => set({ isLoading: loading }),
 }));

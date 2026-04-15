@@ -1,18 +1,12 @@
 'use client';
 
-import { motion, useAnimationControls } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useRef, useState, useCallback, useEffect } from 'react';
 import Image from 'next/image';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import ImageLightbox from '@/components/ui/ImageLightbox';
-
-const galleryImages = [
-    { src: '/images/Gallery_img1.webp', alt: 'Premium nail artistry detailing' },
-    { src: '/images/Gallery_img2.webp', alt: 'Elegant manicure finish' },
-    { src: '/images/Gallery_img3.webp', alt: 'Structural builder gel enhancement' },
-    { src: '/images/Gallery_img4.webp', alt: 'Bespoke hand-painted design' },
-    { src: '/images/Gallery_img5.webp', alt: 'Luxury pedicure texture' },
-];
+import { urlFor } from '@/lib/sanity-image';
+import type { PortfolioSection } from '@/lib/types';
 
 const CARD_WIDTH = 400;
 const CARD_GAP = 32;
@@ -20,21 +14,27 @@ const STEP = CARD_WIDTH + CARD_GAP;
 
 import { useUIStore } from '@/lib/store';
 
-export default function PortfolioGallery() {
+interface PortfolioGalleryProps {
+    section: PortfolioSection | null;
+}
+
+export default function PortfolioGallery({ section }: PortfolioGalleryProps) {
     const containerRef = useRef<HTMLDivElement>(null);
     const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
     const [isMobile, setIsMobile] = useState(false);
 
-    // Restore deleted logic
     const setHandVisible = useUIStore((state) => state.setHandVisible);
 
-    // Infinite Scroll: Triple the images to create seamless loop buffers
+    const galleryImages = (section?.images ?? []).map((item) => ({
+        src: urlFor(item.image).width(1200).quality(85).url(),
+        alt: item.alt,
+    }));
+
     const infiniteImages = [...galleryImages, ...galleryImages, ...galleryImages];
     const originalLength = galleryImages.length;
 
     const scrollToMiddle = useCallback(() => {
-        if (containerRef.current) {
-            // Scroll to the start of the middle set
+        if (containerRef.current && originalLength > 0) {
             const middleSetStart = originalLength * STEP;
             containerRef.current.scrollLeft = middleSetStart;
         }
@@ -44,24 +44,17 @@ export default function PortfolioGallery() {
         const checkMobile = () => setIsMobile(window.innerWidth < 768);
         checkMobile();
         window.addEventListener('resize', checkMobile);
-
-        // Verify initial scroll position
         scrollToMiddle();
-
         return () => window.removeEventListener('resize', checkMobile);
     }, [scrollToMiddle]);
 
     const handleScroll = () => {
-        if (!containerRef.current) return;
-        const { scrollLeft, scrollWidth, clientWidth } = containerRef.current;
+        if (!containerRef.current || originalLength === 0) return;
+        const { scrollLeft } = containerRef.current;
         const singleSetWidth = originalLength * STEP;
-
-        // If scrolled past the second set (to the right), jump back to middle
         if (scrollLeft >= singleSetWidth * 2) {
             containerRef.current.scrollLeft = scrollLeft - singleSetWidth;
-        }
-        // If scrolled before the middle set (to the left), jump forward to middle
-        else if (scrollLeft < singleSetWidth) {
+        } else if (scrollLeft < singleSetWidth) {
             containerRef.current.scrollLeft = scrollLeft + singleSetWidth;
         }
     };
@@ -69,15 +62,11 @@ export default function PortfolioGallery() {
     const scroll = (direction: 'left' | 'right') => {
         if (!containerRef.current) return;
         const currentScroll = containerRef.current.scrollLeft;
-        const targetScroll = direction === 'right'
-            ? currentScroll + STEP
-            : currentScroll - STEP;
-
-        containerRef.current.scrollTo({
-            left: targetScroll,
-            behavior: 'smooth'
-        });
+        const targetScroll = direction === 'right' ? currentScroll + STEP : currentScroll - STEP;
+        containerRef.current.scrollTo({ left: targetScroll, behavior: 'smooth' });
     };
+
+    if (!section || originalLength === 0) return null;
 
     return (
         <section id="gallery" aria-label="Portfolio gallery" className="py-32 relative z-10 bg-crown-black text-clean-white overflow-hidden">
@@ -87,8 +76,8 @@ export default function PortfolioGallery() {
             />
             <div className="container mx-auto px-6 mb-12 flex justify-between items-end">
                 <div>
-                    <h2 className="font-serif text-5xl mb-2 text-clean-white">Selected Works</h2>
-                    <p className="text-stone-grey">Drag or use arrows to explore our latest creations.</p>
+                    <h2 className="font-serif text-5xl mb-2 text-clean-white">{section.heading}</h2>
+                    <p className="text-stone-grey">{section.description}</p>
                 </div>
                 {!isMobile && (
                     <div className="flex items-center gap-4">
@@ -138,7 +127,7 @@ export default function PortfolioGallery() {
                                 className="object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500 group-hover:scale-105 transform"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-                                <span className="text-xs tracking-widest uppercase">View Details</span>
+                                <span className="text-xs tracking-widest uppercase">{section.viewDetailsLabel}</span>
                             </div>
                         </motion.div>
                     ))}
@@ -146,7 +135,7 @@ export default function PortfolioGallery() {
             </div>
 
             <ImageLightbox
-                images={galleryImages.map(img => ({ src: img.src, alt: img.alt }))}
+                images={galleryImages}
                 currentIndex={lightboxIndex}
                 onClose={() => setLightboxIndex(null)}
             />

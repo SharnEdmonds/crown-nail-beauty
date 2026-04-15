@@ -1,0 +1,822 @@
+[
+  {
+    "fields": [
+      {
+        "name": "businessName",
+        "type": "string"
+      },
+      {
+        "name": "tagline",
+        "type": "string"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "logo",
+        "type": "image"
+      },
+      {
+        "description": "Large text in nav/footer (e.g. CROWN)",
+        "name": "logoWordmark",
+        "type": "string"
+      },
+      {
+        "description": "Small text under wordmark (e.g. NAIL & BEAUTY)",
+        "name": "logoSubmark",
+        "type": "string"
+      },
+      {
+        "rows": 3,
+        "description": "Headline text. The 3rd word will render in italic with indent.",
+        "name": "heroHeadline",
+        "type": "text"
+      },
+      {
+        "fields": [
+          {
+            "name": "label",
+            "type": "string"
+          },
+          {
+            "name": "href",
+            "type": "string"
+          }
+        ],
+        "name": "heroCtaPrimary",
+        "type": "object"
+      },
+      {
+        "fields": [
+          {
+            "name": "label",
+            "type": "string"
+          },
+          {
+            "name": "href",
+            "type": "string"
+          }
+        ],
+        "name": "heroCtaSecondary",
+        "type": "object"
+      },
+      {
+        "name": "heroScrollLabel",
+        "type": "string"
+      },
+      {
+        "name": "phone",
+        "type": "string"
+      },
+      {
+        "name": "email",
+        "type": "string"
+      },
+      {
+        "fields": [
+          {
+            "name": "street",
+            "type": "string"
+          },
+          {
+            "name": "suburb",
+            "type": "string"
+          },
+          {
+            "name": "city",
+            "type": "string"
+          },
+          {
+            "name": "postcode",
+            "type": "string"
+          }
+        ],
+        "name": "address",
+        "type": "object"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "days",
+                "type": "string"
+              },
+              {
+                "name": "hours",
+                "type": "string"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "openingHours",
+        "type": "array"
+      },
+      {
+        "fields": [
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "uri",
+                    "constraint": {
+                      "options": {
+                        "scheme": [
+                          "/^http$/",
+                          "/^https$/"
+                        ],
+                        "allowRelative": false,
+                        "relativeOnly": false,
+                        "allowCredentials": false
+                      }
+                    }
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "instagram",
+            "type": "url"
+          },
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "uri",
+                    "constraint": {
+                      "options": {
+                        "scheme": [
+                          "/^http$/",
+                          "/^https$/"
+                        ],
+                        "allowRelative": false,
+                        "relativeOnly": false,
+                        "allowCredentials": false
+                      }
+                    }
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "facebook",
+            "type": "url"
+          }
+        ],
+        "name": "socialLinks",
+        "type": "object"
+      },
+      {
+        "description": "e.g. \"Est. 2024 — Glendene, NZ\"",
+        "name": "aboutEyebrow",
+        "type": "string"
+      },
+      {
+        "name": "aboutHeading",
+        "type": "string"
+      },
+      {
+        "of": [
+          {
+            "type": "text"
+          }
+        ],
+        "name": "aboutParagraphs",
+        "type": "array"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "aboutImage",
+        "type": "image"
+      },
+      {
+        "name": "aboutCtaLabel",
+        "type": "string"
+      },
+      {
+        "name": "aboutCtaHref",
+        "type": "string"
+      }
+    ],
+    "name": "siteSettings",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "label",
+                "type": "string"
+              },
+              {
+                "name": "href",
+                "type": "string"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "links",
+        "type": "array"
+      },
+      {
+        "name": "reserveLabel",
+        "type": "string"
+      },
+      {
+        "name": "reserveHref",
+        "type": "string"
+      },
+      {
+        "name": "mobileHomeLabel",
+        "type": "string"
+      },
+      {
+        "name": "mobileHomeHref",
+        "type": "string"
+      }
+    ],
+    "name": "navigation",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "options": {
+          "source": "title"
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "name": "description",
+        "type": "text"
+      },
+      {
+        "name": "priceFrom",
+        "type": "string"
+      },
+      {
+        "name": "order",
+        "type": "number"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "name": "price",
+                "type": "string"
+              },
+              {
+                "name": "note",
+                "type": "string"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "services",
+        "type": "array"
+      }
+    ],
+    "name": "serviceCategory",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "name": "quote",
+        "type": "text"
+      },
+      {
+        "name": "author",
+        "type": "string"
+      },
+      {
+        "name": "service",
+        "type": "string"
+      },
+      {
+        "name": "order",
+        "type": "number"
+      }
+    ],
+    "name": "testimonial",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "name": "heading",
+        "type": "string"
+      },
+      {
+        "name": "intro",
+        "type": "text"
+      },
+      {
+        "name": "startingFromLabel",
+        "type": "string"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "title",
+                "type": "string"
+              },
+              {
+                "name": "description",
+                "type": "text"
+              },
+              {
+                "name": "href",
+                "type": "string"
+              },
+              {
+                "description": "Slugs of serviceCategory docs to derive \"starting from\" price",
+                "of": [
+                  {
+                    "type": "string"
+                  }
+                ],
+                "name": "categorySlugs",
+                "type": "array"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "cards",
+        "type": "array"
+      }
+    ],
+    "name": "servicesSection",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "name": "eyebrow",
+        "type": "string"
+      },
+      {
+        "name": "headingStart",
+        "type": "string"
+      },
+      {
+        "name": "headingItalic",
+        "type": "string"
+      },
+      {
+        "name": "intro",
+        "type": "text"
+      },
+      {
+        "name": "nailSectionHeadingStart",
+        "type": "string"
+      },
+      {
+        "name": "nailSectionHeadingItalic",
+        "type": "string"
+      },
+      {
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "nailCategorySlugs",
+        "type": "array"
+      }
+    ],
+    "name": "serviceMenuSection",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "name": "heading",
+        "type": "string"
+      },
+      {
+        "name": "description",
+        "type": "string"
+      },
+      {
+        "name": "viewDetailsLabel",
+        "type": "string"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "name": "image",
+                "type": "image"
+              },
+              {
+                "name": "alt",
+                "type": "string"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "images",
+        "type": "array"
+      }
+    ],
+    "name": "portfolioSection",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "name": "eyebrow",
+        "type": "string"
+      }
+    ],
+    "name": "testimonialsSection",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "name": "eyebrow",
+        "type": "string"
+      },
+      {
+        "name": "headingStart",
+        "type": "string"
+      },
+      {
+        "name": "headingItalic",
+        "type": "string"
+      },
+      {
+        "name": "description",
+        "type": "text"
+      },
+      {
+        "name": "ctaLabel",
+        "type": "string"
+      },
+      {
+        "name": "ctaHref",
+        "type": "string"
+      }
+    ],
+    "name": "bookingCtaSection",
+    "type": "document",
+    "title": "Booking CTA Section"
+  },
+  {
+    "fields": [
+      {
+        "name": "brandDescription",
+        "type": "text"
+      },
+      {
+        "name": "hoursHeading",
+        "type": "string"
+      },
+      {
+        "name": "exploreHeading",
+        "type": "string"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "label",
+                "type": "string"
+              },
+              {
+                "name": "href",
+                "type": "string"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "exploreLinks",
+        "type": "array"
+      },
+      {
+        "name": "visitHeading",
+        "type": "string"
+      },
+      {
+        "description": "e.g. \"NZ. All rights reserved.\"",
+        "name": "copyrightSuffix",
+        "type": "string"
+      }
+    ],
+    "name": "footerSection",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "description": "Continuous Y-axis spin speed. Default: 0.15",
+        "name": "idleRotationSpeed",
+        "type": "number",
+        "title": "Idle Rotation Speed (radians/sec)"
+      },
+      {
+        "description": "Amplitude of the gentle side-to-side tilt. Default: 0.02",
+        "name": "idleWobbleAmount",
+        "type": "number",
+        "title": "Idle Z Wobble Amount"
+      },
+      {
+        "description": "Frequency of the side-to-side tilt. Default: 0.25",
+        "name": "idleWobbleSpeed",
+        "type": "number",
+        "title": "Idle Z Wobble Speed"
+      },
+      {
+        "description": "Default: 2.5",
+        "name": "scale",
+        "type": "number",
+        "title": "Model Scale"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "regex",
+                "constraint": {
+                  "pattern": "/^#([0-9a-fA-F]{6})$/",
+                  "name": "hex color",
+                  "invert": false
+                }
+              }
+            ],
+            "level": "error",
+            "message": "Must be a 6-digit hex like #e8beac"
+          }
+        ],
+        "description": "Hex color like #e8beac. Default: #e8beac",
+        "name": "color",
+        "type": "string",
+        "title": "Skin Color (hex)"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "min",
+                "constraint": 0
+              },
+              {
+                "flag": "max",
+                "constraint": 1
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Default: 0.7",
+        "name": "roughness",
+        "type": "number",
+        "title": "Material Roughness (0–1)"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "min",
+                "constraint": 0
+              },
+              {
+                "flag": "max",
+                "constraint": 1
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Default: 0.1",
+        "name": "metalness",
+        "type": "number",
+        "title": "Material Metalness (0–1)"
+      },
+      {
+        "options": {
+          "columns": 3
+        },
+        "fields": [
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          }
+        ],
+        "name": "desktopStartPosition",
+        "type": "object",
+        "title": "Desktop — Start Position"
+      },
+      {
+        "options": {
+          "columns": 3
+        },
+        "fields": [
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          }
+        ],
+        "name": "desktopStartRotation",
+        "type": "object",
+        "title": "Desktop — Start Rotation (radians)"
+      },
+      {
+        "options": {
+          "columns": 3
+        },
+        "fields": [
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          }
+        ],
+        "name": "desktopEndPosition",
+        "type": "object",
+        "title": "Desktop — End Position"
+      },
+      {
+        "options": {
+          "columns": 3
+        },
+        "fields": [
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          }
+        ],
+        "name": "desktopEndRotation",
+        "type": "object",
+        "title": "Desktop — End Rotation (radians)"
+      },
+      {
+        "options": {
+          "columns": 3
+        },
+        "fields": [
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          }
+        ],
+        "name": "mobileStartPosition",
+        "type": "object",
+        "title": "Mobile — Start Position"
+      },
+      {
+        "options": {
+          "columns": 3
+        },
+        "fields": [
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          }
+        ],
+        "name": "mobileStartRotation",
+        "type": "object",
+        "title": "Mobile — Start Rotation (radians)"
+      },
+      {
+        "options": {
+          "columns": 3
+        },
+        "fields": [
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          }
+        ],
+        "name": "mobileEndPosition",
+        "type": "object",
+        "title": "Mobile — End Position"
+      },
+      {
+        "options": {
+          "columns": 3
+        },
+        "fields": [
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          }
+        ],
+        "name": "mobileEndRotation",
+        "type": "object",
+        "title": "Mobile — End Rotation (radians)"
+      }
+    ],
+    "name": "handModel",
+    "type": "document",
+    "title": "3D Hand Model"
+  }
+]

@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import { Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/layout/SmoothScroll";
+import LoadingScreen from "@/components/ui/LoadingScreen";
 
 const satoshi = localFont({
   src: [
@@ -83,6 +84,7 @@ export default function RootLayout({
         >
           Skip to main content
         </a>
+        <LoadingScreen />
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>

@@ -2,19 +2,21 @@
 
 import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
+import type { HandModelConfig } from '@/lib/types';
 
 const ThreeBackground = dynamic(() => import('./ThreeBackground'), {
     ssr: false,
     loading: () => null
 });
 
-export default function ThreeBackgroundWrapper() {
+interface ThreeBackgroundWrapperProps {
+    handModel: HandModelConfig | null;
+}
+
+export default function ThreeBackgroundWrapper({ handModel }: ThreeBackgroundWrapperProps) {
     const [show, setShow] = useState(false);
 
     useEffect(() => {
-        // Adaptive Strategy:
-        // - Desktop: Fast load (1000ms) for premium feel.
-        // - Mobile/Lighthouse: Delayed load (3500ms) to clear TBT/CPU metrics for 90+ score.
         const isMobile = window.innerWidth < 768;
         const delay = isMobile ? 6000 : 1000;
 
@@ -26,7 +28,7 @@ export default function ThreeBackgroundWrapper() {
 
     return (
         <div style={{ animation: 'fadeIn 1.5s ease-in-out' }}>
-            <ThreeBackground />
+            <ThreeBackground handModel={handModel} />
             <style jsx>{`
                 @keyframes fadeIn {
                     from { opacity: 0; }

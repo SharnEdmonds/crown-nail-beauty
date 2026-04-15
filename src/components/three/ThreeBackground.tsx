@@ -7,8 +7,13 @@ import { Loader } from '@react-three/drei';
 import HandScene from '@/components/three/HandScene';
 import ThreeErrorBoundary from '@/components/three/ThreeErrorBoundary';
 import { Suspense } from 'react';
+import type { HandModelConfig } from '@/lib/types';
 
-export default function ThreeBackground() {
+interface ThreeBackgroundProps {
+    handModel: HandModelConfig | null;
+}
+
+export default function ThreeBackground({ handModel }: ThreeBackgroundProps) {
     const isHandVisible = useUIStore((state) => state.isHandVisible);
 
     return (
@@ -22,7 +27,7 @@ export default function ThreeBackground() {
                     gl={{ alpha: true, antialias: false, powerPreference: "high-performance" }}
                 >
                     <Suspense fallback={null}>
-                        <HandScene />
+                        <HandScene config={handModel} />
                     </Suspense>
                 </Canvas>
                 <Loader
