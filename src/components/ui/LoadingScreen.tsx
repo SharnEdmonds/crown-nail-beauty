@@ -3,14 +3,22 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useUIStore } from '@/lib/store';
+import { preloadNailDesigns } from '@/components/three/nailDesigns';
+import { ALL_NAIL_DESIGNS } from '@/components/three/handNailConfig';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 export default function LoadingScreen() {
     const isLoading = useUIStore((s) => s.isLoading);
     const setLoading = useUIStore((s) => s.setLoading);
+    const isModelReady = useUIStore((s) => s.isModelReady);
     const [progress, setProgress] = useState(0);
     const readyRef = useRef(false);
+    const modelReadyRef = useRef(false);
+
+    useEffect(() => {
+        modelReadyRef.current = isModelReady;
+    }, [isModelReady]);
 
     useEffect(() => {
         let active = true;
@@ -18,7 +26,8 @@ export default function LoadingScreen() {
 
         const tick = setInterval(() => {
             if (!active) return;
-            const ready = readyRef.current;
+            // Only allow 100% once the GLTF scene is parsed AND bytes are in.
+            const ready = readyRef.current && modelReadyRef.current;
             const ceiling = ready ? 100 : 92;
             if (current < ceiling) {
                 current += ready ? 4 : Math.max(0.6, (ceiling - current) * 0.04);
@@ -27,6 +36,12 @@ export default function LoadingScreen() {
         }, 40);
 
         const preload = async () => {
+            // Kick off texture preloads in parallel with the GLB download so
+            // total wall time is dominated by whichever is slower.
+            const texturesPromise = preloadNailDesigns(ALL_NAIL_DESIGNS).catch((err) => {
+                console.warn('[LoadingScreen] nail design preload failed', err);
+            });
+
             try {
                 const res = await fetch('/models/Hand-model-draco.glb');
                 const reader = res.body?.getReader();
@@ -37,7 +52,9 @@ export default function LoadingScreen() {
                         const { done, value } = await reader.read();
                         if (done) break;
                         loaded += value?.length || 0;
-                        current = Math.max(current, (loaded / total) * 92);
+                        // Reserve the last 10% for texture decoding so the bar
+                        // doesn't sit at 92 waiting while textures finish.
+                        current = Math.max(current, (loaded / total) * 82);
                     }
                 } else if (res.body) {
                     await res.arrayBuffer();
@@ -45,6 +62,9 @@ export default function LoadingScreen() {
             } catch {
                 /* fall through — dismiss on timeout below */
             }
+
+            // Wait for texture decode before unlocking the final climb to 100.
+            await texturesPromise;
             if (active) readyRef.current = true;
         };
 
@@ -52,8 +72,11 @@ export default function LoadingScreen() {
 
         // Hard ceiling so the loader never traps the user
         const failSafe = setTimeout(() => {
-            if (active) readyRef.current = true;
-        }, 7000);
+            if (active) {
+                readyRef.current = true;
+                modelReadyRef.current = true;
+            }
+        }, 12000);
 
         return () => {
             active = false;

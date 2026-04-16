@@ -1,14 +1,16 @@
 'use client';
 
-import { useRef, useLayoutEffect, useMemo } from 'react';
+import { useRef, useLayoutEffect, useMemo, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { useGLTF, Environment } from '@react-three/drei';
-import { Group, Mesh, MeshStandardMaterial, Color } from 'three';
+import { Group } from 'three';
 import * as THREE from 'three';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useUIStore } from '@/lib/store';
 import type { HandModelConfig, Vec3 } from '@/lib/types';
+import HandModel from './HandModel';
+import { DEFAULT_NAIL_DESIGN } from './handNailConfig';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -17,9 +19,14 @@ const DEFAULTS = {
     idleWobbleAmount: 0.02,
     idleWobbleSpeed: 0.25,
     scale: 2.5,
-    color: '#e8beac',
-    roughness: 0.7,
-    metalness: 0.1,
+    // Natural warm skin tone. Skin is never metallic (metalness must be 0)
+    // and sits around 0.85 roughness with a faint oil sheen on top.
+    color: '#e8b89e',
+    roughness: 0.85,
+    metalness: 0.0,
+    nailColor: '#d4a5a5',
+    nailRoughness: 0.08,
+    nailMetalness: 0.2,
     desktopStartPosition: { x: 2, y: -1, z: 0 },
     desktopStartRotation: { x: 0, y: -0.5, z: 0 },
     desktopEndPosition: { x: 9, y: -1, z: -4 },
@@ -49,9 +56,30 @@ interface HandSceneProps {
 
 export default function HandScene({ config }: HandSceneProps) {
     const setHandVisible = useUIStore((state) => state.setHandVisible);
-    const { scene } = useGLTF('/models/Hand-model-draco.glb', '/draco/');
+    const setModelReady = useUIStore((state) => state.setModelReady);
+    const gltf = useGLTF('/models/Hand-model-draco.glb', '/draco/');
+
+    useEffect(() => {
+        if (gltf?.scene) setModelReady(true);
+    }, [gltf, setModelReady]);
     const handRef = useRef<Group>(null);
-    const idleTime = useRef(0);
+    // Base rotation driven by the GSAP scroll timeline. useFrame composes
+    // mouse-parallax offsets on top of this so scroll and parallax don't fight.
+    const baseRotation = useRef({ x: 0, y: 0, z: 0 });
+    const pointerTarget = useRef({ x: 0, y: 0 });
+    const pointerCurrent = useRef({ x: 0, y: 0 });
+
+    // Track pointer position normalized to [-1, 1] across the viewport.
+    useEffect(() => {
+        const onPointerMove = (e: PointerEvent) => {
+            const nx = (e.clientX / window.innerWidth) * 2 - 1;
+            const ny = (e.clientY / window.innerHeight) * 2 - 1;
+            pointerTarget.current.x = nx;
+            pointerTarget.current.y = ny;
+        };
+        window.addEventListener('pointermove', onPointerMove, { passive: true });
+        return () => window.removeEventListener('pointermove', onPointerMove);
+    }, []);
 
     const cfg = useMemo(() => {
         const c = config ?? {};
@@ -63,6 +91,14 @@ export default function HandScene({ config }: HandSceneProps) {
             color: pick(c.color, DEFAULTS.color),
             roughness: pick(c.roughness, DEFAULTS.roughness),
             metalness: pick(c.metalness, DEFAULTS.metalness),
+            nailColor: pick(c.nailColor, DEFAULTS.nailColor),
+            nailRoughness: pick(c.nailRoughness, DEFAULTS.nailRoughness),
+            nailMetalness: pick(c.nailMetalness, DEFAULTS.nailMetalness),
+            nailThumbColor: c.nailThumbColor ?? undefined,
+            nailIndexColor: c.nailIndexColor ?? undefined,
+            nailMiddleColor: c.nailMiddleColor ?? undefined,
+            nailRingColor: c.nailRingColor ?? undefined,
+            nailPinkyColor: c.nailPinkyColor ?? undefined,
             desktopStartPosition: pickVec(c.desktopStartPosition, DEFAULTS.desktopStartPosition),
             desktopStartRotation: pickVec(c.desktopStartRotation, DEFAULTS.desktopStartRotation),
             desktopEndPosition: pickVec(c.desktopEndPosition, DEFAULTS.desktopEndPosition),
@@ -73,22 +109,6 @@ export default function HandScene({ config }: HandSceneProps) {
             mobileEndRotation: pickVec(c.mobileEndRotation, DEFAULTS.mobileEndRotation),
         };
     }, [config]);
-
-    const texturedScene = useMemo(() => {
-        scene.traverse((child) => {
-            if ((child as Mesh).isMesh) {
-                const mesh = child as Mesh;
-                mesh.material = new MeshStandardMaterial({
-                    color: new Color(cfg.color),
-                    roughness: cfg.roughness,
-                    metalness: cfg.metalness,
-                });
-                mesh.castShadow = true;
-                mesh.receiveShadow = true;
-            }
-        });
-        return scene;
-    }, [scene, cfg.color, cfg.roughness, cfg.metalness]);
 
     useLayoutEffect(() => {
         if (!handRef.current) return;
@@ -130,8 +150,13 @@ export default function HandScene({ config }: HandSceneProps) {
                 },
             });
 
+            // Seed base rotation so the first frame doesn't snap.
+            baseRotation.current.x = startConfig.rot.x;
+            baseRotation.current.y = startConfig.rot.y;
+            baseRotation.current.z = startConfig.rot.z;
+
             timeline.fromTo(
-                handRef.current!.rotation,
+                baseRotation.current,
                 { ...startConfig.rot },
                 { ...endConfig.rot, duration: 1, ease: 'sine.inOut' },
                 0
@@ -150,9 +175,22 @@ export default function HandScene({ config }: HandSceneProps) {
 
     useFrame((state, delta) => {
         if (!handRef.current) return;
-        idleTime.current += delta;
-        handRef.current.rotation.y += delta * cfg.idleRotationSpeed;
-        handRef.current.rotation.z = Math.sin(idleTime.current * cfg.idleWobbleSpeed) * cfg.idleWobbleAmount;
+
+        // Damped interpolation of the pointer target so motion feels smooth.
+        const ease = Math.min(1, delta * 6);
+        pointerCurrent.current.x += (pointerTarget.current.x - pointerCurrent.current.x) * ease;
+        pointerCurrent.current.y += (pointerTarget.current.y - pointerCurrent.current.y) * ease;
+
+        // Horizontal-only parallax: mouse X rotates the hand around its Y axis.
+        // idleRotationSpeed controls overall mouse-rotation magnitude; a full
+        // viewport swing rotates the hand ~0.5 rad (~28°) at the default value.
+        const strength = 0.5 * Math.max(0.1, cfg.idleRotationSpeed / 0.15);
+        const parallaxY = pointerCurrent.current.x * strength;
+
+        // Compose: GSAP-driven base rotation + horizontal mouse parallax on Y only.
+        handRef.current.rotation.x = baseRotation.current.x;
+        handRef.current.rotation.y = baseRotation.current.y + parallaxY;
+        handRef.current.rotation.z = baseRotation.current.z;
 
         // Safety clamp: keep the hand inside the viewport horizontally.
         // Compute visible half-width at the hand's z-depth and clamp x accordingly.
@@ -173,26 +211,40 @@ export default function HandScene({ config }: HandSceneProps) {
 
     return (
         <>
+            {/*
+              * Lighting balance tuned for the nail art to show volume:
+              *   • HDRI does most of the reflective work (clearcoat highlights).
+              *   • Ambient kept low so normal-mapped details self-shade properly.
+              *   • One sharp key spot to carve contour, one warm fill to keep
+              *     the skin from looking clinical.
+              */}
             <Environment files="/hdri/studio_small_03_1k.hdr" />
-            <ambientLight intensity={0.8} />
+            <ambientLight intensity={0.35} />
             <spotLight
                 position={[10, 10, 10]}
-                angle={0.15}
-                penumbra={1}
-                intensity={1.2}
+                angle={0.2}
+                penumbra={0.8}
+                intensity={1.8}
                 castShadow
             />
             <spotLight
                 position={[-5, 5, -5]}
-                angle={0.3}
-                penumbra={0.5}
-                intensity={0.5}
+                angle={0.4}
+                penumbra={0.6}
+                intensity={0.6}
                 color="#ffcdb2"
             />
+            {/* Subtle rim from behind to pop the nail silhouette against the bg. */}
+            <directionalLight position={[0, 4, -8]} intensity={0.4} color="#ffe4d1" />
 
-            <primitive
-                object={texturedScene}
+            <HandModel
                 ref={handRef}
+                color={cfg.color}
+                roughness={cfg.roughness}
+                metalness={cfg.metalness}
+                nailRoughness={cfg.nailRoughness}
+                nailMetalness={cfg.nailMetalness}
+                nailDesign={DEFAULT_NAIL_DESIGN}
                 scale={cfg.scale}
                 position={[cfg.desktopStartPosition.x, cfg.desktopStartPosition.y, cfg.desktopStartPosition.z]}
                 rotation={[cfg.desktopStartRotation.x, cfg.desktopStartRotation.y, cfg.desktopStartRotation.z]}

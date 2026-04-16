@@ -4,6 +4,7 @@ import { useUIStore } from '@/lib/store';
 
 import { Canvas } from '@react-three/fiber';
 import { Loader } from '@react-three/drei';
+import * as THREE from 'three';
 import HandScene from '@/components/three/HandScene';
 import ThreeErrorBoundary from '@/components/three/ThreeErrorBoundary';
 import { Suspense } from 'react';
@@ -22,9 +23,17 @@ export default function ThreeBackground({ handModel }: ThreeBackgroundProps) {
                 className={`fixed inset-0 z-0 pointer-events-none transition-opacity duration-700 ease-in-out ${isHandVisible ? 'opacity-100' : 'opacity-0 hidden'}`}
             >
                 <Canvas
-                    dpr={[1, 1.5]}
+                    dpr={[1, 1.8]}
                     camera={{ position: [0, 0, 5], fov: 45 }}
-                    gl={{ alpha: true, antialias: false, powerPreference: "high-performance" }}
+                    gl={{
+                        alpha: true,
+                        antialias: true,
+                        powerPreference: 'high-performance',
+                        // ACES filmic tone mapping preserves highlight detail
+                        // instead of clipping clearcoat reflections to flat white.
+                        toneMapping: THREE.ACESFilmicToneMapping,
+                        toneMappingExposure: 1.1,
+                    }}
                 >
                     <Suspense fallback={null}>
                         <HandScene config={handModel} />

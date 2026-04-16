@@ -132,6 +132,14 @@ export interface HandModelConfig {
   color?: string;
   roughness?: number;
   metalness?: number;
+  nailColor?: string;
+  nailRoughness?: number;
+  nailMetalness?: number;
+  nailThumbColor?: string;
+  nailIndexColor?: string;
+  nailMiddleColor?: string;
+  nailRingColor?: string;
+  nailPinkyColor?: string;
   desktopStartPosition?: Vec3;
   desktopStartRotation?: Vec3;
   desktopEndPosition?: Vec3;

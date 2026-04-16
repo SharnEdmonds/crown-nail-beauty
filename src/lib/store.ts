@@ -7,6 +7,8 @@ interface UIState {
   setScrollLocked: (locked: boolean) => void;
   isLoading: boolean;
   setLoading: (loading: boolean) => void;
+  isModelReady: boolean;
+  setModelReady: (ready: boolean) => void;
 }
 
 export const useUIStore = create<UIState>((set) => ({
@@ -16,4 +18,6 @@ export const useUIStore = create<UIState>((set) => ({
   setScrollLocked: (locked) => set({ isScrollLocked: locked }),
   isLoading: true,
   setLoading: (loading) => set({ isLoading: loading }),
+  isModelReady: false,
+  setModelReady: (ready) => set({ isModelReady: ready }),
 }));
