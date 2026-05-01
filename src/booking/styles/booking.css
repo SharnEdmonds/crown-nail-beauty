@@ -1,0 +1,413 @@
+/* ======================================================
+ * Booking module styles. Every color references a CSS var
+ * supplied by the bookingTheme document at runtime.
+ *
+ * Hardcoded color values are FORBIDDEN in this file —
+ * they must come from var(--booking-*) tokens.
+ * ====================================================== */
+
+.booking-root {
+  /* Default fallback values are also injected from the theme provider —
+   * these are last-resort safety values in case the provider runs server-side
+   * before hydration. They match the brand defaults. */
+  --booking-color-bg: #E8E4E0;
+  --booking-color-surface: #FAFAFA;
+  --booking-color-surface-muted: #F0EDE9;
+  --booking-color-border: #D9D5D1;
+  --booking-color-border-focus: #C9A962;
+  --booking-color-text-primary: #1A1A1A;
+  --booking-color-text-secondary: #4A4A4A;
+  --booking-color-text-muted: #8A8A8A;
+  --booking-color-accent: #C9A962;
+  --booking-color-accent-muted: #E8D7B0;
+  --booking-color-success: #3D8B5C;
+  --booking-color-warning: #C77F2A;
+  --booking-color-error: #B8493A;
+  --booking-color-on-accent: #FFFFFF;
+  --booking-color-step-active: var(--booking-color-accent);
+  --booking-color-step-completed: var(--booking-color-accent-muted);
+  --booking-color-step-pending: var(--booking-color-border);
+  --booking-color-slot-available: var(--booking-color-surface);
+  --booking-color-slot-selected: var(--booking-color-accent);
+  --booking-color-slot-unavailable: var(--booking-color-surface-muted);
+  --booking-heading-font: "Cormorant Garamond", Georgia, serif;
+  --booking-body-font: Satoshi, system-ui, sans-serif;
+  --booking-mono-font: ui-monospace, SFMono-Regular, monospace;
+  --booking-radius-sm: 2px;
+  --booking-radius-md: 4px;
+  --booking-radius-lg: 8px;
+  --booking-radius-full: 9999px;
+
+  background: var(--booking-color-bg);
+  color: var(--booking-color-text-primary);
+  font-family: var(--booking-body-font);
+}
+
+/* ── Page-level containers ───────────────────────────── */
+.booking-page {
+  min-height: 100vh;
+  padding: 4rem 1.5rem;
+  background: var(--booking-color-bg);
+}
+
+.booking-shell {
+  max-width: 56rem;
+  margin: 0 auto;
+}
+
+/* ── Headings ───────────────────────────────────────── */
+.booking-heading {
+  font-family: var(--booking-heading-font);
+  color: var(--booking-color-text-primary);
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+
+.booking-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  font-size: 0.75rem;
+  color: var(--booking-color-accent);
+}
+
+.booking-helper {
+  color: var(--booking-color-text-secondary);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.booking-muted {
+  color: var(--booking-color-text-muted);
+}
+
+/* ── Cards & surfaces ────────────────────────────────── */
+.booking-card {
+  background: var(--booking-color-surface);
+  border: 1px solid var(--booking-color-border);
+  border-radius: var(--booking-radius-md);
+  color: var(--booking-color-text-primary);
+}
+
+.booking-card--muted {
+  background: var(--booking-color-surface-muted);
+}
+
+.booking-card-pad {
+  padding: 2rem;
+}
+
+/* ── Buttons / CTA ──────────────────────────────────── */
+.booking-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.75rem;
+  background: var(--booking-color-accent);
+  color: var(--booking-color-on-accent);
+  border: 1px solid var(--booking-color-accent);
+  border-radius: var(--booking-radius-md);
+  font-size: 0.8125rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: filter 200ms ease, opacity 200ms ease;
+}
+
+.booking-cta:hover {
+  filter: brightness(0.95);
+}
+
+.booking-cta:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.booking-cta--secondary {
+  background: transparent;
+  color: var(--booking-color-text-primary);
+  border-color: var(--booking-color-border);
+}
+
+.booking-cta--secondary:hover {
+  border-color: var(--booking-color-text-primary);
+  filter: none;
+}
+
+/* ── Inputs ─────────────────────────────────────────── */
+.booking-input,
+.booking-textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: var(--booking-color-surface);
+  border: 1px solid var(--booking-color-border);
+  border-radius: var(--booking-radius-md);
+  color: var(--booking-color-text-primary);
+  font-family: var(--booking-body-font);
+  font-size: 0.9375rem;
+  transition: border-color 150ms ease;
+}
+
+.booking-input::placeholder,
+.booking-textarea::placeholder {
+  color: var(--booking-color-text-muted);
+}
+
+.booking-input:focus,
+.booking-textarea:focus {
+  outline: none;
+  border-color: var(--booking-color-border-focus);
+}
+
+.booking-label {
+  display: block;
+  font-size: 0.6875rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--booking-color-text-secondary);
+  margin-bottom: 0.4rem;
+}
+
+/* ── Step indicator ─────────────────────────────────── */
+.booking-step-circle {
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--booking-radius-full);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background: var(--booking-color-step-pending);
+  color: var(--booking-color-text-muted);
+  transition: background 200ms ease, color 200ms ease;
+}
+
+.booking-step-circle--active {
+  background: var(--booking-color-step-active);
+  color: var(--booking-color-on-accent);
+}
+
+.booking-step-circle--completed {
+  background: var(--booking-color-step-completed);
+  color: var(--booking-color-accent);
+}
+
+.booking-step-line {
+  height: 1px;
+  background: var(--booking-color-step-pending);
+}
+
+.booking-step-line--completed {
+  background: var(--booking-color-accent);
+}
+
+/* ── Time slot grid ─────────────────────────────────── */
+.booking-slot {
+  padding: 0.75rem 0.5rem;
+  background: var(--booking-color-slot-available);
+  border: 1px solid var(--booking-color-border);
+  border-radius: var(--booking-radius-md);
+  font-size: 0.8125rem;
+  letter-spacing: 0.05em;
+  color: var(--booking-color-text-secondary);
+  cursor: pointer;
+  transition: border-color 150ms ease, background 150ms ease;
+}
+
+.booking-slot:hover:not(:disabled) {
+  border-color: var(--booking-color-border-focus);
+}
+
+.booking-slot--selected {
+  background: var(--booking-color-slot-selected);
+  color: var(--booking-color-on-accent);
+  border-color: var(--booking-color-slot-selected);
+}
+
+.booking-slot:disabled,
+.booking-slot--unavailable {
+  background: var(--booking-color-slot-unavailable);
+  color: var(--booking-color-text-muted);
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+/* ── Tags / badges ──────────────────────────────────── */
+.booking-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.625rem;
+  border-radius: var(--booking-radius-full);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.booking-badge--accent {
+  background: var(--booking-color-accent-muted);
+  color: var(--booking-color-text-primary);
+}
+
+.booking-badge--success {
+  background: color-mix(in srgb, var(--booking-color-success) 18%, transparent);
+  color: var(--booking-color-success);
+}
+
+.booking-badge--warning {
+  background: color-mix(in srgb, var(--booking-color-warning) 18%, transparent);
+  color: var(--booking-color-warning);
+}
+
+.booking-badge--error {
+  background: color-mix(in srgb, var(--booking-color-error) 18%, transparent);
+  color: var(--booking-color-error);
+}
+
+/* ── Toasts / errors ────────────────────────────────── */
+.booking-error-banner {
+  background: color-mix(in srgb, var(--booking-color-error) 12%, transparent);
+  border: 1px solid var(--booking-color-error);
+  color: var(--booking-color-error);
+  border-radius: var(--booking-radius-md);
+  padding: 0.875rem 1rem;
+  font-size: 0.875rem;
+}
+
+/* ── Calendar ───────────────────────────────────────── */
+.booking-calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.375rem;
+}
+
+.booking-calendar-day {
+  aspect-ratio: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--booking-radius-md);
+  background: var(--booking-color-surface);
+  border: 1px solid transparent;
+  font-size: 0.875rem;
+  color: var(--booking-color-text-primary);
+  cursor: pointer;
+  transition: background 150ms ease, border-color 150ms ease;
+}
+
+.booking-calendar-day:hover:not(:disabled) {
+  border-color: var(--booking-color-border-focus);
+}
+
+.booking-calendar-day--today {
+  border-color: var(--booking-color-accent-muted);
+}
+
+.booking-calendar-day--selected {
+  background: var(--booking-color-accent);
+  color: var(--booking-color-on-accent);
+}
+
+.booking-calendar-day:disabled,
+.booking-calendar-day--unavailable {
+  background: var(--booking-color-surface-muted);
+  color: var(--booking-color-text-muted);
+  cursor: not-allowed;
+}
+
+.booking-calendar-weekday {
+  text-align: center;
+  font-size: 0.6875rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--booking-color-text-muted);
+  padding: 0.5rem 0;
+}
+
+/* ── Welcome back badge ─────────────────────────────── */
+.booking-welcome-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.875rem;
+  background: var(--booking-color-accent-muted);
+  border-radius: var(--booking-radius-full);
+  font-size: 0.8125rem;
+  color: var(--booking-color-text-primary);
+}
+
+/* ── Admin tables ───────────────────────────────────── */
+.booking-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--booking-color-surface);
+  border-radius: var(--booking-radius-md);
+  overflow: hidden;
+}
+
+.booking-table th,
+.booking-table td {
+  padding: 0.875rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--booking-color-border);
+}
+
+.booking-table th {
+  background: var(--booking-color-surface-muted);
+  font-size: 0.6875rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--booking-color-text-secondary);
+  font-weight: 500;
+}
+
+.booking-table tr:last-child td {
+  border-bottom: none;
+}
+
+.booking-table tr:hover td {
+  background: var(--booking-color-surface-muted);
+}
+
+/* ── Calendar (admin) ──────────────────────────────── */
+.booking-cal-day-grid {
+  display: grid;
+  grid-template-columns: 60px repeat(var(--cal-tech-count, 1), minmax(180px, 1fr));
+  min-width: calc(60px + var(--cal-tech-count, 1) * 180px);
+}
+
+.booking-cal-day-stack {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  /* On narrow screens, replace the side-by-side grid with a per-tech stack. */
+  .booking-cal-day-grid {
+    display: none;
+  }
+  .booking-cal-day-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+}
+
+/* ── Modal ──────────────────────────────────────────── */
+.booking-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: color-mix(in srgb, var(--booking-color-text-primary) 70%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  z-index: 50;
+}
+
+.booking-modal {
+  width: 100%;
+  max-width: 32rem;
+  background: var(--booking-color-surface);
+  border-radius: var(--booking-radius-lg);
+  padding: 2rem;
+}

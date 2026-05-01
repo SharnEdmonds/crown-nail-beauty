@@ -31,38 +31,38 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://crownnails.co.nz"),
-  title: "Crown Nail & Beauty | Nail, Lash & Beauty Services in Glendene, Auckland",
+  metadataBase: new URL("https://demo.example.com"),
+  title: "Atelier Lumière | Demo Beauty Studio",
   description:
-    "Where meticulous craftsmanship meets serene luxury. Premium nail, eyelash, waxing, facial and permanent makeup services in Glendene, Auckland. Open Mon-Sat 9am-6pm, Sun 10am-5:30pm.",
+    "Demo site showcasing a luxury beauty studio template. Premium nail, lash, waxing, facial and permanent makeup services. Sample content only.",
   alternates: {
     canonical: '/',
   },
   robots: {
-    index: true,
-    follow: true,
+    index: false,
+    follow: false,
     googleBot: {
-      index: true,
-      follow: true,
+      index: false,
+      follow: false,
       'max-video-preview': -1,
       'max-image-preview': 'large',
       'max-snippet': -1,
     },
   },
   openGraph: {
-    title: "Crown Nail & Beauty | Nail, Lash & Beauty Services in Glendene, Auckland",
+    title: "Atelier Lumière | Demo Beauty Studio",
     description:
-      "Where meticulous craftsmanship meets serene luxury. Premium nail, eyelash, waxing, facial and permanent makeup services in Glendene, Auckland.",
-    url: "https://crownnails.co.nz",
-    siteName: "Crown Nail & Beauty",
-    locale: "en_NZ",
+      "Demo site showcasing a luxury beauty studio template. Sample content only.",
+    url: "https://demo.example.com",
+    siteName: "Atelier Lumière",
+    locale: "en",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Crown Nail & Beauty | Nail, Lash & Beauty Services in Glendene, Auckland",
+    title: "Atelier Lumière | Demo Beauty Studio",
     description:
-      "Where meticulous craftsmanship meets serene luxury. Premium nail and beauty services in Glendene, Auckland.",
+      "Demo site showcasing a luxury beauty studio template. Sample content only.",
   },
 };
 

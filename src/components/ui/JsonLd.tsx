@@ -11,19 +11,19 @@ export default function JsonLd({ siteSettings, serviceCategories }: JsonLdProps)
     const structuredData = {
         '@context': 'https://schema.org',
         '@type': 'BeautySalon',
-        name: siteSettings?.businessName || 'Crown Nail & Beauty',
+        name: siteSettings?.businessName || 'Atelier Lumière',
         description: siteSettings?.tagline
-            ? `${siteSettings.tagline}. Premium nail and beauty services in Auckland, New Zealand.`
-            : 'Where meticulous craftsmanship meets serene luxury. Premium nail and beauty services in Auckland, New Zealand.',
-        url: 'https://crownnails.co.nz',
+            ? `${siteSettings.tagline}. Demo beauty studio template.`
+            : 'Demo beauty studio template — sample content only.',
+        url: 'https://demo.example.com',
         telephone: siteSettings?.phone?.replace(/[^+\d]/g, '') || '',
         email: siteSettings?.email || '',
         address: {
             '@type': 'PostalAddress',
-            streetAddress: address?.street || '10/4343 Great North Road',
-            addressLocality: address ? `${address.suburb}, ${address.city}` : 'Glendene, Auckland',
-            postalCode: address?.postcode || '0602',
-            addressCountry: 'NZ',
+            streetAddress: address?.street || '1 Sample Street',
+            addressLocality: address ? `${address.suburb}, ${address.city}` : 'Demo City',
+            postalCode: address?.postcode || '00000',
+            addressCountry: 'XX',
         },
         priceRange: '$$',
         openingHoursSpecification: [

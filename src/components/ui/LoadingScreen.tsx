@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useUIStore } from '@/lib/store';
 import { preloadNailDesigns } from '@/components/three/nailDesigns';
@@ -8,7 +9,14 @@ import { ALL_NAIL_DESIGNS } from '@/components/three/handNailConfig';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
+// Routes where the brand 3D-hand loader should NOT mount. These pages don't
+// load the hand model, so the progress bar would never reach 100% naturally.
+const SUPPRESS_PATH_PREFIXES = ['/book', '/booking', '/admin', '/auth', '/privacy'];
+
 export default function LoadingScreen() {
+    const pathname = usePathname();
+    const suppressed =
+        pathname && SUPPRESS_PATH_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`));
     const isLoading = useUIStore((s) => s.isLoading);
     const setLoading = useUIStore((s) => s.setLoading);
     const isModelReady = useUIStore((s) => s.isModelReady);
@@ -20,7 +28,14 @@ export default function LoadingScreen() {
         modelReadyRef.current = isModelReady;
     }, [isModelReady]);
 
+    // On suppressed routes, immediately clear any stale loading state so the
+    // 3D-hand site (if visited later) doesn't think it's mid-load.
     useEffect(() => {
+        if (suppressed && isLoading) setLoading(false);
+    }, [suppressed, isLoading, setLoading]);
+
+    useEffect(() => {
+        if (suppressed) return;
         let active = true;
         let current = 0;
 
@@ -93,13 +108,15 @@ export default function LoadingScreen() {
     }, [progress, setLoading]);
 
     useEffect(() => {
-        if (!isLoading) return;
+        if (!isLoading || suppressed) return;
         const { overflow } = document.body.style;
         document.body.style.overflow = 'hidden';
         return () => {
             document.body.style.overflow = overflow;
         };
-    }, [isLoading]);
+    }, [isLoading, suppressed]);
+
+    if (suppressed) return null;
 
     return (
         <AnimatePresence>
@@ -129,7 +146,7 @@ export default function LoadingScreen() {
                         className="relative pt-10 md:pt-14 text-center"
                     >
                         <div className="text-[10px] md:text-[11px] tracking-[0.35em] uppercase text-stone-grey">
-                            Crown Nail &amp; Beauty
+                            Atelier Lumière
                         </div>
                         <div className="mt-3 mx-auto h-px w-10 bg-brushed-gold/70" />
                     </motion.div>

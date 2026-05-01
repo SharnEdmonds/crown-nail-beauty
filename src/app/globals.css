@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Crown Brand Color Palette */
+/* Brand Color Palette */
 :root {
   /* Backgrounds */
   --marble-stone: #E8E4E0;
@@ -109,4 +109,13 @@ h3 {
   background-size: 50px 50px;
   pointer-events: none;
   opacity: 0.3;
+}
+
+/* Used by the gallery thumbnail strip to hide its overflow scrollbar */
+.scrollbar-hide {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
 }

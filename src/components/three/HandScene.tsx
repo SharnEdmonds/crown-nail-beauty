@@ -11,6 +11,7 @@ import { useUIStore } from '@/lib/store';
 import type { HandModelConfig, Vec3 } from '@/lib/types';
 import HandModel from './HandModel';
 import { DEFAULT_NAIL_DESIGN } from './handNailConfig';
+import type { NailDesignSpec } from './nailDesigns';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -70,7 +71,15 @@ export default function HandScene({ config }: HandSceneProps) {
     const pointerCurrent = useRef({ x: 0, y: 0 });
 
     // Track pointer position normalized to [-1, 1] across the viewport.
+    // Touch devices report (hover: none) / (pointer: coarse) — on those, mouse
+    // parallax is meaningless and only causes jitter on tap, so we skip the
+    // listener entirely. pointerCurrent stays at (0,0) → parallaxY = 0 in
+    // useFrame, so the hand sits in its scroll-only baseline pose on mobile.
     useEffect(() => {
+        if (typeof window === 'undefined') return;
+        const supportsHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+        if (!supportsHover) return;
+
         const onPointerMove = (e: PointerEvent) => {
             const nx = (e.clientX / window.innerWidth) * 2 - 1;
             const ny = (e.clientY / window.innerHeight) * 2 - 1;
@@ -107,8 +116,22 @@ export default function HandScene({ config }: HandSceneProps) {
             mobileStartRotation: pickVec(c.mobileStartRotation, DEFAULTS.mobileStartRotation),
             mobileEndPosition: pickVec(c.mobileEndPosition, DEFAULTS.mobileEndPosition),
             mobileEndRotation: pickVec(c.mobileEndRotation, DEFAULTS.mobileEndRotation),
+            nailTipColor: c.nailTipColor,
         };
     }, [config]);
+
+    // Build the nail design spec live from Sanity. If only the base color is
+    // overridden, the default tip color still applies — and vice versa — so
+    // partial CMS edits never produce a broken-looking nail.
+    const nailDesign = useMemo<NailDesignSpec>(() => {
+        const fallback = DEFAULT_NAIL_DESIGN as Extract<NailDesignSpec, { type: 'naturalManicure' }>;
+        return {
+            type: 'naturalManicure',
+            baseColor: cfg.nailColor,
+            tipColor: cfg.nailTipColor ?? fallback.tipColor,
+            tipStart: fallback.tipStart,
+        };
+    }, [cfg.nailColor, cfg.nailTipColor]);
 
     useLayoutEffect(() => {
         if (!handRef.current) return;
@@ -150,10 +173,15 @@ export default function HandScene({ config }: HandSceneProps) {
                 },
             });
 
-            // Seed base rotation so the first frame doesn't snap.
+            // Seed base rotation AND group position so the first frame after a
+            // breakpoint change doesn't snap. Without seeding position, GSAP's
+            // fromTo starts from wherever the group sat last (e.g. mobile pose
+            // when the user resized back to desktop), which kept the hand
+            // visually stuck in the wrong place.
             baseRotation.current.x = startConfig.rot.x;
             baseRotation.current.y = startConfig.rot.y;
             baseRotation.current.z = startConfig.rot.z;
+            handRef.current!.position.set(startConfig.pos.x, startConfig.pos.y, startConfig.pos.z);
 
             timeline.fromTo(
                 baseRotation.current,
@@ -170,7 +198,25 @@ export default function HandScene({ config }: HandSceneProps) {
             );
         });
 
-        return () => mm.revert();
+        // RAF-coalesced refresh on resize: trigger ScrollTrigger to re-read
+        // viewport dimensions and re-evaluate fromTo values (invalidateOnRefresh
+        // is already true on the timeline). Single-flight via rafId so a drag-
+        // resize doesn't fire 60×/sec.
+        let rafId = 0;
+        const onResize = () => {
+            if (rafId) return;
+            rafId = requestAnimationFrame(() => {
+                rafId = 0;
+                ScrollTrigger.refresh();
+            });
+        };
+        window.addEventListener('resize', onResize);
+
+        return () => {
+            window.removeEventListener('resize', onResize);
+            if (rafId) cancelAnimationFrame(rafId);
+            mm.revert();
+        };
     }, [cfg, setHandVisible]);
 
     useFrame((state, delta) => {
@@ -244,7 +290,7 @@ export default function HandScene({ config }: HandSceneProps) {
                 metalness={cfg.metalness}
                 nailRoughness={cfg.nailRoughness}
                 nailMetalness={cfg.nailMetalness}
-                nailDesign={DEFAULT_NAIL_DESIGN}
+                nailDesign={nailDesign}
                 scale={cfg.scale}
                 position={[cfg.desktopStartPosition.x, cfg.desktopStartPosition.y, cfg.desktopStartPosition.z]}
                 rotation={[cfg.desktopStartRotation.x, cfg.desktopStartRotation.y, cfg.desktopStartRotation.z]}

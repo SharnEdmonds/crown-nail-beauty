@@ -1,143 +1,212 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { useRef, useState, useCallback, useEffect } from 'react';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 import ImageLightbox from '@/components/ui/ImageLightbox';
 import { urlFor } from '@/lib/sanity-image';
-import type { PortfolioSection } from '@/lib/types';
-
-const CARD_WIDTH = 400;
-const CARD_GAP = 32;
-const STEP = CARD_WIDTH + CARD_GAP;
-
 import { useUIStore } from '@/lib/store';
+import type { PortfolioSection } from '@/lib/types';
 
 interface PortfolioGalleryProps {
     section: PortfolioSection | null;
 }
 
-export default function PortfolioGallery({ section }: PortfolioGalleryProps) {
-    const containerRef = useRef<HTMLDivElement>(null);
-    const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-    const [isMobile, setIsMobile] = useState(false);
+const DEFAULT_ROTATION_SECONDS = 6;
 
+/**
+ * Cinematic magazine-spread gallery.
+ *
+ * Featured image (full-width 16:9) crossfades between portfolio images.
+ * Below it, a thumbnail strip shows every image; clicking one switches the
+ * featured image. A counter and slim gold progress line sit alongside.
+ *
+ * Performance posture:
+ *   • Only one full-resolution image is ever mounted (AnimatePresence mode="wait").
+ *   • Thumbnails request a 240px-wide variant from Sanity — small + cheap.
+ *   • Auto-rotation is opt-in via Sanity (`autoRotate`) and double-gated on
+ *     IntersectionObserver visibility, hover/focus, and prefers-reduced-motion.
+ *     When idle, the component does zero JS work.
+ *   • No infinite scroll, no JS scroll loop, no per-frame tweens.
+ */
+export default function PortfolioGallery({ section }: PortfolioGalleryProps) {
+    const [activeIndex, setActiveIndex] = useState(0);
+    const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+    const [isHovering, setIsHovering] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
+    const sectionRef = useRef<HTMLElement>(null);
     const setHandVisible = useUIStore((state) => state.setHandVisible);
+    const prefersReducedMotion = useReducedMotion();
 
     const galleryImages = (section?.images ?? []).map((item) => ({
-        src: urlFor(item.image).width(1200).quality(85).url(),
+        src: urlFor(item.image).width(2000).quality(85).url(),
+        thumbSrc: urlFor(item.image).width(320).quality(70).url(),
         alt: item.alt,
     }));
+    const totalImages = galleryImages.length;
 
-    const infiniteImages = [...galleryImages, ...galleryImages, ...galleryImages];
-    const originalLength = galleryImages.length;
-
-    const scrollToMiddle = useCallback(() => {
-        if (containerRef.current && originalLength > 0) {
-            const middleSetStart = originalLength * STEP;
-            containerRef.current.scrollLeft = middleSetStart;
-        }
-    }, [originalLength]);
-
+    // Single IntersectionObserver — pause auto-rotate when off-screen so the
+    // background tab / scrolled-past gallery doesn't keep ticking.
     useEffect(() => {
-        const checkMobile = () => setIsMobile(window.innerWidth < 768);
-        checkMobile();
-        window.addEventListener('resize', checkMobile);
-        scrollToMiddle();
-        return () => window.removeEventListener('resize', checkMobile);
-    }, [scrollToMiddle]);
+        if (!sectionRef.current) return;
+        const obs = new IntersectionObserver(
+            ([entry]) => setIsVisible(entry.isIntersecting),
+            { threshold: 0.25 }
+        );
+        obs.observe(sectionRef.current);
+        return () => obs.disconnect();
+    }, []);
 
-    const handleScroll = () => {
-        if (!containerRef.current || originalLength === 0) return;
-        const { scrollLeft } = containerRef.current;
-        const singleSetWidth = originalLength * STEP;
-        if (scrollLeft >= singleSetWidth * 2) {
-            containerRef.current.scrollLeft = scrollLeft - singleSetWidth;
-        } else if (scrollLeft < singleSetWidth) {
-            containerRef.current.scrollLeft = scrollLeft + singleSetWidth;
-        }
-    };
+    // Auto-rotate: opt-in via Sanity, disabled by reduced-motion, hover, or
+    // off-screen. setInterval fires only while every gate is open.
+    useEffect(() => {
+        if (totalImages < 2) return;
+        if (!section?.autoRotate) return;
+        if (prefersReducedMotion) return;
+        if (isHovering) return;
+        if (!isVisible) return;
+        if (lightboxIndex !== null) return;
 
-    const scroll = (direction: 'left' | 'right') => {
-        if (!containerRef.current) return;
-        const currentScroll = containerRef.current.scrollLeft;
-        const targetScroll = direction === 'right' ? currentScroll + STEP : currentScroll - STEP;
-        containerRef.current.scrollTo({ left: targetScroll, behavior: 'smooth' });
-    };
+        const seconds = section.rotationSeconds ?? DEFAULT_ROTATION_SECONDS;
+        const id = setInterval(() => {
+            setActiveIndex((i) => (i + 1) % totalImages);
+        }, seconds * 1000);
+        return () => clearInterval(id);
+    }, [section?.autoRotate, section?.rotationSeconds, prefersReducedMotion, isHovering, isVisible, lightboxIndex, totalImages]);
 
-    if (!section || originalLength === 0) return null;
+    if (!section || totalImages === 0) return null;
+
+    const activeImage = galleryImages[activeIndex];
+    const progressPct = ((activeIndex + 1) / totalImages) * 100;
 
     return (
-        <section id="gallery" aria-label="Portfolio gallery" className="py-32 relative z-10 bg-crown-black text-clean-white overflow-hidden">
+        <section
+            id="gallery"
+            ref={sectionRef}
+            aria-label="Portfolio gallery"
+            className="py-24 md:py-32 relative z-10 bg-crown-black text-clean-white overflow-hidden"
+        >
             <motion.div
                 onViewportEnter={() => setHandVisible(false)}
                 className="absolute top-0 left-0 w-full h-20 pointer-events-none"
             />
-            <div className="container mx-auto px-6 mb-12 flex justify-between items-end">
-                <div>
-                    <h2 className="font-serif text-5xl mb-2 text-clean-white">{section.heading}</h2>
-                    <p className="text-stone-grey">{section.description}</p>
-                </div>
-                {!isMobile && (
-                    <div className="flex items-center gap-4">
-                        <button
-                            onClick={() => scroll('left')}
-                            aria-label="Previous"
-                            className="w-12 h-12 border border-clean-white/20 rounded-full flex items-center justify-center hover:bg-clean-white/10 transition-colors"
-                        >
-                            <ChevronLeft size={20} />
-                        </button>
-                        <button
-                            onClick={() => scroll('right')}
-                            aria-label="Next"
-                            className="w-12 h-12 border border-clean-white/20 rounded-full flex items-center justify-center hover:bg-clean-white/10 transition-colors"
-                        >
-                            <ChevronRight size={20} />
-                        </button>
-                    </div>
-                )}
-            </div>
 
-            <div
-                ref={containerRef}
-                onScroll={handleScroll}
-                className="container mx-auto px-6 overflow-x-auto md:overflow-x-hidden cursor-grab active:cursor-grabbing scrollbar-hide touch-pan-x"
-            >
-                <motion.div
-                    className="flex w-fit snap-x snap-mandatory"
-                    style={{ gap: CARD_GAP }}
+            <div className="container mx-auto px-6">
+                {/* Header */}
+                <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10 md:mb-14">
+                    <div>
+                        <span className="text-xs tracking-[0.3em] uppercase text-brushed-gold mb-3 block">
+                            Portfolio
+                        </span>
+                        <h2 className="font-serif text-4xl md:text-5xl text-clean-white leading-tight">
+                            {section.heading}
+                        </h2>
+                        {section.description && (
+                            <p className="text-stone-grey mt-3 max-w-md">{section.description}</p>
+                        )}
+                    </div>
+                    <div className="text-stone-grey text-xs tracking-[0.3em] tabular-nums">
+                        {String(activeIndex + 1).padStart(2, '0')} / {String(totalImages).padStart(2, '0')}
+                    </div>
+                </div>
+
+                {/* Featured image — single full-res render at any time */}
+                <div
+                    className="relative w-full aspect-[16/9] bg-warm-black overflow-hidden cursor-pointer group"
+                    onMouseEnter={() => setIsHovering(true)}
+                    onMouseLeave={() => setIsHovering(false)}
+                    onFocus={() => setIsHovering(true)}
+                    onBlur={() => setIsHovering(false)}
+                    onClick={() => setLightboxIndex(activeIndex)}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            setLightboxIndex(activeIndex);
+                        }
+                    }}
+                    aria-label={`Open ${activeImage.alt} in lightbox`}
                 >
-                    {infiniteImages.map((image, index) => (
+                    <AnimatePresence mode="wait">
                         <motion.div
-                            key={index}
-                            className="relative w-[300px] h-[400px] md:w-[400px] md:h-[550px] flex-shrink-0 bg-warm-black overflow-hidden group cursor-pointer snap-center"
-                            initial={{ opacity: 0, x: 60 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: (index % originalLength) * 0.1, duration: 0.5 }}
-                            whileHover={{ scale: 0.98 }}
-                            onClick={() => setLightboxIndex(index % originalLength)}
+                            key={activeIndex}
+                            className="absolute inset-0"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
                         >
                             <Image
-                                src={image.src}
-                                alt={image.alt}
+                                src={activeImage.src}
+                                alt={activeImage.alt}
                                 fill
-                                sizes="(max-width: 768px) 90vw, 400px"
-                                className="object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500 group-hover:scale-105 transform"
+                                sizes="(max-width: 768px) 100vw, 90vw"
+                                className="object-cover"
+                                priority={activeIndex === 0}
                             />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-                                <span className="text-xs tracking-widest uppercase">{section.viewDetailsLabel}</span>
-                            </div>
                         </motion.div>
-                    ))}
-                </motion.div>
+                    </AnimatePresence>
+
+                    {/* Subtle bottom gradient for the "View" eyebrow */}
+                    <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-crown-black/70 to-transparent pointer-events-none" />
+                    <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8 flex items-center gap-3 pointer-events-none">
+                        <span className="text-[10px] tracking-[0.35em] uppercase text-clean-white/80">
+                            {section.viewDetailsLabel || 'View'}
+                        </span>
+                        <span className="block w-8 h-px bg-brushed-gold origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]" />
+                    </div>
+                </div>
+
+                {/* Progress line — 1px gold, fills with index */}
+                <div className="relative h-px bg-clean-white/10 mt-6 overflow-hidden">
+                    <div
+                        className="absolute inset-y-0 left-0 bg-brushed-gold transition-[width] duration-500 ease-out"
+                        style={{ width: `${progressPct}%` }}
+                    />
+                </div>
+
+                {/* Thumbnail row */}
+                <div
+                    className="mt-6 flex gap-3 overflow-x-auto scrollbar-hide pb-2"
+                    onMouseEnter={() => setIsHovering(true)}
+                    onMouseLeave={() => setIsHovering(false)}
+                >
+                    {galleryImages.map((image, index) => {
+                        const isActive = index === activeIndex;
+                        return (
+                            <button
+                                key={index}
+                                type="button"
+                                onClick={() => setActiveIndex(index)}
+                                aria-label={`Show ${image.alt}`}
+                                aria-current={isActive ? 'true' : undefined}
+                                className={`relative flex-shrink-0 w-20 h-28 md:w-24 md:h-32 overflow-hidden bg-warm-black transition-[opacity,transform] duration-500 ease-out ${
+                                    isActive
+                                        ? 'opacity-100 ring-1 ring-brushed-gold ring-offset-2 ring-offset-crown-black'
+                                        : 'opacity-50 hover:opacity-90'
+                                }`}
+                            >
+                                <Image
+                                    src={image.thumbSrc}
+                                    alt=""
+                                    fill
+                                    sizes="96px"
+                                    className="object-cover"
+                                    loading="lazy"
+                                />
+                            </button>
+                        );
+                    })}
+                </div>
             </div>
 
             <ImageLightbox
-                images={galleryImages}
+                images={galleryImages.map((i) => ({ src: i.src, alt: i.alt }))}
                 currentIndex={lightboxIndex}
                 onClose={() => setLightboxIndex(null)}
+                onNext={() => setLightboxIndex((i) => (i === null ? null : (i + 1) % totalImages))}
+                onPrev={() => setLightboxIndex((i) => (i === null ? null : (i - 1 + totalImages) % totalImages))}
             />
         </section>
     );

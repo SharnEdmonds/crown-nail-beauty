@@ -24,6 +24,17 @@ export type NailDesignSpec =
           tipStart?: number; // 0–1, default 0.55
           accent?: boolean;  // draw a thin line at the transition
       }
+    /**
+     * Natural manicured look: subtle pink-peach base with a soft white tip.
+     * Reuses the french-tip gradient sweep for the tip transition so it follows
+     * the almond-nail silhouette through the planar UVs (no hard edge).
+     */
+    | {
+          type: 'naturalManicure';
+          baseColor: string;
+          tipColor: string;
+          tipStart?: number; // 0–1, default 0.62
+      }
     | {
           type: 'frenchTipSwirl';
           baseColor: string;
@@ -235,6 +246,10 @@ function renderCanvasDesign(spec: Exclude<NailDesignSpec, { type: 'textureSet' }
             break;
         case 'frenchTipSwirl':
             drawFrenchTipSwirl(ctx, spec.baseColor, spec.tipColor, spec.accentColor, spec.tipStart ?? 0.55);
+            break;
+        case 'naturalManicure':
+            // Soft, no accent line — reads as a fresh manicure with a clean white tip.
+            drawFrenchTip(ctx, spec.baseColor, spec.tipColor, spec.tipStart ?? 0.62);
             break;
         case 'marble':
             drawMarble(ctx, spec.baseColor, spec.veinColor);

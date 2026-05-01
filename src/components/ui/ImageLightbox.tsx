@@ -1,9 +1,9 @@
 'use client';
 
 import { useEffect, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, type PanInfo } from 'framer-motion';
 import Image from 'next/image';
-import { X } from 'lucide-react';
+import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 
 interface LightboxImage {
     src: string;
@@ -14,19 +14,24 @@ interface ImageLightboxProps {
     images: LightboxImage[];
     currentIndex: number | null;
     onClose: () => void;
+    /** Optional. If provided, prev/next arrows + ArrowLeft/Right keys + swipe become active. */
+    onNext?: () => void;
+    onPrev?: () => void;
 }
 
 import { useUIStore } from '@/lib/store';
 
-// ... (imports)
+const SWIPE_THRESHOLD = 60;
 
-export default function ImageLightbox({ images, currentIndex, onClose }: ImageLightboxProps) {
+export default function ImageLightbox({ images, currentIndex, onClose, onNext, onPrev }: ImageLightboxProps) {
     const isOpen = currentIndex !== null;
     const setScrollLocked = useUIStore((state) => state.setScrollLocked);
 
     const handleKeyDown = useCallback((e: KeyboardEvent) => {
         if (e.key === 'Escape') onClose();
-    }, [onClose]);
+        else if (e.key === 'ArrowRight' && onNext) onNext();
+        else if (e.key === 'ArrowLeft' && onPrev) onPrev();
+    }, [onClose, onNext, onPrev]);
 
     useEffect(() => {
         if (isOpen) {
@@ -40,6 +45,11 @@ export default function ImageLightbox({ images, currentIndex, onClose }: ImageLi
             document.body.style.overflow = '';
         };
     }, [isOpen, handleKeyDown, setScrollLocked]);
+
+    const handleDragEnd = (_e: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+        if (info.offset.x < -SWIPE_THRESHOLD && onNext) onNext();
+        else if (info.offset.x > SWIPE_THRESHOLD && onPrev) onPrev();
+    };
 
     return (
         <AnimatePresence>
@@ -62,22 +72,64 @@ export default function ImageLightbox({ images, currentIndex, onClose }: ImageLi
                         <X size={32} />
                     </button>
 
+                    {/* Prev arrow */}
+                    {onPrev && images.length > 1 && (
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onPrev();
+                            }}
+                            aria-label="Previous image"
+                            className="fixed left-6 top-1/2 -translate-y-1/2 z-[110] w-12 h-12 rounded-full border border-brushed-gold/40 text-clean-white/80 hover:text-clean-white hover:border-brushed-gold flex items-center justify-center transition-colors"
+                        >
+                            <ChevronLeft size={22} />
+                        </button>
+                    )}
+
+                    {/* Next arrow */}
+                    {onNext && images.length > 1 && (
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onNext();
+                            }}
+                            aria-label="Next image"
+                            className="fixed right-6 top-1/2 -translate-y-1/2 z-[110] w-12 h-12 rounded-full border border-brushed-gold/40 text-clean-white/80 hover:text-clean-white hover:border-brushed-gold flex items-center justify-center transition-colors"
+                        >
+                            <ChevronRight size={22} />
+                        </button>
+                    )}
+
                     <motion.div
+                        key={currentIndex}
                         className="relative w-[90vw] h-[80vh] max-w-5xl"
                         initial={{ scale: 0.9, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         exit={{ scale: 0.9, opacity: 0 }}
                         transition={{ duration: 0.3 }}
+                        onClick={(e) => e.stopPropagation()}
+                        drag={onNext || onPrev ? 'x' : false}
+                        dragConstraints={{ left: 0, right: 0 }}
+                        dragElastic={0.2}
+                        onDragEnd={handleDragEnd}
                     >
                         <Image
                             src={images[currentIndex].src}
                             alt={images[currentIndex].alt}
                             fill
                             sizes="90vw"
-                            className="object-contain"
+                            className="object-contain pointer-events-none select-none"
                             priority
+                            draggable={false}
                         />
                     </motion.div>
+
+                    {/* Counter, bottom-left */}
+                    {images.length > 1 && (
+                        <div className="fixed bottom-8 left-8 z-[110] text-clean-white/70 text-xs tracking-[0.3em] tabular-nums">
+                            {String(currentIndex + 1).padStart(2, '0')} / {String(images.length).padStart(2, '0')}
+                        </div>
+                    )}
 
                     {/* Bottom Close Button (Mobile Friendly) */}
                     <button

@@ -65,9 +65,16 @@ export const handModel = defineType({
     }),
     defineField({
       name: 'nailColor',
-      title: 'Nail Color (hex)',
+      title: 'Nail Base Color (hex)',
       type: 'string',
-      description: 'Shared color for all five nails. Default: #d4a5a5',
+      description: 'Base color of the manicured nail. Default: #e8c8b8 (warm pink-peach)',
+      validation: (Rule) => Rule.regex(/^#([0-9a-fA-F]{6})$/, { name: 'hex color' }).error('Must be a 6-digit hex'),
+    }),
+    defineField({
+      name: 'nailTipColor',
+      title: 'Nail French Tip Color (hex)',
+      type: 'string',
+      description: 'Color of the French tip at the nail edge. Default: #f5ede4 (soft warm white)',
       validation: (Rule) => Rule.regex(/^#([0-9a-fA-F]{6})$/, { name: 'hex color' }).error('Must be a 6-digit hex'),
     }),
     defineField({

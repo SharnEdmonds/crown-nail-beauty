@@ -99,6 +99,8 @@ export interface PortfolioSection {
   heading: string;
   description: string;
   viewDetailsLabel: string;
+  autoRotate?: boolean;
+  rotationSeconds?: number;
   images: {
     image: SanityImage;
     alt: string;
@@ -133,6 +135,7 @@ export interface HandModelConfig {
   roughness?: number;
   metalness?: number;
   nailColor?: string;
+  nailTipColor?: string;
   nailRoughness?: number;
   nailMetalness?: number;
   nailThumbColor?: string;

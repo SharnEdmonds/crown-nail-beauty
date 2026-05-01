@@ -29,7 +29,10 @@
       "Bash(curl:*)",
       "WebFetch(domain:crown-nail-beauty-exx5c2bgt-sharnedmonds2020-gmailcoms-projects.vercel.app)",
       "Bash(npx --yes next build)",
-      "Bash(npx next dev)"
+      "Bash(npx next dev)",
+      "Bash(node node_modules/typescript/bin/tsc --noEmit)",
+      "mcp__Sanity__patch_document_from_json",
+      "Bash(npm run *)"
     ]
   }
 }

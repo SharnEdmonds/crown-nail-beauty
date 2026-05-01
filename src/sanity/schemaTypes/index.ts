@@ -10,6 +10,7 @@ import { testimonialsSection } from './testimonialsSection';
 import { bookingCtaSection } from './bookingCtaSection';
 import { footerSection } from './footerSection';
 import { handModel } from './handModel';
+import { bookingSchemas } from './booking';
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -24,5 +25,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     bookingCtaSection,
     footerSection,
     handModel,
+    ...bookingSchemas,
   ],
 };

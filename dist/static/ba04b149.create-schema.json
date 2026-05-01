@@ -1,0 +1,4796 @@
+[
+  {
+    "fields": [
+      {
+        "name": "businessName",
+        "type": "string"
+      },
+      {
+        "name": "tagline",
+        "type": "string"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "logo",
+        "type": "image"
+      },
+      {
+        "description": "Large text in nav/footer (e.g. CROWN)",
+        "name": "logoWordmark",
+        "type": "string"
+      },
+      {
+        "description": "Small text under wordmark (e.g. NAIL & BEAUTY)",
+        "name": "logoSubmark",
+        "type": "string"
+      },
+      {
+        "rows": 3,
+        "description": "Headline text. The 3rd word will render in italic with indent.",
+        "name": "heroHeadline",
+        "type": "text"
+      },
+      {
+        "fields": [
+          {
+            "name": "label",
+            "type": "string"
+          },
+          {
+            "name": "href",
+            "type": "string"
+          }
+        ],
+        "name": "heroCtaPrimary",
+        "type": "object"
+      },
+      {
+        "fields": [
+          {
+            "name": "label",
+            "type": "string"
+          },
+          {
+            "name": "href",
+            "type": "string"
+          }
+        ],
+        "name": "heroCtaSecondary",
+        "type": "object"
+      },
+      {
+        "name": "heroScrollLabel",
+        "type": "string"
+      },
+      {
+        "name": "phone",
+        "type": "string"
+      },
+      {
+        "name": "email",
+        "type": "string"
+      },
+      {
+        "fields": [
+          {
+            "name": "street",
+            "type": "string"
+          },
+          {
+            "name": "suburb",
+            "type": "string"
+          },
+          {
+            "name": "city",
+            "type": "string"
+          },
+          {
+            "name": "postcode",
+            "type": "string"
+          }
+        ],
+        "name": "address",
+        "type": "object"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "days",
+                "type": "string"
+              },
+              {
+                "name": "hours",
+                "type": "string"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "openingHours",
+        "type": "array"
+      },
+      {
+        "fields": [
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "uri",
+                    "constraint": {
+                      "options": {
+                        "scheme": [
+                          "/^http$/",
+                          "/^https$/"
+                        ],
+                        "allowRelative": false,
+                        "relativeOnly": false,
+                        "allowCredentials": false
+                      }
+                    }
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "instagram",
+            "type": "url"
+          },
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "uri",
+                    "constraint": {
+                      "options": {
+                        "scheme": [
+                          "/^http$/",
+                          "/^https$/"
+                        ],
+                        "allowRelative": false,
+                        "relativeOnly": false,
+                        "allowCredentials": false
+                      }
+                    }
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "facebook",
+            "type": "url"
+          }
+        ],
+        "name": "socialLinks",
+        "type": "object"
+      },
+      {
+        "description": "e.g. \"Est. 2024 — Glendene, NZ\"",
+        "name": "aboutEyebrow",
+        "type": "string"
+      },
+      {
+        "name": "aboutHeading",
+        "type": "string"
+      },
+      {
+        "of": [
+          {
+            "type": "text"
+          }
+        ],
+        "name": "aboutParagraphs",
+        "type": "array"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "aboutImage",
+        "type": "image"
+      },
+      {
+        "name": "aboutCtaLabel",
+        "type": "string"
+      },
+      {
+        "name": "aboutCtaHref",
+        "type": "string"
+      }
+    ],
+    "name": "siteSettings",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "label",
+                "type": "string"
+              },
+              {
+                "name": "href",
+                "type": "string"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "links",
+        "type": "array"
+      },
+      {
+        "name": "reserveLabel",
+        "type": "string"
+      },
+      {
+        "name": "reserveHref",
+        "type": "string"
+      },
+      {
+        "name": "mobileHomeLabel",
+        "type": "string"
+      },
+      {
+        "name": "mobileHomeHref",
+        "type": "string"
+      }
+    ],
+    "name": "navigation",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "options": {
+          "source": "title"
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "name": "description",
+        "type": "text"
+      },
+      {
+        "name": "priceFrom",
+        "type": "string"
+      },
+      {
+        "name": "order",
+        "type": "number"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "name": "price",
+                "type": "string"
+              },
+              {
+                "name": "note",
+                "type": "string"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "services",
+        "type": "array"
+      }
+    ],
+    "name": "serviceCategory",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "name": "quote",
+        "type": "text"
+      },
+      {
+        "name": "author",
+        "type": "string"
+      },
+      {
+        "name": "service",
+        "type": "string"
+      },
+      {
+        "name": "order",
+        "type": "number"
+      }
+    ],
+    "name": "testimonial",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "name": "heading",
+        "type": "string"
+      },
+      {
+        "name": "intro",
+        "type": "text"
+      },
+      {
+        "name": "startingFromLabel",
+        "type": "string"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "title",
+                "type": "string"
+              },
+              {
+                "name": "description",
+                "type": "text"
+              },
+              {
+                "name": "href",
+                "type": "string"
+              },
+              {
+                "description": "Slugs of serviceCategory docs to derive \"starting from\" price",
+                "of": [
+                  {
+                    "type": "string"
+                  }
+                ],
+                "name": "categorySlugs",
+                "type": "array"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "cards",
+        "type": "array"
+      }
+    ],
+    "name": "servicesSection",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "name": "eyebrow",
+        "type": "string"
+      },
+      {
+        "name": "headingStart",
+        "type": "string"
+      },
+      {
+        "name": "headingItalic",
+        "type": "string"
+      },
+      {
+        "name": "intro",
+        "type": "text"
+      },
+      {
+        "name": "nailSectionHeadingStart",
+        "type": "string"
+      },
+      {
+        "name": "nailSectionHeadingItalic",
+        "type": "string"
+      },
+      {
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "nailCategorySlugs",
+        "type": "array"
+      }
+    ],
+    "name": "serviceMenuSection",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "name": "heading",
+        "type": "string"
+      },
+      {
+        "name": "description",
+        "type": "string"
+      },
+      {
+        "name": "viewDetailsLabel",
+        "type": "string"
+      },
+      {
+        "description": "When on, the featured image cycles through the gallery automatically. Pauses on hover, when off-screen, and when the visitor has reduced-motion enabled.",
+        "name": "autoRotate",
+        "type": "boolean",
+        "title": "Auto-rotate featured image"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "min",
+                "constraint": 2
+              },
+              {
+                "flag": "max",
+                "constraint": 30
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "How often to advance the featured image when auto-rotation is on. Default: 6.",
+        "name": "rotationSeconds",
+        "type": "number",
+        "title": "Rotation interval (seconds)"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "name": "image",
+                "type": "image"
+              },
+              {
+                "name": "alt",
+                "type": "string"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "images",
+        "type": "array"
+      }
+    ],
+    "name": "portfolioSection",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "name": "eyebrow",
+        "type": "string"
+      }
+    ],
+    "name": "testimonialsSection",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "name": "eyebrow",
+        "type": "string"
+      },
+      {
+        "name": "headingStart",
+        "type": "string"
+      },
+      {
+        "name": "headingItalic",
+        "type": "string"
+      },
+      {
+        "name": "description",
+        "type": "text"
+      },
+      {
+        "name": "ctaLabel",
+        "type": "string"
+      },
+      {
+        "name": "ctaHref",
+        "type": "string"
+      }
+    ],
+    "name": "bookingCtaSection",
+    "type": "document",
+    "title": "Booking CTA Section"
+  },
+  {
+    "fields": [
+      {
+        "name": "brandDescription",
+        "type": "text"
+      },
+      {
+        "name": "hoursHeading",
+        "type": "string"
+      },
+      {
+        "name": "exploreHeading",
+        "type": "string"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "label",
+                "type": "string"
+              },
+              {
+                "name": "href",
+                "type": "string"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "exploreLinks",
+        "type": "array"
+      },
+      {
+        "name": "visitHeading",
+        "type": "string"
+      },
+      {
+        "description": "e.g. \"NZ. All rights reserved.\"",
+        "name": "copyrightSuffix",
+        "type": "string"
+      }
+    ],
+    "name": "footerSection",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "description": "Continuous Y-axis spin speed. Default: 0.15",
+        "name": "idleRotationSpeed",
+        "type": "number",
+        "title": "Idle Rotation Speed (radians/sec)"
+      },
+      {
+        "description": "Amplitude of the gentle side-to-side tilt. Default: 0.02",
+        "name": "idleWobbleAmount",
+        "type": "number",
+        "title": "Idle Z Wobble Amount"
+      },
+      {
+        "description": "Frequency of the side-to-side tilt. Default: 0.25",
+        "name": "idleWobbleSpeed",
+        "type": "number",
+        "title": "Idle Z Wobble Speed"
+      },
+      {
+        "description": "Default: 2.5",
+        "name": "scale",
+        "type": "number",
+        "title": "Model Scale"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "regex",
+                "constraint": {
+                  "pattern": "/^#([0-9a-fA-F]{6})$/",
+                  "name": "hex color",
+                  "invert": false
+                }
+              }
+            ],
+            "level": "error",
+            "message": "Must be a 6-digit hex like #e8beac"
+          }
+        ],
+        "description": "Hex color like #e8beac. Default: #e8beac",
+        "name": "color",
+        "type": "string",
+        "title": "Skin Color (hex)"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "min",
+                "constraint": 0
+              },
+              {
+                "flag": "max",
+                "constraint": 1
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Default: 0.7",
+        "name": "roughness",
+        "type": "number",
+        "title": "Material Roughness (0–1)"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "min",
+                "constraint": 0
+              },
+              {
+                "flag": "max",
+                "constraint": 1
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Default: 0.1",
+        "name": "metalness",
+        "type": "number",
+        "title": "Material Metalness (0–1)"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "regex",
+                "constraint": {
+                  "pattern": "/^#([0-9a-fA-F]{6})$/",
+                  "name": "hex color",
+                  "invert": false
+                }
+              }
+            ],
+            "level": "error",
+            "message": "Must be a 6-digit hex"
+          }
+        ],
+        "description": "Base color of the manicured nail. Default: #e8c8b8 (warm pink-peach)",
+        "name": "nailColor",
+        "type": "string",
+        "title": "Nail Base Color (hex)"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "regex",
+                "constraint": {
+                  "pattern": "/^#([0-9a-fA-F]{6})$/",
+                  "name": "hex color",
+                  "invert": false
+                }
+              }
+            ],
+            "level": "error",
+            "message": "Must be a 6-digit hex"
+          }
+        ],
+        "description": "Color of the French tip at the nail edge. Default: #f5ede4 (soft warm white)",
+        "name": "nailTipColor",
+        "type": "string",
+        "title": "Nail French Tip Color (hex)"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "min",
+                "constraint": 0
+              },
+              {
+                "flag": "max",
+                "constraint": 1
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Lower = glossier. Default: 0.1",
+        "name": "nailRoughness",
+        "type": "number",
+        "title": "Nail Roughness (0–1)"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "min",
+                "constraint": 0
+              },
+              {
+                "flag": "max",
+                "constraint": 1
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Default: 0.2",
+        "name": "nailMetalness",
+        "type": "number",
+        "title": "Nail Metalness (0–1)"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "regex",
+                "constraint": {
+                  "pattern": "/^#([0-9a-fA-F]{6})$/",
+                  "name": "hex color",
+                  "invert": false
+                }
+              }
+            ],
+            "level": "error",
+            "message": "Must be a 6-digit hex"
+          }
+        ],
+        "description": "Optional per-finger override hex.",
+        "name": "nailThumbColor",
+        "type": "string",
+        "title": "Nail Override — Thumb"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "regex",
+                "constraint": {
+                  "pattern": "/^#([0-9a-fA-F]{6})$/",
+                  "name": "hex color",
+                  "invert": false
+                }
+              }
+            ],
+            "level": "error",
+            "message": "Must be a 6-digit hex"
+          }
+        ],
+        "name": "nailIndexColor",
+        "type": "string",
+        "title": "Nail Override — Index"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "regex",
+                "constraint": {
+                  "pattern": "/^#([0-9a-fA-F]{6})$/",
+                  "name": "hex color",
+                  "invert": false
+                }
+              }
+            ],
+            "level": "error",
+            "message": "Must be a 6-digit hex"
+          }
+        ],
+        "name": "nailMiddleColor",
+        "type": "string",
+        "title": "Nail Override — Middle"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "regex",
+                "constraint": {
+                  "pattern": "/^#([0-9a-fA-F]{6})$/",
+                  "name": "hex color",
+                  "invert": false
+                }
+              }
+            ],
+            "level": "error",
+            "message": "Must be a 6-digit hex"
+          }
+        ],
+        "name": "nailRingColor",
+        "type": "string",
+        "title": "Nail Override — Ring"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "regex",
+                "constraint": {
+                  "pattern": "/^#([0-9a-fA-F]{6})$/",
+                  "name": "hex color",
+                  "invert": false
+                }
+              }
+            ],
+            "level": "error",
+            "message": "Must be a 6-digit hex"
+          }
+        ],
+        "name": "nailPinkyColor",
+        "type": "string",
+        "title": "Nail Override — Pinky"
+      },
+      {
+        "options": {
+          "columns": 3
+        },
+        "fields": [
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          }
+        ],
+        "name": "desktopStartPosition",
+        "type": "object",
+        "title": "Desktop — Start Position"
+      },
+      {
+        "options": {
+          "columns": 3
+        },
+        "fields": [
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          }
+        ],
+        "name": "desktopStartRotation",
+        "type": "object",
+        "title": "Desktop — Start Rotation (radians)"
+      },
+      {
+        "options": {
+          "columns": 3
+        },
+        "fields": [
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          }
+        ],
+        "name": "desktopEndPosition",
+        "type": "object",
+        "title": "Desktop — End Position"
+      },
+      {
+        "options": {
+          "columns": 3
+        },
+        "fields": [
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          }
+        ],
+        "name": "desktopEndRotation",
+        "type": "object",
+        "title": "Desktop — End Rotation (radians)"
+      },
+      {
+        "options": {
+          "columns": 3
+        },
+        "fields": [
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          }
+        ],
+        "name": "mobileStartPosition",
+        "type": "object",
+        "title": "Mobile — Start Position"
+      },
+      {
+        "options": {
+          "columns": 3
+        },
+        "fields": [
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          }
+        ],
+        "name": "mobileStartRotation",
+        "type": "object",
+        "title": "Mobile — Start Rotation (radians)"
+      },
+      {
+        "options": {
+          "columns": 3
+        },
+        "fields": [
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          }
+        ],
+        "name": "mobileEndPosition",
+        "type": "object",
+        "title": "Mobile — End Position"
+      },
+      {
+        "options": {
+          "columns": 3
+        },
+        "fields": [
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          }
+        ],
+        "name": "mobileEndRotation",
+        "type": "object",
+        "title": "Mobile — End Rotation (radians)"
+      }
+    ],
+    "name": "handModel",
+    "type": "document",
+    "title": "3D Hand Model"
+  },
+  {
+    "description": "A bookable service. Variants (Short / Long etc.) are separate documents.",
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 2
+              },
+              {
+                "flag": "max",
+                "constraint": 80
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "options": {
+          "source": "title",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "rows": 3,
+        "description": "Short blurb shown on the service card in the booking wizard.",
+        "name": "description",
+        "type": "text"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 15
+              },
+              {
+                "flag": "max",
+                "constraint": 480
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "How long the appointment takes from start to finish.",
+        "name": "durationMinutes",
+        "type": "number",
+        "title": "Duration (minutes)"
+      },
+      {
+        "initialValue": 0,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "min",
+                "constraint": 0
+              },
+              {
+                "flag": "max",
+                "constraint": 60
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Time blocked AFTER the booking for cleanup. Adds to the slot length.",
+        "name": "bufferMinutes",
+        "type": "number",
+        "title": "Buffer / cleanup (minutes)"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 0
+              },
+              {
+                "flag": "precision",
+                "constraint": 2
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Total service price in dollars. Example: 60 or 60.00.",
+        "name": "price",
+        "type": "number",
+        "title": "Full price (NZD)"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 0
+              },
+              {
+                "flag": "precision",
+                "constraint": 2
+              },
+              {
+                "flag": "custom"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Charged at booking via Stripe. Balance paid in salon. Must be ≤ full price.",
+        "name": "deposit",
+        "type": "number",
+        "title": "Deposit (NZD)"
+      },
+      {
+        "description": "References the existing serviceCategory.slug for display grouping in the wizard. Optional.",
+        "name": "linkedCategorySlug",
+        "type": "string",
+        "title": "Linked menu category slug (optional)"
+      },
+      {
+        "initialValue": 100,
+        "name": "order",
+        "type": "number",
+        "title": "Sort order"
+      },
+      {
+        "initialValue": true,
+        "description": "Hide from booking without deleting. Existing bookings stay valid.",
+        "name": "isActive",
+        "type": "boolean",
+        "title": "Active (bookable)"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "fields": [
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "custom"
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "alt",
+            "type": "string",
+            "title": "Alt text"
+          }
+        ],
+        "name": "imageOptional",
+        "type": "image",
+        "title": "Image (optional)"
+      }
+    ],
+    "name": "bookingService",
+    "type": "document",
+    "title": "Service"
+  },
+  {
+    "description": "A bookable technician. Assign which services they perform and their weekly schedule.",
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 1
+              },
+              {
+                "flag": "max",
+                "constraint": 80
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "options": {
+          "source": "name",
+          "maxLength": 64
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "fields": [
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "custom"
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "alt",
+            "type": "string",
+            "title": "Alt text"
+          }
+        ],
+        "name": "photo",
+        "type": "image",
+        "title": "Photo (optional)"
+      },
+      {
+        "rows": 3,
+        "name": "bio",
+        "type": "text",
+        "title": "Short bio"
+      },
+      {
+        "description": "Shown under the name in the wizard, e.g. \"Nail artistry & gel extensions\".",
+        "name": "specialty",
+        "type": "string",
+        "title": "Specialty (one-line)"
+      },
+      {
+        "description": "Which services this technician can perform. Customers will only see this technician for these services.",
+        "of": [
+          {
+            "to": [
+              {
+                "type": "bookingService"
+              }
+            ],
+            "type": "reference",
+            "title": "Reference to service"
+          }
+        ],
+        "name": "services",
+        "type": "array",
+        "title": "Services performed"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "length",
+                "constraint": 7
+              },
+              {
+                "flag": "custom"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "One entry per day-of-week (0=Sunday, 6=Saturday). All times in salon timezone.",
+        "of": [
+          {
+            "fields": [
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Sunday",
+                      "value": 0
+                    },
+                    {
+                      "title": "Monday",
+                      "value": 1
+                    },
+                    {
+                      "title": "Tuesday",
+                      "value": 2
+                    },
+                    {
+                      "title": "Wednesday",
+                      "value": 3
+                    },
+                    {
+                      "title": "Thursday",
+                      "value": 4
+                    },
+                    {
+                      "title": "Friday",
+                      "value": 5
+                    },
+                    {
+                      "title": "Saturday",
+                      "value": 6
+                    }
+                  ]
+                },
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "valid",
+                        "constraint": [
+                          0,
+                          1,
+                          2,
+                          3,
+                          4,
+                          5,
+                          6
+                        ]
+                      },
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      },
+                      {
+                        "flag": "min",
+                        "constraint": 0
+                      },
+                      {
+                        "flag": "max",
+                        "constraint": 6
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "dayOfWeek",
+                "type": "number",
+                "title": "Day of week"
+              },
+              {
+                "initialValue": true,
+                "name": "isWorkingDay",
+                "type": "boolean",
+                "title": "Working day"
+              },
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "custom"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "description": "24h format. Example: 09:00",
+                "name": "startTime",
+                "type": "string",
+                "title": "Start time (HH:mm)"
+              },
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "custom"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "description": "24h format. Must be after start time.",
+                "name": "endTime",
+                "type": "string",
+                "title": "End time (HH:mm)"
+              },
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "custom"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "description": "Optional single break window. Leave blank for no break.",
+                "name": "breakStart",
+                "type": "string",
+                "title": "Lunch break start (HH:mm, optional)"
+              },
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "custom"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "breakEnd",
+                "type": "string",
+                "title": "Lunch break end (HH:mm, optional)"
+              }
+            ],
+            "type": "object",
+            "name": "daySchedule"
+          }
+        ],
+        "name": "weeklySchedule",
+        "type": "array",
+        "title": "Weekly schedule"
+      },
+      {
+        "description": "Holidays, sick days, training. Date ranges. For salon-wide closures use Booking Settings → Public Holidays.",
+        "of": [
+          {
+            "fields": [
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "startDate",
+                "type": "date",
+                "title": "Start date"
+              },
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      },
+                      {
+                        "flag": "custom"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "description": "Same as start date for a single day.",
+                "name": "endDate",
+                "type": "date",
+                "title": "End date"
+              },
+              {
+                "name": "reason",
+                "type": "string",
+                "title": "Reason (admin-only)"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "timeOff",
+        "type": "array",
+        "title": "One-off blocked dates"
+      },
+      {
+        "initialValue": true,
+        "description": "Hide from booking without deleting. Existing bookings stay valid.",
+        "name": "isActive",
+        "type": "boolean",
+        "title": "Active (bookable)"
+      },
+      {
+        "initialValue": 100,
+        "name": "order",
+        "type": "number",
+        "title": "Sort order"
+      }
+    ],
+    "name": "technician",
+    "type": "document"
+  },
+  {
+    "description": "Operational configuration for the booking system. Singleton.",
+    "fields": [
+      {
+        "initialValue": true,
+        "description": "Global kill switch. When off, the booking page is disabled.",
+        "name": "isBookingEnabled",
+        "type": "boolean",
+        "title": "Booking enabled"
+      },
+      {
+        "initialValue": "Pacific/Auckland",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "IANA timezone identifier. Default: Pacific/Auckland.",
+        "name": "salonTimezone",
+        "type": "string",
+        "title": "Salon timezone (IANA)"
+      },
+      {
+        "initialValue": 30,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 5
+              },
+              {
+                "flag": "max",
+                "constraint": 120
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Granularity of bookable start times. Typical: 30.",
+        "name": "slotIntervalMinutes",
+        "type": "number",
+        "title": "Slot interval (minutes)"
+      },
+      {
+        "initialValue": 2,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 0
+              },
+              {
+                "flag": "max",
+                "constraint": 72
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Customers must book at least this many hours in advance. Prevents same-hour bookings and gives techs prep time.",
+        "name": "minHoursAheadToBook",
+        "type": "number",
+        "title": "Minimum hours ahead to book"
+      },
+      {
+        "initialValue": 30,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 1
+              },
+              {
+                "flag": "max",
+                "constraint": 365
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "How far ahead customers can book. Default: 30 days.",
+        "name": "maxDaysAheadToBook",
+        "type": "number",
+        "title": "Maximum days ahead to book"
+      },
+      {
+        "initialValue": 24,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 0
+              },
+              {
+                "flag": "max",
+                "constraint": 168
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Customers can self-cancel up to this many hours before the appointment. Inside this window they must phone the salon.",
+        "name": "cancellationCutoffHours",
+        "type": "number",
+        "title": "Self-cancel cutoff (hours)"
+      },
+      {
+        "initialValue": 15,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 5
+              },
+              {
+                "flag": "max",
+                "constraint": 60
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "How long a slot is held for an unpaid pending booking before expiring. Default: 15.",
+        "name": "pendingPaymentTtlMinutes",
+        "type": "number",
+        "title": "Pending payment hold (minutes)"
+      },
+      {
+        "description": "Dates when the salon is fully closed. Overrides all technician schedules.",
+        "of": [
+          {
+            "fields": [
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "date",
+                "type": "date"
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "title": "Label (optional, admin-only)"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "publicHolidayDates",
+        "type": "array",
+        "title": "Public holidays / salon closures"
+      },
+      {
+        "description": "Shown on the booking review step and included in confirmation emails.",
+        "of": [
+          {
+            "marks": {
+              "annotations": [],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Strong"
+                },
+                {
+                  "value": "em",
+                  "title": "Italic"
+                }
+              ]
+            },
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Bulleted list"
+              },
+              {
+                "value": "number",
+                "title": "Numbered list"
+              }
+            ],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normal"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          }
+        ],
+        "name": "cancellationPolicyText",
+        "type": "array",
+        "title": "Cancellation policy"
+      },
+      {
+        "of": [
+          {
+            "marks": {
+              "annotations": [
+                {
+                  "i18nTitleKey": "inputs.portable-text.annotation.link",
+                  "options": {
+                    "modal": {
+                      "type": "popover"
+                    }
+                  },
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/",
+                                    "/^tel$/",
+                                    "/^mailto$/"
+                                  ],
+                                  "allowRelative": true,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ],
+                          "level": "error"
+                        }
+                      ],
+                      "description": "A valid web, email, phone, or relative link.",
+                      "name": "href",
+                      "type": "url",
+                      "title": "Link"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Strong"
+                },
+                {
+                  "value": "em",
+                  "title": "Italic"
+                },
+                {
+                  "value": "code",
+                  "title": "Code"
+                },
+                {
+                  "value": "underline",
+                  "title": "Underline"
+                },
+                {
+                  "value": "strike-through",
+                  "title": "Strike"
+                }
+              ]
+            },
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Bulleted list"
+              },
+              {
+                "value": "number",
+                "title": "Numbered list"
+              }
+            ],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normal"
+              },
+              {
+                "value": "h1",
+                "title": "Heading 1"
+              },
+              {
+                "value": "h2",
+                "title": "Heading 2"
+              },
+              {
+                "value": "h3",
+                "title": "Heading 3"
+              },
+              {
+                "value": "h4",
+                "title": "Heading 4"
+              },
+              {
+                "value": "h5",
+                "title": "Heading 5"
+              },
+              {
+                "value": "h6",
+                "title": "Heading 6"
+              },
+              {
+                "value": "blockquote",
+                "title": "Quote"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          }
+        ],
+        "name": "privacyPolicyText",
+        "type": "array",
+        "title": "Privacy policy (rendered at /privacy)"
+      },
+      {
+        "description": "Emails to notify when a new booking is confirmed.",
+        "of": [
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "regex",
+                    "constraint": {
+                      "pattern": "/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/",
+                      "name": "email",
+                      "invert": false
+                    }
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "type": "string"
+          }
+        ],
+        "name": "ownerNotificationEmails",
+        "type": "array",
+        "title": "Owner notification emails"
+      },
+      {
+        "description": "Shown on cancellation pages when the customer is inside the cancel cutoff. Falls back to siteSettings.contactPhone.",
+        "name": "contactPhoneOverride",
+        "type": "string",
+        "title": "Contact phone (optional)"
+      }
+    ],
+    "name": "bookingSettings",
+    "type": "document"
+  },
+  {
+    "description": "Colors, fonts, logos, radii used by the booking wizard, admin and emails. Edit hex values to retheme without redeploying.",
+    "fields": [
+      {
+        "options": {
+          "hotspot": true
+        },
+        "description": "Wizard header, success page, and email header.",
+        "fields": [
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "custom"
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "alt",
+            "type": "string",
+            "title": "Alt text"
+          }
+        ],
+        "name": "logoPrimary",
+        "type": "image",
+        "title": "Primary logo"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "description": "Compact mark for tight spaces.",
+        "fields": [
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "custom"
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "alt",
+            "type": "string",
+            "title": "Alt text"
+          }
+        ],
+        "name": "logoSubmark",
+        "type": "image",
+        "title": "Submark / icon logo"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "description": "Recommended 600×120 banner used at the top of every transactional email.",
+        "fields": [
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "custom"
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "alt",
+            "type": "string",
+            "title": "Alt text"
+          }
+        ],
+        "name": "logoEmailHeader",
+        "type": "image",
+        "title": "Email header banner"
+      },
+      {
+        "initialValue": "#E8E4E0",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "regex",
+                "constraint": {
+                  "pattern": "/^#([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/",
+                  "name": "hex color",
+                  "invert": false
+                }
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "warning",
+            "message": "Use a 6- or 8-digit hex color (e.g. #C9A962)."
+          }
+        ],
+        "description": "Page background (booking page and admin).",
+        "name": "colorBackground",
+        "type": "string",
+        "title": "Background"
+      },
+      {
+        "initialValue": "#FAFAFA",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "regex",
+                "constraint": {
+                  "pattern": "/^#([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/",
+                  "name": "hex color",
+                  "invert": false
+                }
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "warning",
+            "message": "Use a 6- or 8-digit hex color (e.g. #C9A962)."
+          }
+        ],
+        "description": "Card / panel background.",
+        "name": "colorSurface",
+        "type": "string",
+        "title": "Surface"
+      },
+      {
+        "initialValue": "#F0EDE9",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "regex",
+                "constraint": {
+                  "pattern": "/^#([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/",
+                  "name": "hex color",
+                  "invert": false
+                }
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "warning",
+            "message": "Use a 6- or 8-digit hex color (e.g. #C9A962)."
+          }
+        ],
+        "description": "Hover / secondary card backgrounds.",
+        "name": "colorSurfaceMuted",
+        "type": "string",
+        "title": "Surface (muted)"
+      },
+      {
+        "initialValue": "#D9D5D1",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "regex",
+                "constraint": {
+                  "pattern": "/^#([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/",
+                  "name": "hex color",
+                  "invert": false
+                }
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "warning",
+            "message": "Use a 6- or 8-digit hex color (e.g. #C9A962)."
+          }
+        ],
+        "description": "Dividers and input borders.",
+        "name": "colorBorder",
+        "type": "string",
+        "title": "Border"
+      },
+      {
+        "initialValue": "#C9A962",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "regex",
+                "constraint": {
+                  "pattern": "/^#([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/",
+                  "name": "hex color",
+                  "invert": false
+                }
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "warning",
+            "message": "Use a 6- or 8-digit hex color (e.g. #C9A962)."
+          }
+        ],
+        "description": "Focused input border, active step ring.",
+        "name": "colorBorderFocus",
+        "type": "string",
+        "title": "Border (focus)"
+      },
+      {
+        "initialValue": "#1A1A1A",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "regex",
+                "constraint": {
+                  "pattern": "/^#([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/",
+                  "name": "hex color",
+                  "invert": false
+                }
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "warning",
+            "message": "Use a 6- or 8-digit hex color (e.g. #C9A962)."
+          }
+        ],
+        "description": "Headlines and body text.",
+        "name": "colorTextPrimary",
+        "type": "string",
+        "title": "Text primary"
+      },
+      {
+        "initialValue": "#4A4A4A",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "regex",
+                "constraint": {
+                  "pattern": "/^#([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/",
+                  "name": "hex color",
+                  "invert": false
+                }
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "warning",
+            "message": "Use a 6- or 8-digit hex color (e.g. #C9A962)."
+          }
+        ],
+        "description": "Labels and helper text.",
+        "name": "colorTextSecondary",
+        "type": "string",
+        "title": "Text secondary"
+      },
+      {
+        "initialValue": "#8A8A8A",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "regex",
+                "constraint": {
+                  "pattern": "/^#([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/",
+                  "name": "hex color",
+                  "invert": false
+                }
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "warning",
+            "message": "Use a 6- or 8-digit hex color (e.g. #C9A962)."
+          }
+        ],
+        "description": "Placeholders and disabled text.",
+        "name": "colorTextMuted",
+        "type": "string",
+        "title": "Text muted"
+      },
+      {
+        "initialValue": "#C9A962",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "regex",
+                "constraint": {
+                  "pattern": "/^#([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/",
+                  "name": "hex color",
+                  "invert": false
+                }
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "warning",
+            "message": "Use a 6- or 8-digit hex color (e.g. #C9A962)."
+          }
+        ],
+        "description": "Primary CTA, selected items, active step.",
+        "name": "colorAccent",
+        "type": "string",
+        "title": "Accent"
+      },
+      {
+        "initialValue": "#E8D7B0",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "regex",
+                "constraint": {
+                  "pattern": "/^#([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/",
+                  "name": "hex color",
+                  "invert": false
+                }
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "warning",
+            "message": "Use a 6- or 8-digit hex color (e.g. #C9A962)."
+          }
+        ],
+        "description": "Soft accent backgrounds and badges.",
+        "name": "colorAccentMuted",
+        "type": "string",
+        "title": "Accent (muted)"
+      },
+      {
+        "initialValue": "#3D8B5C",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "regex",
+                "constraint": {
+                  "pattern": "/^#([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/",
+                  "name": "hex color",
+                  "invert": false
+                }
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "warning",
+            "message": "Use a 6- or 8-digit hex color (e.g. #C9A962)."
+          }
+        ],
+        "description": "Confirmation states and refunded badges.",
+        "name": "colorSuccess",
+        "type": "string",
+        "title": "Success"
+      },
+      {
+        "initialValue": "#C77F2A",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "regex",
+                "constraint": {
+                  "pattern": "/^#([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/",
+                  "name": "hex color",
+                  "invert": false
+                }
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "warning",
+            "message": "Use a 6- or 8-digit hex color (e.g. #C9A962)."
+          }
+        ],
+        "description": "Pending payment and soft warnings.",
+        "name": "colorWarning",
+        "type": "string",
+        "title": "Warning"
+      },
+      {
+        "initialValue": "#B8493A",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "regex",
+                "constraint": {
+                  "pattern": "/^#([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/",
+                  "name": "hex color",
+                  "invert": false
+                }
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "warning",
+            "message": "Use a 6- or 8-digit hex color (e.g. #C9A962)."
+          }
+        ],
+        "description": "Error toasts and validation messages.",
+        "name": "colorError",
+        "type": "string",
+        "title": "Error"
+      },
+      {
+        "initialValue": "#FFFFFF",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "regex",
+                "constraint": {
+                  "pattern": "/^#([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/",
+                  "name": "hex color",
+                  "invert": false
+                }
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "warning",
+            "message": "Use a 6- or 8-digit hex color (e.g. #C9A962)."
+          }
+        ],
+        "description": "Text/icon color when ON the accent background. Usually white.",
+        "name": "colorOnAccent",
+        "type": "string",
+        "title": "Text on accent"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "regex",
+                "constraint": {
+                  "pattern": "/^#([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/",
+                  "name": "hex color",
+                  "invert": false
+                }
+              }
+            ],
+            "level": "warning",
+            "message": "Use a 6- or 8-digit hex color (e.g. #C9A962)."
+          }
+        ],
+        "description": "Active step circle. Falls back to accent if blank.",
+        "name": "colorStepActive",
+        "type": "string",
+        "title": "Step active (optional)"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "regex",
+                "constraint": {
+                  "pattern": "/^#([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/",
+                  "name": "hex color",
+                  "invert": false
+                }
+              }
+            ],
+            "level": "warning",
+            "message": "Use a 6- or 8-digit hex color (e.g. #C9A962)."
+          }
+        ],
+        "description": "Completed step circle. Falls back to accent muted if blank.",
+        "name": "colorStepCompleted",
+        "type": "string",
+        "title": "Step completed (optional)"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "regex",
+                "constraint": {
+                  "pattern": "/^#([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/",
+                  "name": "hex color",
+                  "invert": false
+                }
+              }
+            ],
+            "level": "warning",
+            "message": "Use a 6- or 8-digit hex color (e.g. #C9A962)."
+          }
+        ],
+        "description": "Future step circle. Falls back to border color if blank.",
+        "name": "colorStepPending",
+        "type": "string",
+        "title": "Step pending (optional)"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "regex",
+                "constraint": {
+                  "pattern": "/^#([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/",
+                  "name": "hex color",
+                  "invert": false
+                }
+              }
+            ],
+            "level": "warning",
+            "message": "Use a 6- or 8-digit hex color (e.g. #C9A962)."
+          }
+        ],
+        "description": "Available time-slot button. Falls back to surface if blank.",
+        "name": "colorSlotAvailable",
+        "type": "string",
+        "title": "Slot available (optional)"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "regex",
+                "constraint": {
+                  "pattern": "/^#([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/",
+                  "name": "hex color",
+                  "invert": false
+                }
+              }
+            ],
+            "level": "warning",
+            "message": "Use a 6- or 8-digit hex color (e.g. #C9A962)."
+          }
+        ],
+        "description": "Selected time-slot button. Falls back to accent if blank.",
+        "name": "colorSlotSelected",
+        "type": "string",
+        "title": "Slot selected (optional)"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "regex",
+                "constraint": {
+                  "pattern": "/^#([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/",
+                  "name": "hex color",
+                  "invert": false
+                }
+              }
+            ],
+            "level": "warning",
+            "message": "Use a 6- or 8-digit hex color (e.g. #C9A962)."
+          }
+        ],
+        "description": "Disabled time-slot. Falls back to surface muted if blank.",
+        "name": "colorSlotUnavailable",
+        "type": "string",
+        "title": "Slot unavailable (optional)"
+      },
+      {
+        "initialValue": "\"Cormorant Garamond\", Georgia, serif",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "CSS font-family stack. Example: \"Cormorant Garamond, serif\".",
+        "name": "headingFontFamily",
+        "type": "string",
+        "title": "Heading font family"
+      },
+      {
+        "initialValue": "Satoshi, system-ui, sans-serif",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "CSS font-family stack.",
+        "name": "bodyFontFamily",
+        "type": "string",
+        "title": "Body font family"
+      },
+      {
+        "initialValue": "ui-monospace, SFMono-Regular, monospace",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Used for prices and numerical displays.",
+        "name": "monoFontFamily",
+        "type": "string",
+        "title": "Mono font family"
+      },
+      {
+        "initialValue": "2px",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "radiusSm",
+        "type": "string",
+        "title": "Radius small"
+      },
+      {
+        "initialValue": "4px",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "radiusMd",
+        "type": "string",
+        "title": "Radius medium"
+      },
+      {
+        "initialValue": "8px",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "radiusLg",
+        "type": "string",
+        "title": "Radius large"
+      },
+      {
+        "initialValue": "9999px",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "radiusFull",
+        "type": "string",
+        "title": "Radius full (pill)"
+      },
+      {
+        "initialValue": "#F0EDE9",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "regex",
+                "constraint": {
+                  "pattern": "/^#([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/",
+                  "name": "hex color",
+                  "invert": false
+                }
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "warning",
+            "message": "Use a 6- or 8-digit hex color (e.g. #C9A962)."
+          }
+        ],
+        "description": "Outer body color of transactional emails.",
+        "name": "emailBackgroundColor",
+        "type": "string",
+        "title": "Email page background"
+      },
+      {
+        "initialValue": "#FFFFFF",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "regex",
+                "constraint": {
+                  "pattern": "/^#([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/",
+                  "name": "hex color",
+                  "invert": false
+                }
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "warning",
+            "message": "Use a 6- or 8-digit hex color (e.g. #C9A962)."
+          }
+        ],
+        "description": "Inner card color of transactional emails.",
+        "name": "emailCardColor",
+        "type": "string",
+        "title": "Email card background"
+      },
+      {
+        "description": "Small footer block on every email.",
+        "of": [
+          {
+            "marks": {
+              "annotations": [
+                {
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/"
+                                  ],
+                                  "allowRelative": false,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ],
+                          "level": "error"
+                        }
+                      ],
+                      "name": "href",
+                      "type": "url",
+                      "title": "URL"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Strong"
+                },
+                {
+                  "value": "em",
+                  "title": "Italic"
+                }
+              ]
+            },
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Bulleted list"
+              },
+              {
+                "value": "number",
+                "title": "Numbered list"
+              }
+            ],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normal"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          }
+        ],
+        "name": "emailFooterText",
+        "type": "array",
+        "title": "Email footer block"
+      }
+    ],
+    "name": "bookingTheme",
+    "type": "document"
+  },
+  {
+    "description": "Every visible string in the booking surface — wizard, success page, cancel pages, emails, and admin. Use {placeholder} tokens where noted; supported tokens are listed per-field.",
+    "fields": [
+      {
+        "initialValue": "Reserve Your Experience",
+        "description": "Browser tab title.",
+        "name": "wizardPageTitle",
+        "type": "string",
+        "title": "Page title"
+      },
+      {
+        "initialValue": "Reserve your appointment online with Crown Nail & Beauty.",
+        "description": "For search engines and social shares.",
+        "name": "wizardPageMetaDescription",
+        "type": "string",
+        "title": "Meta description"
+      },
+      {
+        "initialValue": "Reservations",
+        "description": "Small label above the headline.",
+        "name": "wizardHeadlineEyebrow",
+        "type": "string",
+        "title": "Headline eyebrow"
+      },
+      {
+        "initialValue": "Reserve Your",
+        "description": "First part of the headline.",
+        "name": "wizardHeadlineMain",
+        "type": "string",
+        "title": "Headline (main)"
+      },
+      {
+        "initialValue": "Experience",
+        "description": "Italic / accent word at the end of the headline.",
+        "name": "wizardHeadlineItalic",
+        "type": "string",
+        "title": "Headline (italic)"
+      },
+      {
+        "description": "Short paragraph below the headline. Supports bold, italic, links.",
+        "of": [
+          {
+            "marks": {
+              "annotations": [
+                {
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/"
+                                  ],
+                                  "allowRelative": false,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ],
+                          "level": "error"
+                        }
+                      ],
+                      "name": "href",
+                      "type": "url",
+                      "title": "URL"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Strong"
+                },
+                {
+                  "value": "em",
+                  "title": "Italic"
+                }
+              ]
+            },
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Bulleted list"
+              },
+              {
+                "value": "number",
+                "title": "Numbered list"
+              }
+            ],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normal"
+              },
+              {
+                "value": "h3",
+                "title": "Heading 3"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          }
+        ],
+        "name": "wizardIntro",
+        "type": "array",
+        "title": "Wizard intro"
+      },
+      {
+        "initialValue": "Welcome back, {firstName} ✓",
+        "description": "Shown when a returning customer is recognized via cookie. Supports {firstName}.",
+        "name": "wizardWelcomeBackTemplate",
+        "type": "string",
+        "title": "Welcome-back greeting"
+      },
+      {
+        "initialValue": "Not {firstName}? Use different details",
+        "description": "Link to clear recognition. Supports {firstName}.",
+        "name": "wizardNotYouLink",
+        "type": "string",
+        "title": "Not-you reset link"
+      },
+      {
+        "description": "Shown above the Pay button. Should summarize the cancellation policy.",
+        "of": [
+          {
+            "marks": {
+              "annotations": [
+                {
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/"
+                                  ],
+                                  "allowRelative": false,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ],
+                          "level": "error"
+                        }
+                      ],
+                      "name": "href",
+                      "type": "url",
+                      "title": "URL"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Strong"
+                },
+                {
+                  "value": "em",
+                  "title": "Italic"
+                }
+              ]
+            },
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Bulleted list"
+              },
+              {
+                "value": "number",
+                "title": "Numbered list"
+              }
+            ],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normal"
+              },
+              {
+                "value": "h3",
+                "title": "Heading 3"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          }
+        ],
+        "name": "wizardPolicyAcceptText",
+        "type": "array",
+        "title": "Policy summary"
+      },
+      {
+        "initialValue": "Service",
+        "description": "",
+        "name": "stepsServiceLabel",
+        "type": "string",
+        "title": "Step label: Service"
+      },
+      {
+        "initialValue": "Technician",
+        "description": "",
+        "name": "stepsTechnicianLabel",
+        "type": "string",
+        "title": "Step label: Technician"
+      },
+      {
+        "initialValue": "Date & Time",
+        "description": "",
+        "name": "stepsDateTimeLabel",
+        "type": "string",
+        "title": "Step label: Date & Time"
+      },
+      {
+        "initialValue": "Details",
+        "description": "",
+        "name": "stepsDetailsLabel",
+        "type": "string",
+        "title": "Step label: Details"
+      },
+      {
+        "initialValue": "Review",
+        "description": "",
+        "name": "stepsReviewLabel",
+        "type": "string",
+        "title": "Step label: Review"
+      },
+      {
+        "initialValue": "Choose a Service",
+        "description": "",
+        "name": "serviceHeading",
+        "type": "string",
+        "title": "Service step heading"
+      },
+      {
+        "description": "Optional sub-line.",
+        "name": "serviceSubHeading",
+        "type": "string",
+        "title": "Service step subheading"
+      },
+      {
+        "initialValue": "from",
+        "description": "",
+        "name": "servicePriceFromLabel",
+        "type": "string",
+        "title": "Service price prefix"
+      },
+      {
+        "initialValue": "Deposit at booking",
+        "description": "",
+        "name": "serviceDepositLabel",
+        "type": "string",
+        "title": "Deposit label"
+      },
+      {
+        "initialValue": "Balance due in salon",
+        "description": "",
+        "name": "serviceBalanceLabel",
+        "type": "string",
+        "title": "Balance label"
+      },
+      {
+        "initialValue": "{minutes} min",
+        "description": "Supports {minutes}.",
+        "name": "serviceDurationLabel",
+        "type": "string",
+        "title": "Duration display"
+      },
+      {
+        "initialValue": "No services available right now.",
+        "description": "",
+        "name": "serviceEmptyState",
+        "type": "string",
+        "title": "Empty state — no services"
+      },
+      {
+        "initialValue": "Choose Your Technician",
+        "description": "",
+        "name": "techHeading",
+        "type": "string",
+        "title": "Technician step heading"
+      },
+      {
+        "initialValue": "Each artist below is qualified for {service}.",
+        "description": "Supports {service}.",
+        "name": "techSubHeading",
+        "type": "string",
+        "title": "Technician step subheading"
+      },
+      {
+        "initialValue": "No Preference",
+        "description": "",
+        "name": "techAnyTechLabel",
+        "type": "string",
+        "title": "No-preference label"
+      },
+      {
+        "initialValue": "We'll match you with our most-available artist.",
+        "description": "",
+        "name": "techAnyTechDescription",
+        "type": "string",
+        "title": "No-preference description"
+      },
+      {
+        "initialValue": "Specialty",
+        "description": "",
+        "name": "techSpecialtyLabel",
+        "type": "string",
+        "title": "Specialty label"
+      },
+      {
+        "initialValue": "No technicians qualified for this service.",
+        "description": "",
+        "name": "techEmptyState",
+        "type": "string",
+        "title": "Empty state — no qualified techs"
+      },
+      {
+        "initialValue": "Select Date",
+        "description": "",
+        "name": "dateTimeDateHeading",
+        "type": "string",
+        "title": "Date heading"
+      },
+      {
+        "initialValue": "Preferred Time",
+        "description": "",
+        "name": "dateTimeTimeHeading",
+        "type": "string",
+        "title": "Time heading"
+      },
+      {
+        "initialValue": "{month} {year}",
+        "description": "Supports {month} and {year}.",
+        "name": "dateTimeMonthFormat",
+        "type": "string",
+        "title": "Month label format"
+      },
+      {
+        "initialValue": [
+          "S",
+          "M",
+          "T",
+          "W",
+          "T",
+          "F",
+          "S"
+        ],
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "length",
+                "constraint": 7
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Seven entries starting Sunday. Single letters work best.",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "dateTimeWeekdayShort",
+        "type": "array",
+        "title": "Weekday letters"
+      },
+      {
+        "initialValue": "No availability — try another day.",
+        "description": "",
+        "name": "dateTimeNoSlotsThisDay",
+        "type": "string",
+        "title": "No-slots message"
+      },
+      {
+        "initialValue": "Same-day bookings need {hours}h notice.",
+        "description": "Supports {hours}.",
+        "name": "dateTimeMinHoursBufferNote",
+        "type": "string",
+        "title": "Min-hours buffer note"
+      },
+      {
+        "initialValue": "All times shown in NZT.",
+        "description": "Reassures customer about which timezone times are shown in.",
+        "name": "dateTimeTimezoneNote",
+        "type": "string",
+        "title": "Timezone note"
+      },
+      {
+        "initialValue": "Your Details",
+        "description": "",
+        "name": "detailsHeading",
+        "type": "string",
+        "title": "Details step heading"
+      },
+      {
+        "description": "",
+        "name": "detailsSubHeading",
+        "type": "string",
+        "title": "Details step subheading"
+      },
+      {
+        "initialValue": "Name",
+        "description": "",
+        "name": "detailsNameLabel",
+        "type": "string",
+        "title": "Name label"
+      },
+      {
+        "initialValue": "Full name",
+        "description": "",
+        "name": "detailsNamePlaceholder",
+        "type": "string",
+        "title": "Name placeholder"
+      },
+      {
+        "initialValue": "Phone",
+        "description": "",
+        "name": "detailsPhoneLabel",
+        "type": "string",
+        "title": "Phone label"
+      },
+      {
+        "initialValue": "e.g. 022 123 4567",
+        "description": "",
+        "name": "detailsPhonePlaceholder",
+        "type": "string",
+        "title": "Phone placeholder"
+      },
+      {
+        "initialValue": "Email",
+        "description": "",
+        "name": "detailsEmailLabel",
+        "type": "string",
+        "title": "Email label"
+      },
+      {
+        "initialValue": "your@email.com",
+        "description": "",
+        "name": "detailsEmailPlaceholder",
+        "type": "string",
+        "title": "Email placeholder"
+      },
+      {
+        "initialValue": "Special requests",
+        "description": "",
+        "name": "detailsNotesLabel",
+        "type": "string",
+        "title": "Notes label"
+      },
+      {
+        "initialValue": "Any allergies, design preferences, or special requests…",
+        "description": "",
+        "name": "detailsNotesPlaceholder",
+        "type": "string",
+        "title": "Notes placeholder"
+      },
+      {
+        "initialValue": "(optional)",
+        "description": "Suffix used to mark optional fields.",
+        "name": "detailsEmailOptionalSuffix",
+        "type": "string",
+        "title": "Optional suffix"
+      },
+      {
+        "initialValue": "*",
+        "description": "Symbol next to required field labels.",
+        "name": "detailsRequiredFieldIndicator",
+        "type": "string",
+        "title": "Required indicator"
+      },
+      {
+        "initialValue": "Review Your Booking",
+        "description": "",
+        "name": "reviewHeading",
+        "type": "string",
+        "title": "Review step heading"
+      },
+      {
+        "initialValue": "Service",
+        "description": "",
+        "name": "reviewServiceLabel",
+        "type": "string",
+        "title": "Review label: Service"
+      },
+      {
+        "initialValue": "Technician",
+        "description": "",
+        "name": "reviewTechnicianLabel",
+        "type": "string",
+        "title": "Review label: Technician"
+      },
+      {
+        "initialValue": "Date",
+        "description": "",
+        "name": "reviewDateLabel",
+        "type": "string",
+        "title": "Review label: Date"
+      },
+      {
+        "initialValue": "Time",
+        "description": "",
+        "name": "reviewTimeLabel",
+        "type": "string",
+        "title": "Review label: Time"
+      },
+      {
+        "initialValue": "Pay now",
+        "description": "",
+        "name": "reviewDepositDueLabel",
+        "type": "string",
+        "title": "Deposit due now"
+      },
+      {
+        "initialValue": "Pay at appointment",
+        "description": "",
+        "name": "reviewBalanceDueLabel",
+        "type": "string",
+        "title": "Balance label"
+      },
+      {
+        "initialValue": "Pay {amount} deposit & confirm",
+        "description": "Supports {amount}.",
+        "name": "reviewPayButtonLabel",
+        "type": "string",
+        "title": "Pay button"
+      },
+      {
+        "initialValue": "Redirecting to secure payment…",
+        "description": "Shown briefly while redirecting to Stripe.",
+        "name": "reviewPayingProcessingLabel",
+        "type": "string",
+        "title": "Processing label"
+      },
+      {
+        "initialValue": "That slot was just booked — please pick another.",
+        "description": "",
+        "name": "errorsSlotJustTaken",
+        "type": "string",
+        "title": "Slot just taken"
+      },
+      {
+        "initialValue": "The technician's schedule has changed. Please pick a new time.",
+        "description": "",
+        "name": "errorsScheduleChanged",
+        "type": "string",
+        "title": "Schedule changed"
+      },
+      {
+        "initialValue": "Connection problem — please try again.",
+        "description": "",
+        "name": "errorsNetworkError",
+        "type": "string",
+        "title": "Network error"
+      },
+      {
+        "initialValue": "Too many attempts — please wait a moment and try again.",
+        "description": "",
+        "name": "errorsRateLimited",
+        "type": "string",
+        "title": "Rate limited"
+      },
+      {
+        "initialValue": "We couldn't verify you're human. Please refresh and try again.",
+        "description": "",
+        "name": "errorsCaptchaFailed",
+        "type": "string",
+        "title": "Captcha failed"
+      },
+      {
+        "initialValue": "Something went wrong. Please try again or call us.",
+        "description": "Fallback when no specific error message applies.",
+        "name": "errorsGeneric",
+        "type": "string",
+        "title": "Generic error"
+      },
+      {
+        "initialValue": "Back",
+        "description": "",
+        "name": "navBack",
+        "type": "string",
+        "title": "Back button"
+      },
+      {
+        "initialValue": "Next",
+        "description": "",
+        "name": "navNext",
+        "type": "string",
+        "title": "Next button"
+      },
+      {
+        "initialValue": "Cancel booking",
+        "description": "",
+        "name": "navCancelWizard",
+        "type": "string",
+        "title": "Cancel wizard"
+      },
+      {
+        "initialValue": "You're booked",
+        "description": "",
+        "name": "successHeading",
+        "type": "string",
+        "title": "Success heading"
+      },
+      {
+        "initialValue": "We can't wait to see you, {firstName}.",
+        "description": "Supports {firstName}.",
+        "name": "successSubheading",
+        "type": "string",
+        "title": "Success subheading"
+      },
+      {
+        "description": "Supports {service}, {tech}, {date}, {time}, {address}, {balance}, {firstName}.",
+        "of": [
+          {
+            "marks": {
+              "annotations": [
+                {
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/"
+                                  ],
+                                  "allowRelative": false,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ],
+                          "level": "error"
+                        }
+                      ],
+                      "name": "href",
+                      "type": "url",
+                      "title": "URL"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Strong"
+                },
+                {
+                  "value": "em",
+                  "title": "Italic"
+                }
+              ]
+            },
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Bulleted list"
+              },
+              {
+                "value": "number",
+                "title": "Numbered list"
+              }
+            ],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normal"
+              },
+              {
+                "value": "h3",
+                "title": "Heading 3"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          }
+        ],
+        "name": "successBodyTemplate",
+        "type": "array",
+        "title": "Success body"
+      },
+      {
+        "initialValue": "Add to calendar",
+        "description": "",
+        "name": "successCalendarButtonLabel",
+        "type": "string",
+        "title": "Add-to-calendar button"
+      },
+      {
+        "initialValue": "We've sent a confirmation to {email}.",
+        "description": "Supports {email}.",
+        "name": "successEmailSentNote",
+        "type": "string",
+        "title": "Email sent note"
+      },
+      {
+        "description": "Supports {cancelLink}, {phone}, {cutoffHours}. Place {cancelLink} as a link annotation in the rich text.",
+        "of": [
+          {
+            "marks": {
+              "annotations": [
+                {
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/"
+                                  ],
+                                  "allowRelative": false,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ],
+                          "level": "error"
+                        }
+                      ],
+                      "name": "href",
+                      "type": "url",
+                      "title": "URL"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Strong"
+                },
+                {
+                  "value": "em",
+                  "title": "Italic"
+                }
+              ]
+            },
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Bulleted list"
+              },
+              {
+                "value": "number",
+                "title": "Numbered list"
+              }
+            ],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normal"
+              },
+              {
+                "value": "h3",
+                "title": "Heading 3"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          }
+        ],
+        "name": "successCancellationNote",
+        "type": "array",
+        "title": "Cancellation note"
+      },
+      {
+        "initialValue": "Cancel your booking",
+        "description": "",
+        "name": "cancelHeading",
+        "type": "string",
+        "title": "Cancel heading"
+      },
+      {
+        "description": "Supports {service}, {tech}, {date}, {time}, {refundAmount}.",
+        "of": [
+          {
+            "marks": {
+              "annotations": [
+                {
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/"
+                                  ],
+                                  "allowRelative": false,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ],
+                          "level": "error"
+                        }
+                      ],
+                      "name": "href",
+                      "type": "url",
+                      "title": "URL"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Strong"
+                },
+                {
+                  "value": "em",
+                  "title": "Italic"
+                }
+              ]
+            },
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Bulleted list"
+              },
+              {
+                "value": "number",
+                "title": "Numbered list"
+              }
+            ],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normal"
+              },
+              {
+                "value": "h3",
+                "title": "Heading 3"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          }
+        ],
+        "name": "cancelConfirmBody",
+        "type": "array",
+        "title": "Cancel confirm body"
+      },
+      {
+        "initialValue": "Yes, cancel and refund {refundAmount}",
+        "description": "Supports {refundAmount}.",
+        "name": "cancelConfirmButton",
+        "type": "string",
+        "title": "Confirm cancel button"
+      },
+      {
+        "initialValue": "Cancellation confirmed",
+        "description": "",
+        "name": "cancelSuccessHeading",
+        "type": "string",
+        "title": "Cancel success heading"
+      },
+      {
+        "description": "Supports {refundAmount}, {firstName}.",
+        "of": [
+          {
+            "marks": {
+              "annotations": [
+                {
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/"
+                                  ],
+                                  "allowRelative": false,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ],
+                          "level": "error"
+                        }
+                      ],
+                      "name": "href",
+                      "type": "url",
+                      "title": "URL"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Strong"
+                },
+                {
+                  "value": "em",
+                  "title": "Italic"
+                }
+              ]
+            },
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Bulleted list"
+              },
+              {
+                "value": "number",
+                "title": "Numbered list"
+              }
+            ],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normal"
+              },
+              {
+                "value": "h3",
+                "title": "Heading 3"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          }
+        ],
+        "name": "cancelSuccessBody",
+        "type": "array",
+        "title": "Cancel success body"
+      },
+      {
+        "initialValue": "Inside cancellation window",
+        "description": "",
+        "name": "cancelTooLateHeading",
+        "type": "string",
+        "title": "Inside cutoff heading"
+      },
+      {
+        "description": "Supports {phone}, {cutoffHours}.",
+        "of": [
+          {
+            "marks": {
+              "annotations": [
+                {
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/"
+                                  ],
+                                  "allowRelative": false,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ],
+                          "level": "error"
+                        }
+                      ],
+                      "name": "href",
+                      "type": "url",
+                      "title": "URL"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Strong"
+                },
+                {
+                  "value": "em",
+                  "title": "Italic"
+                }
+              ]
+            },
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Bulleted list"
+              },
+              {
+                "value": "number",
+                "title": "Numbered list"
+              }
+            ],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normal"
+              },
+              {
+                "value": "h3",
+                "title": "Heading 3"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          }
+        ],
+        "name": "cancelTooLateBody",
+        "type": "array",
+        "title": "Inside cutoff body"
+      },
+      {
+        "initialValue": "Already cancelled",
+        "description": "",
+        "name": "cancelAlreadyUsedHeading",
+        "type": "string",
+        "title": "Already-cancelled heading"
+      },
+      {
+        "description": "",
+        "of": [
+          {
+            "marks": {
+              "annotations": [
+                {
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/"
+                                  ],
+                                  "allowRelative": false,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ],
+                          "level": "error"
+                        }
+                      ],
+                      "name": "href",
+                      "type": "url",
+                      "title": "URL"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Strong"
+                },
+                {
+                  "value": "em",
+                  "title": "Italic"
+                }
+              ]
+            },
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Bulleted list"
+              },
+              {
+                "value": "number",
+                "title": "Numbered list"
+              }
+            ],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normal"
+              },
+              {
+                "value": "h3",
+                "title": "Heading 3"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          }
+        ],
+        "name": "cancelAlreadyUsedBody",
+        "type": "array",
+        "title": "Already-cancelled body"
+      },
+      {
+        "initialValue": "Your booking is confirmed — {service} on {date}",
+        "description": "Supports {service}, {date}, {time}, {firstName}.",
+        "name": "emailConfirmationSubjectTemplate",
+        "type": "string",
+        "title": "Confirmation email — subject"
+      },
+      {
+        "initialValue": "You're booked",
+        "description": "",
+        "name": "emailConfirmationHeroHeadline",
+        "type": "string",
+        "title": "Confirmation email — hero"
+      },
+      {
+        "description": "Supports {firstName}, {service}, {tech}, {date}, {time}.",
+        "of": [
+          {
+            "marks": {
+              "annotations": [
+                {
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/"
+                                  ],
+                                  "allowRelative": false,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ],
+                          "level": "error"
+                        }
+                      ],
+                      "name": "href",
+                      "type": "url",
+                      "title": "URL"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Strong"
+                },
+                {
+                  "value": "em",
+                  "title": "Italic"
+                }
+              ]
+            },
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Bulleted list"
+              },
+              {
+                "value": "number",
+                "title": "Numbered list"
+              }
+            ],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normal"
+              },
+              {
+                "value": "h3",
+                "title": "Heading 3"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          }
+        ],
+        "name": "emailConfirmationBodyIntro",
+        "type": "array",
+        "title": "Confirmation email — intro"
+      },
+      {
+        "initialValue": "Appointment details",
+        "description": "",
+        "name": "emailConfirmationDetailsHeading",
+        "type": "string",
+        "title": "Confirmation email — details heading"
+      },
+      {
+        "initialValue": "Balance of {balance} due at appointment.",
+        "description": "Supports {balance}.",
+        "name": "emailConfirmationBalanceNote",
+        "type": "string",
+        "title": "Confirmation email — balance note"
+      },
+      {
+        "initialValue": "Need to cancel?",
+        "description": "",
+        "name": "emailConfirmationCancellationHeading",
+        "type": "string",
+        "title": "Confirmation email — cancellation heading"
+      },
+      {
+        "description": "Supports {cancelLink} (use as link annotation), {phone}, {cutoffHours}.",
+        "of": [
+          {
+            "marks": {
+              "annotations": [
+                {
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/"
+                                  ],
+                                  "allowRelative": false,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ],
+                          "level": "error"
+                        }
+                      ],
+                      "name": "href",
+                      "type": "url",
+                      "title": "URL"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Strong"
+                },
+                {
+                  "value": "em",
+                  "title": "Italic"
+                }
+              ]
+            },
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Bulleted list"
+              },
+              {
+                "value": "number",
+                "title": "Numbered list"
+              }
+            ],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normal"
+              },
+              {
+                "value": "h3",
+                "title": "Heading 3"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          }
+        ],
+        "name": "emailConfirmationCancellationBody",
+        "type": "array",
+        "title": "Confirmation email — cancellation body"
+      },
+      {
+        "description": "",
+        "of": [
+          {
+            "marks": {
+              "annotations": [
+                {
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/"
+                                  ],
+                                  "allowRelative": false,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ],
+                          "level": "error"
+                        }
+                      ],
+                      "name": "href",
+                      "type": "url",
+                      "title": "URL"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Strong"
+                },
+                {
+                  "value": "em",
+                  "title": "Italic"
+                }
+              ]
+            },
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Bulleted list"
+              },
+              {
+                "value": "number",
+                "title": "Numbered list"
+              }
+            ],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normal"
+              },
+              {
+                "value": "h3",
+                "title": "Heading 3"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          }
+        ],
+        "name": "emailConfirmationSignoff",
+        "type": "array",
+        "title": "Confirmation email — signoff"
+      },
+      {
+        "initialValue": "New booking — {customer} — {date} {time}",
+        "description": "Supports {customer}, {date}, {time}, {service}, {tech}.",
+        "name": "emailOwnerNotificationSubjectTemplate",
+        "type": "string",
+        "title": "Owner notification — subject"
+      },
+      {
+        "initialValue": "New booking received",
+        "description": "",
+        "name": "emailOwnerNotificationHeading",
+        "type": "string",
+        "title": "Owner notification — heading"
+      },
+      {
+        "description": "Supports {customer}, {customerPhone}, {customerEmail}, {service}, {serviceDuration}, {tech}, {date}, {time}, {deposit}, {amount}, {balance}, {notes}, {visitCount}, {adminLink}.",
+        "of": [
+          {
+            "marks": {
+              "annotations": [
+                {
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/"
+                                  ],
+                                  "allowRelative": false,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ],
+                          "level": "error"
+                        }
+                      ],
+                      "name": "href",
+                      "type": "url",
+                      "title": "URL"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Strong"
+                },
+                {
+                  "value": "em",
+                  "title": "Italic"
+                }
+              ]
+            },
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Bulleted list"
+              },
+              {
+                "value": "number",
+                "title": "Numbered list"
+              }
+            ],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normal"
+              },
+              {
+                "value": "h3",
+                "title": "Heading 3"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          }
+        ],
+        "name": "emailOwnerNotificationBody",
+        "type": "array",
+        "title": "Owner notification — body"
+      },
+      {
+        "initialValue": "Your booking has been cancelled",
+        "description": "Supports {service}, {date}.",
+        "name": "emailCancellationSubjectTemplate",
+        "type": "string",
+        "title": "Cancellation email — subject"
+      },
+      {
+        "initialValue": "Booking cancelled",
+        "description": "",
+        "name": "emailCancellationHeading",
+        "type": "string",
+        "title": "Cancellation email — heading"
+      },
+      {
+        "description": "Supports {firstName}, {refundAmount}, {service}, {date}.",
+        "of": [
+          {
+            "marks": {
+              "annotations": [
+                {
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/"
+                                  ],
+                                  "allowRelative": false,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ],
+                          "level": "error"
+                        }
+                      ],
+                      "name": "href",
+                      "type": "url",
+                      "title": "URL"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Strong"
+                },
+                {
+                  "value": "em",
+                  "title": "Italic"
+                }
+              ]
+            },
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Bulleted list"
+              },
+              {
+                "value": "number",
+                "title": "Numbered list"
+              }
+            ],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normal"
+              },
+              {
+                "value": "h3",
+                "title": "Heading 3"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          }
+        ],
+        "name": "emailCancellationBody",
+        "type": "array",
+        "title": "Cancellation email — body"
+      },
+      {
+        "initialValue": "Your booking has been cancelled",
+        "description": "",
+        "name": "emailCancellationNoRefundSubjectTemplate",
+        "type": "string",
+        "title": "Cancellation (no refund) — subject"
+      },
+      {
+        "initialValue": "Booking cancelled",
+        "description": "",
+        "name": "emailCancellationNoRefundHeading",
+        "type": "string",
+        "title": "Cancellation (no refund) — heading"
+      },
+      {
+        "description": "Supports {firstName}, {service}, {date}.",
+        "of": [
+          {
+            "marks": {
+              "annotations": [
+                {
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/"
+                                  ],
+                                  "allowRelative": false,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ],
+                          "level": "error"
+                        }
+                      ],
+                      "name": "href",
+                      "type": "url",
+                      "title": "URL"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Strong"
+                },
+                {
+                  "value": "em",
+                  "title": "Italic"
+                }
+              ]
+            },
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Bulleted list"
+              },
+              {
+                "value": "number",
+                "title": "Numbered list"
+              }
+            ],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normal"
+              },
+              {
+                "value": "h3",
+                "title": "Heading 3"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          }
+        ],
+        "name": "emailCancellationNoRefundBody",
+        "type": "array",
+        "title": "Cancellation (no refund) — body"
+      },
+      {
+        "initialValue": "Your booking has been rescheduled — {newDate}",
+        "description": "Supports {service}, {newDate}, {newTime}.",
+        "name": "emailRescheduleSubjectTemplate",
+        "type": "string",
+        "title": "Reschedule email — subject"
+      },
+      {
+        "initialValue": "Your booking has been rescheduled",
+        "description": "",
+        "name": "emailRescheduleHeading",
+        "type": "string",
+        "title": "Reschedule email — heading"
+      },
+      {
+        "description": "Supports {firstName}, {service}, {oldDate}, {oldTime}, {newDate}, {newTime}, {tech}, {phone}.",
+        "of": [
+          {
+            "marks": {
+              "annotations": [
+                {
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/"
+                                  ],
+                                  "allowRelative": false,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ],
+                          "level": "error"
+                        }
+                      ],
+                      "name": "href",
+                      "type": "url",
+                      "title": "URL"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Strong"
+                },
+                {
+                  "value": "em",
+                  "title": "Italic"
+                }
+              ]
+            },
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Bulleted list"
+              },
+              {
+                "value": "number",
+                "title": "Numbered list"
+              }
+            ],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normal"
+              },
+              {
+                "value": "h3",
+                "title": "Heading 3"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          }
+        ],
+        "name": "emailRescheduleBody",
+        "type": "array",
+        "title": "Reschedule email — body"
+      },
+      {
+        "initialValue": "How was your visit, {firstName}?",
+        "description": "Sent 2 days after appointment. Supports {service}, {tech}, {firstName}.",
+        "name": "emailReviewSubjectTemplate",
+        "type": "string",
+        "title": "Review email — subject"
+      },
+      {
+        "initialValue": "Thank you for visiting Crown Nail & Beauty",
+        "description": "",
+        "name": "emailReviewHeading",
+        "type": "string",
+        "title": "Review email — heading"
+      },
+      {
+        "description": "Supports {firstName}, {service}, {tech}, {reviewLink}.",
+        "of": [
+          {
+            "marks": {
+              "annotations": [
+                {
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/"
+                                  ],
+                                  "allowRelative": false,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ],
+                          "level": "error"
+                        }
+                      ],
+                      "name": "href",
+                      "type": "url",
+                      "title": "URL"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Strong"
+                },
+                {
+                  "value": "em",
+                  "title": "Italic"
+                }
+              ]
+            },
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Bulleted list"
+              },
+              {
+                "value": "number",
+                "title": "Numbered list"
+              }
+            ],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normal"
+              },
+              {
+                "value": "h3",
+                "title": "Heading 3"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          }
+        ],
+        "name": "emailReviewBody",
+        "type": "array",
+        "title": "Review email — body"
+      },
+      {
+        "description": "Where the \"leave a review\" button in the review email points. Usually the salon's Google review URL.",
+        "name": "reviewLinkUrl",
+        "type": "string",
+        "title": "Review link URL"
+      },
+      {
+        "initialValue": "Booking Admin",
+        "description": "",
+        "name": "adminDashboardTitle",
+        "type": "string",
+        "title": "Admin: dashboard title"
+      },
+      {
+        "initialValue": "Bookings",
+        "description": "",
+        "name": "adminBookingsTitle",
+        "type": "string",
+        "title": "Admin: bookings page title"
+      },
+      {
+        "initialValue": "Customers",
+        "description": "",
+        "name": "adminCustomersTitle",
+        "type": "string",
+        "title": "Admin: customers page title"
+      },
+      {
+        "initialValue": "Refunds",
+        "description": "",
+        "name": "adminRefundsTitle",
+        "type": "string",
+        "title": "Admin: refunds page title"
+      },
+      {
+        "initialValue": "Sign out",
+        "description": "",
+        "name": "adminSignOutLabel",
+        "type": "string",
+        "title": "Admin: sign out"
+      },
+      {
+        "initialValue": "To confirm, type the customer's first name ({customerName}) below.",
+        "description": "Supports {customerName}.",
+        "name": "adminRefundConfirmationPrompt",
+        "type": "string",
+        "title": "Refund confirm prompt"
+      },
+      {
+        "initialValue": "Refund {amount}",
+        "description": "Supports {amount}.",
+        "name": "adminRefundButtonTemplate",
+        "type": "string",
+        "title": "Refund button"
+      },
+      {
+        "initialValue": "Type CANCEL to confirm cancellation without refund.",
+        "description": "",
+        "name": "adminCancelConfirmationPrompt",
+        "type": "string",
+        "title": "Cancel-no-refund prompt"
+      },
+      {
+        "description": "Display labels for each booking status enum value.",
+        "fields": [
+          {
+            "initialValue": "Pending payment",
+            "name": "pending_payment",
+            "type": "string",
+            "title": "pending_payment"
+          },
+          {
+            "initialValue": "Confirmed",
+            "name": "confirmed",
+            "type": "string",
+            "title": "confirmed"
+          },
+          {
+            "initialValue": "Cancelled",
+            "name": "cancelled",
+            "type": "string",
+            "title": "cancelled"
+          },
+          {
+            "initialValue": "Completed",
+            "name": "completed",
+            "type": "string",
+            "title": "completed"
+          },
+          {
+            "initialValue": "Expired",
+            "name": "expired",
+            "type": "string",
+            "title": "expired"
+          }
+        ],
+        "name": "adminBookingStatusLabels",
+        "type": "object",
+        "title": "Booking status labels"
+      }
+    ],
+    "name": "bookingCopy",
+    "type": "document"
+  }
+]

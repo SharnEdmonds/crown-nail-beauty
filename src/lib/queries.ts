@@ -73,6 +73,8 @@ export const PORTFOLIO_SECTION_QUERY = `*[_type == "portfolioSection"][0]{
   heading,
   description,
   viewDetailsLabel,
+  autoRotate,
+  rotationSeconds,
   images[]{
     image,
     alt
@@ -101,6 +103,7 @@ export const HAND_MODEL_QUERY = `*[_type == "handModel"][0]{
   roughness,
   metalness,
   nailColor,
+  nailTipColor,
   nailRoughness,
   nailMetalness,
   nailThumbColor,

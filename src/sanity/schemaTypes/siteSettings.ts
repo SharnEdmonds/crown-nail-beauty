@@ -61,7 +61,7 @@ export const siteSettings = defineType({
         defineField({ name: 'facebook', type: 'url' }),
       ],
     }),
-    defineField({ name: 'aboutEyebrow', type: 'string', description: 'e.g. "Est. 2024 — Glendene, NZ"' }),
+    defineField({ name: 'aboutEyebrow', type: 'string', description: 'e.g. "Est. 2024 — Demo City"' }),
     defineField({ name: 'aboutHeading', type: 'string' }),
     defineField({ name: 'aboutParagraphs', type: 'array', of: [{ type: 'text' }] }),
     defineField({ name: 'aboutImage', type: 'image', options: { hotspot: true } }),

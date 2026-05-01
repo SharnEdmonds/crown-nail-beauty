@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
             userAgent: '*',
             allow: '/',
         },
-        sitemap: 'https://crownnails.co.nz/sitemap.xml',
+        sitemap: 'https://demo.example.com/sitemap.xml',
     };
 }
