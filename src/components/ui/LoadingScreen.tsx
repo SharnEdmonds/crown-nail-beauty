@@ -13,7 +13,17 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 // load the hand model, so the progress bar would never reach 100% naturally.
 const SUPPRESS_PATH_PREFIXES = ['/book', '/booking', '/admin', '/auth', '/privacy'];
 
-export default function LoadingScreen() {
+interface LoadingScreenProps {
+    /** Pulled from siteSettings in the root layout. All optional — the loader
+     *  renders even before Sanity data is available; missing fields just don't
+     *  render their slot. */
+    eyebrow?: string;
+    wordmark?: string;
+    submark?: string;
+    tagline?: string;
+}
+
+export default function LoadingScreen({ eyebrow, wordmark, submark, tagline }: LoadingScreenProps) {
     const pathname = usePathname();
     const suppressed =
         pathname && SUPPRESS_PATH_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`));
@@ -138,70 +148,53 @@ export default function LoadingScreen() {
                         }}
                     />
 
-                    {/* Top mark */}
+                    {/* Top mark — small business-name eyebrow plus a thin gold rule. */}
                     <motion.div
                         initial={{ opacity: 0, y: -8 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, ease: EASE, delay: 0.1 }}
                         className="relative pt-10 md:pt-14 text-center"
                     >
-                        <div className="text-[10px] md:text-[11px] tracking-[0.35em] uppercase text-stone-grey">
-                            Atelier Lumière
-                        </div>
+                        {eyebrow && (
+                            <div className="text-[10px] md:text-[11px] tracking-[0.35em] uppercase text-stone-grey">
+                                {eyebrow}
+                            </div>
+                        )}
                         <div className="mt-3 mx-auto h-px w-10 bg-brushed-gold/70" />
                     </motion.div>
 
-                    {/* Center lockup */}
-                    <div className="relative flex flex-col items-center px-6">
-                        <motion.h1
-                            className="font-serif text-crown-black text-center leading-[0.95] text-[clamp(3rem,10vw,7rem)]"
-                            initial="hidden"
-                            animate="visible"
-                            variants={{
-                                hidden: {},
-                                visible: { transition: { staggerChildren: 0.08, delayChildren: 0.15 } },
-                            }}
-                        >
-                            {['Crafted', 'in', 'Quiet'].map((w, i) => (
-                                <motion.span
-                                    key={w}
-                                    variants={{
-                                        hidden: { opacity: 0, y: 32 },
-                                        visible: {
-                                            opacity: 1,
-                                            y: 0,
-                                            transition: { duration: 0.9, ease: EASE },
-                                        },
-                                    }}
-                                    className={`inline-block mr-[0.28em] ${i === 1 ? 'italic font-light' : ''}`}
-                                >
-                                    {w}
-                                </motion.span>
-                            ))}
-                            <br />
-                            <motion.span
-                                variants={{
-                                    hidden: { opacity: 0, y: 32 },
-                                    visible: {
-                                        opacity: 1,
-                                        y: 0,
-                                        transition: { duration: 0.9, ease: EASE },
-                                    },
-                                }}
-                                className="inline-block italic font-light"
+                    {/* Center lockup — full wordmark + submark from Sanity. */}
+                    <div className="relative flex flex-col items-center px-6 text-center">
+                        {wordmark && (
+                            <motion.h1
+                                className="font-serif text-crown-black leading-[0.95] text-[clamp(3rem,12vw,8rem)] tracking-tight"
+                                initial={{ opacity: 0, y: 32 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.9, delay: 0.15, ease: EASE }}
                             >
-                                Luxury.
-                            </motion.span>
-                        </motion.h1>
-
-                        <motion.p
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ duration: 1, delay: 0.8, ease: EASE }}
-                            className="mt-8 text-[11px] md:text-xs tracking-[0.28em] uppercase text-charcoal-grey/80"
-                        >
-                            Preparing your experience
-                        </motion.p>
+                                {wordmark}
+                            </motion.h1>
+                        )}
+                        {submark && (
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ duration: 0.9, delay: 0.45, ease: EASE }}
+                                className="mt-3 text-[11px] md:text-xs tracking-[0.32em] uppercase text-stone-grey"
+                            >
+                                {submark}
+                            </motion.div>
+                        )}
+                        {tagline && (
+                            <motion.p
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ duration: 1, delay: 0.8, ease: EASE }}
+                                className="mt-8 italic font-serif text-charcoal-grey/80 text-base md:text-lg"
+                            >
+                                {tagline}
+                            </motion.p>
+                        )}
                     </div>
 
                     {/* Progress */}

@@ -11,7 +11,7 @@ export default function JsonLd({ siteSettings, serviceCategories }: JsonLdProps)
     const structuredData = {
         '@context': 'https://schema.org',
         '@type': 'BeautySalon',
-        name: siteSettings?.businessName || 'Atelier Lumière',
+        name: siteSettings?.businessName || 'Beauty Studio',
         description: siteSettings?.tagline
             ? `${siteSettings.tagline}. Demo beauty studio template.`
             : 'Demo beauty studio template — sample content only.',

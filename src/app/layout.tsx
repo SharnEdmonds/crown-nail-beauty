@@ -4,6 +4,9 @@ import { Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/layout/SmoothScroll";
 import LoadingScreen from "@/components/ui/LoadingScreen";
+import { client as sanityClient } from "@/sanity/lib/client";
+import { SITE_SETTINGS_QUERY } from "@/lib/queries";
+import type { SiteSettings } from "@/lib/types";
 
 const satoshi = localFont({
   src: [
@@ -30,51 +33,66 @@ const cormorant = Cormorant_Garamond({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL("https://demo.example.com"),
-  title: "Atelier Lumière | Demo Beauty Studio",
-  description:
-    "Demo site showcasing a luxury beauty studio template. Premium nail, lash, waxing, facial and permanent makeup services. Sample content only.",
-  alternates: {
-    canonical: '/',
-  },
-  robots: {
-    index: false,
-    follow: false,
-    googleBot: {
+// Site URL is the only piece that can't reasonably live in Sanity (the host
+// owns it). Everything brand-textual is pulled from siteSettings.
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://demo.example.com";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await sanityClient
+    .fetch<SiteSettings | null>(SITE_SETTINGS_QUERY)
+    .catch(() => null);
+
+  const brand = settings?.businessName || "Demo Studio";
+  const tagline = settings?.tagline || "";
+  const title = tagline ? `${brand} | ${tagline}` : brand;
+  const description =
+    tagline || `${brand} — book premium beauty services online.`;
+
+  return {
+    metadataBase: new URL(SITE_URL),
+    title,
+    description,
+    alternates: { canonical: '/' },
+    robots: {
       index: false,
       follow: false,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      googleBot: {
+        index: false,
+        follow: false,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
     },
-  },
-  openGraph: {
-    title: "Atelier Lumière | Demo Beauty Studio",
-    description:
-      "Demo site showcasing a luxury beauty studio template. Sample content only.",
-    url: "https://demo.example.com",
-    siteName: "Atelier Lumière",
-    locale: "en",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Atelier Lumière | Demo Beauty Studio",
-    description:
-      "Demo site showcasing a luxury beauty studio template. Sample content only.",
-  },
-};
+    openGraph: {
+      title,
+      description,
+      url: SITE_URL,
+      siteName: brand,
+      locale: 'en',
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+    },
+  };
+}
 
-
-
-// ... (existing imports)
-
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Fetch siteSettings here so the LoadingScreen can use the same brand text
+  // as the rest of the marketing site without each component fetching on its
+  // own. Wrapped in catch so a transient Sanity error doesn't crash the
+  // entire app — the loader just falls back to its empty-string render.
+  const settings = await sanityClient
+    .fetch<SiteSettings | null>(SITE_SETTINGS_QUERY)
+    .catch(() => null);
+
   return (
     <html lang="en" className={`${satoshi.variable} ${cormorant.variable}`}>
       <body className="font-sans antialiased" suppressHydrationWarning>
@@ -84,7 +102,12 @@ export default function RootLayout({
         >
           Skip to main content
         </a>
-        <LoadingScreen />
+        <LoadingScreen
+          eyebrow={settings?.businessName ?? undefined}
+          wordmark={settings?.logoWordmark ?? undefined}
+          submark={settings?.logoSubmark ?? undefined}
+          tagline={settings?.tagline ?? undefined}
+        />
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>
