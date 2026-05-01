@@ -1,8 +1,9 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Check } from 'lucide-react';
+import { ArrowLeft, ChevronLeft, ChevronRight, Check } from 'lucide-react';
 import { useCopy } from '@/booking/lib/context';
 import { safeJson } from '@/booking/lib/templating';
 import type {
@@ -208,6 +209,29 @@ export function BookingWizard({
   return (
     <div className="booking-page">
       <div className="booking-shell">
+        {/* Top-left link out of the wizard back to the marketing home page.
+            The /book route doesn't render the marketing NavBar, so without
+            this the only way out is the browser back button. */}
+        <div style={{ marginBottom: '1.5rem' }}>
+          <Link
+            href="/"
+            className="booking-helper"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              fontSize: '0.75rem',
+              letterSpacing: '0.15em',
+              textTransform: 'uppercase',
+              textDecoration: 'none',
+              color: 'var(--booking-color-text-secondary)',
+              transition: 'color 200ms',
+            }}
+          >
+            <ArrowLeft size={14} />
+            Back to home
+          </Link>
+        </div>
         <header style={{ textAlign: 'center', marginBottom: '2rem' }}>
           <p className="booking-eyebrow">{t('wizardHeadlineEyebrow')}</p>
           {recognizedCustomer ? (
