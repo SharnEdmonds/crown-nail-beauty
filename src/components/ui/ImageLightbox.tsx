@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence, type PanInfo } from 'framer-motion';
 import Image from 'next/image';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
@@ -26,6 +27,14 @@ const SWIPE_THRESHOLD = 60;
 export default function ImageLightbox({ images, currentIndex, onClose, onNext, onPrev }: ImageLightboxProps) {
     const isOpen = currentIndex !== null;
     const setScrollLocked = useUIStore((state) => state.setScrollLocked);
+    // Portal target — only resolves on the client. Without this, ancestor
+    // sections like #gallery (relative + z-10 + overflow-hidden) create their
+    // own stacking contexts and trap the fixed lightbox below the navbar
+    // (z-50). Mounting to document.body escapes every ancestor context.
+    const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(null);
+    useEffect(() => {
+        setPortalTarget(document.body);
+    }, []);
 
     const handleKeyDown = useCallback((e: KeyboardEvent) => {
         if (e.key === 'Escape') onClose();
@@ -51,7 +60,9 @@ export default function ImageLightbox({ images, currentIndex, onClose, onNext, o
         else if (info.offset.x > SWIPE_THRESHOLD && onPrev) onPrev();
     };
 
-    return (
+    if (!portalTarget) return null;
+
+    return createPortal(
         <AnimatePresence>
             {isOpen && currentIndex !== null && (
                 <motion.div
@@ -142,6 +153,7 @@ export default function ImageLightbox({ images, currentIndex, onClose, onNext, o
                     </button>
                 </motion.div>
             )}
-        </AnimatePresence>
+        </AnimatePresence>,
+        portalTarget,
     );
 }
