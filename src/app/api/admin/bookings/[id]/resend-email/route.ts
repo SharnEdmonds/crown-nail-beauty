@@ -86,7 +86,13 @@ export async function POST(_request: Request, ctx: Ctx) {
 
   const balance = booking.service_price_cents_snapshot - booking.deposit_cents_snapshot;
   const firstName = (customer.name ?? '').split(/\s+/)[0] ?? '';
-  const baseUrl = new URL(_request.url).origin;
+  // Prefer the explicit canonical site URL so emails always point at the
+  // public domain rather than the request's host (which on Vercel is the
+  // deploy URL, not always what the recipient expects to see).
+  const baseUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : '') ||
+    new URL(_request.url).origin;
   const cancelLink = booking.cancel_token
     ? `${baseUrl}/booking/cancel/${booking.cancel_token}`
     : '';

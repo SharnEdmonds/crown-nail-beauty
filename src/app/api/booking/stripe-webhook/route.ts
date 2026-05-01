@@ -294,9 +294,28 @@ async function sendBookingEmails({
   const balance = booking.service_price_cents_snapshot - booking.deposit_cents_snapshot;
   const firstName = customerName.split(/\s+/)[0] || customerName;
 
-  const baseUrl =
-    process.env.NEXT_PUBLIC_SITE_URL ||
-    (typeof session.success_url === 'string' ? new URL(session.success_url).origin : '');
+  // Resolve a public origin for links embedded in emails (admin link, cancel link).
+  // Priority: explicit env var → Stripe's stored success_url origin → Vercel's auto
+  // VERCEL_URL (production deploys). The webhook's own request.url is unreliable
+  // here because Stripe calls the function directly — its host is the deploy URL,
+  // which is fine, but we prefer NEXT_PUBLIC_SITE_URL when set so emails always
+  // point at the canonical domain rather than a one-off preview deploy.
+  let baseUrl = process.env.NEXT_PUBLIC_SITE_URL || '';
+  if (!baseUrl && typeof session.success_url === 'string') {
+    try {
+      baseUrl = new URL(session.success_url).origin;
+    } catch {
+      baseUrl = '';
+    }
+  }
+  if (!baseUrl && process.env.VERCEL_URL) {
+    baseUrl = `https://${process.env.VERCEL_URL}`;
+  }
+  if (!baseUrl) {
+    console.warn(
+      '[stripe-webhook] could not resolve baseUrl for email links — set NEXT_PUBLIC_SITE_URL',
+    );
+  }
 
   const cancelLink =
     booking.cancel_token && baseUrl
