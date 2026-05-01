@@ -41,7 +41,7 @@ See `.env.local.example` — covers Supabase, Stripe, Resend, Upstash, admin all
 
 1. Apply Supabase migrations: `npm run supabase:migrate` (requires `SUPABASE_DB_URL` pointing to the **Session pooler**).
 2. Verify exclusion constraint: `npm run supabase:test-exclusion`.
-3. Seed Sanity content: open `/studio` → Booking → fill in Settings, Theme, Copy, then add Services and Technicians.
+3. Seed Sanity content: open the hosted Sanity Studio (`https://<your-studio-host>.sanity.studio`) → Booking → fill in Settings, Theme, Copy, then add Services and Technicians.
 4. Configure Stripe webhook → `https://<domain>/api/booking/stripe-webhook` listening for `checkout.session.completed`.
 5. Set up Railway cron service hitting `https://<domain>/api/admin/expire-pending-cron` hourly with `X-Cron-Secret` header equal to `CRON_SECRET`.
 
