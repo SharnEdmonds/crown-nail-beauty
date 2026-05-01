@@ -100,6 +100,20 @@ export function DateTimeStep({
 
   const monthCells = useMemo(() => buildMonthCells(viewMonth), [viewMonth]);
 
+  // Compute the month/year vars once per viewMonth change. Passing them
+  // through t() lets useCopy() do the {month} / {year} substitution itself,
+  // which avoids double-templating (and the spurious "Unknown placeholder"
+  // warnings the wizard was throwing for dateTimeMonthFormat).
+  const monthLabel = useMemo(() => {
+    const [y, m] = viewMonth.split('-').map(Number);
+    const dt = new Date(Date.UTC(y, m - 1, 1));
+    const monthName = new Intl.DateTimeFormat('en-NZ', {
+      month: 'long',
+      timeZone: 'UTC',
+    }).format(dt);
+    return t('dateTimeMonthFormat', { month: monthName, year: y });
+  }, [viewMonth, t]);
+
   function pickDate(d: string) {
     if (d < today || d > maxDate) return;
     // Don't call fetchSlots() here — onChange updates `date` in the parent,
@@ -140,7 +154,7 @@ export function DateTimeStep({
               <ChevronLeft size={14} />
             </button>
             <h3 className="booking-heading" style={{ fontSize: '1rem', margin: 0 }}>
-              {monthLabelFromDate(viewMonth, t('dateTimeMonthFormat'))}
+              {monthLabel}
             </h3>
             <button
               type="button"
@@ -279,12 +293,3 @@ function buildMonthCells(monthAnchor: string): Array<Cell | null> {
   return cells;
 }
 
-function monthLabelFromDate(date: string, template: string): string {
-  const [y, m] = date.split('-').map(Number);
-  const dt = new Date(Date.UTC(y, m - 1, 1));
-  const monthName = new Intl.DateTimeFormat('en-NZ', {
-    month: 'long',
-    timeZone: 'UTC',
-  }).format(dt);
-  return template.replace('{month}', monthName).replace('{year}', String(y));
-}
