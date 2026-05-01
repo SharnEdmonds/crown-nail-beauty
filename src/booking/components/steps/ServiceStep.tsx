@@ -30,11 +30,16 @@ export function ServiceStep({
   selectedIds,
   maxServices,
   onToggle,
+  hasQualifiedTech,
 }: {
   services: BookingService[];
   selectedIds: string[];
   maxServices: number;
   onToggle: (id: string) => void;
+  /** True if at least one technician performs every selected service. When
+   *  false (and ≥1 service is selected), the user can still advance — but we
+   *  show an inline note so they know the next step will be empty. */
+  hasQualifiedTech: boolean;
 }) {
   const t = useCopy();
 
@@ -139,6 +144,32 @@ export function ServiceStep({
           </div>
         ))}
       </div>
+      {selectedServices.length > 0 && !hasQualifiedTech ? (
+        <div
+          className="booking-card booking-card-pad"
+          style={{
+            marginTop: '1.25rem',
+            borderColor: 'var(--booking-color-warning, #C9A962)',
+            background: 'rgba(201, 169, 98, 0.08)',
+          }}
+        >
+          <p
+            className="booking-helper"
+            style={{
+              fontSize: '0.7rem',
+              letterSpacing: '0.15em',
+              textTransform: 'uppercase',
+              marginBottom: '0.5rem',
+            }}
+          >
+            No artist performs this combo
+          </p>
+          <p style={{ fontSize: '0.875rem', margin: 0 }}>
+            None of our technicians perform every service in this combination.
+            Remove a service to continue, or book each service in a separate appointment.
+          </p>
+        </div>
+      ) : null}
       {selectedServices.length > 0 ? (
         <div
           className="booking-card booking-card-pad"

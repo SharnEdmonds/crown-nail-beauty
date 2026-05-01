@@ -130,7 +130,11 @@ export function BookingWizard({
   function canProceed(currentStep: number): boolean {
     switch (currentStep) {
       case 1:
-        return state.serviceIds.length >= 1 && qualifiedTechs.length > 0;
+        // Only require at least one service selected. If the combo has no
+        // qualified technician, the TechnicianStep shows that explicitly via
+        // its empty state — gating Next here just disables the button silently
+        // and leaves the user wondering why.
+        return state.serviceIds.length >= 1;
       case 2:
         return !!state.technicianId;
       case 3:
@@ -242,6 +246,7 @@ export function BookingWizard({
                 selectedIds={state.serviceIds}
                 maxServices={MAX_SERVICES}
                 onToggle={toggleService}
+                hasQualifiedTech={qualifiedTechs.length > 0}
               />
             )}
             {step === 2 && selectedServices.length > 0 && (
