@@ -1,4 +1,6 @@
+import Image from 'next/image';
 import { Instagram, Facebook } from 'lucide-react';
+import { urlFor } from '@/lib/sanity-image';
 import type { SiteSettings, FooterSection, Navigation } from '@/lib/types';
 
 interface FooterProps {
@@ -13,16 +15,31 @@ export default function Footer({ siteSettings, footer, navigation }: FooterProps
     const phone = siteSettings?.phone;
     const email = siteSettings?.email;
     const social = siteSettings?.socialLinks;
+    const logoSrc = siteSettings?.logo?.asset
+        ? urlFor(siteSettings.logo).width(320).quality(90).url()
+        : null;
+    const logoAlt = siteSettings?.businessName || siteSettings?.logoWordmark || '';
 
     return (
         <footer className="bg-crown-black text-clean-white py-20 px-6">
             <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12">
                 {/* Brand */}
                 <div className="lg:col-span-4 space-y-6">
-                    <div className="flex flex-col">
-                        <span className="font-serif text-3xl tracking-wide">{siteSettings?.logoWordmark}</span>
-                        <span className="text-xs tracking-[0.2em] text-stone-grey">{siteSettings?.logoSubmark}</span>
-                    </div>
+                    {logoSrc ? (
+                        <Image
+                            src={logoSrc}
+                            alt={logoAlt}
+                            width={160}
+                            height={160}
+                            // Slightly larger than the nav mark so it anchors the footer.
+                            className="w-20 h-20 object-contain"
+                        />
+                    ) : (
+                        <div className="flex flex-col">
+                            <span className="font-serif text-3xl tracking-wide">{siteSettings?.logoWordmark}</span>
+                            <span className="text-xs tracking-[0.2em] text-stone-grey">{siteSettings?.logoSubmark}</span>
+                        </div>
+                    )}
                     {footer?.brandDescription && (
                         <p className="text-stone-grey max-w-xs font-light">
                             {footer.brandDescription}

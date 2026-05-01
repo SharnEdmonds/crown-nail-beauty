@@ -2,8 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import MotionLink from '@/components/ui/MotionLink';
+import { urlFor } from '@/lib/sanity-image';
 import type { SiteSettings, Navigation } from '@/lib/types';
 
 interface NavBarProps {
@@ -27,6 +29,13 @@ export default function NavBar({ siteSettings, navigation }: NavBarProps) {
     const links = navigation?.links ?? [];
     const wordmark = siteSettings?.logoWordmark ?? '';
     const submark = siteSettings?.logoSubmark ?? '';
+    // Prefer the uploaded brand image if Sanity has one; fall back to the
+    // wordmark+submark text lockup otherwise. Both paths render the same
+    // accessible label (the business name) so screen readers are unaffected.
+    const logoSrc = siteSettings?.logo?.asset
+        ? urlFor(siteSettings.logo).width(280).quality(90).url()
+        : null;
+    const logoAlt = siteSettings?.businessName || wordmark || 'Home';
 
     return (
         <>
@@ -41,15 +50,28 @@ export default function NavBar({ siteSettings, navigation }: NavBarProps) {
                 transition={{ duration: 0.8, ease: [0.33, 1, 0.68, 1] }}
             >
                 <div className="container mx-auto px-6 flex justify-between items-center">
-                    <Link href="/" className="z-50 relative group">
-                        <div className="flex flex-col items-center">
-                            <span className={`font-serif text-2xl md:text-3xl tracking-wide transition-colors duration-300 ${isMobileMenuOpen ? 'text-crown-black' : 'text-crown-black'}`}>
-                                {wordmark}
-                            </span>
-                            <span className="text-[10px] md:text-xs tracking-[0.2em] font-sans text-stone-grey group-hover:text-brushed-gold transition-colors duration-300">
-                                {submark}
-                            </span>
-                        </div>
+                    <Link href="/" className="z-50 relative group" aria-label={logoAlt}>
+                        {logoSrc ? (
+                            <Image
+                                src={logoSrc}
+                                alt={logoAlt}
+                                width={140}
+                                height={140}
+                                priority
+                                // Square mark — 56px on mobile, 64px on desktop. Matches
+                                // the height of the rest of the nav row on both sizes.
+                                className="w-14 h-14 md:w-16 md:h-16 object-contain transition-transform duration-300 group-hover:scale-105"
+                            />
+                        ) : (
+                            <div className="flex flex-col items-center">
+                                <span className="font-serif text-2xl md:text-3xl tracking-wide text-crown-black transition-colors duration-300">
+                                    {wordmark}
+                                </span>
+                                <span className="text-[10px] md:text-xs tracking-[0.2em] font-sans text-stone-grey group-hover:text-brushed-gold transition-colors duration-300">
+                                    {submark}
+                                </span>
+                            </div>
+                        )}
                     </Link>
 
                     <div className="hidden lg:flex items-center space-x-12 font-sans text-sm tracking-widest uppercase">
