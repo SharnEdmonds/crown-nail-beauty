@@ -43,6 +43,12 @@ export function DateTimeStep({
 
   // Availability cache: key = `${date}|${technicianId}|${serviceIds.join(',')}`
   const cacheRef = useRef<Map<string, { slots: ApiSlot[]; ts: number }>>(new Map());
+  // AbortController for the in-flight request. New fetches abort the old one
+  // so out-of-order responses can't blank a date that does have slots.
+  const abortRef = useRef<AbortController | null>(null);
+  // Tracks the date the user is currently expecting slots for — late responses
+  // for a different date are dropped on arrival.
+  const pendingDateRef = useRef<string | null>(null);
   const [slots, setSlots] = useState<ApiSlot[]>([]);
   const [loadingSlots, setLoadingSlots] = useState(false);
 
@@ -52,21 +58,33 @@ export function DateTimeStep({
       const cached = cacheRef.current.get(key);
       if (cached && Date.now() - cached.ts < 30_000) {
         setSlots(cached.slots);
+        setLoadingSlots(false);
         return;
       }
+
+      // Abort any in-flight request before starting a new one. The aborted
+      // fetch's catch branch is a no-op below, so we never apply its result.
+      abortRef.current?.abort();
+      const controller = new AbortController();
+      abortRef.current = controller;
+      pendingDateRef.current = forDate;
+
       setLoadingSlots(true);
       try {
         const url = `/api/booking/availability?serviceIds=${encodeURIComponent(serviceIdsKey)}&technicianId=${encodeURIComponent(technicianId)}&date=${encodeURIComponent(forDate)}`;
-        const res = await fetch(url);
+        const res = await fetch(url, { signal: controller.signal });
         const data = await safeJson<{ slots?: ApiSlot[] }>(res);
         const list: ApiSlot[] = Array.isArray(data?.slots) ? data.slots : [];
         cacheRef.current.set(key, { slots: list, ts: Date.now() });
+        // Drop the response if the user has since asked for a different date.
+        if (pendingDateRef.current !== forDate) return;
         setSlots(list);
       } catch (err) {
+        if ((err as { name?: string })?.name === 'AbortError') return;
         console.warn('[booking] availability fetch failed', err);
-        setSlots([]);
+        if (pendingDateRef.current === forDate) setSlots([]);
       } finally {
-        setLoadingSlots(false);
+        if (pendingDateRef.current === forDate) setLoadingSlots(false);
       }
     },
     [serviceIdsKey, technicianId],
@@ -74,14 +92,21 @@ export function DateTimeStep({
 
   useEffect(() => {
     if (selectedDate) fetchSlots(selectedDate);
+    return () => {
+      // Abort on unmount or when the effect re-runs for a new date.
+      abortRef.current?.abort();
+    };
   }, [selectedDate, fetchSlots]);
 
   const monthCells = useMemo(() => buildMonthCells(viewMonth), [viewMonth]);
 
   function pickDate(d: string) {
     if (d < today || d > maxDate) return;
+    // Don't call fetchSlots() here — onChange updates `date` in the parent,
+    // which flows back as the `selectedDate` dependency on the useEffect that
+    // owns the fetch. Calling it twice raced and could blank the slot list
+    // when the second response landed before the first.
     onChange(d, null, null);
-    fetchSlots(d);
   }
 
   function pickSlot(slot: ApiSlot) {
