@@ -10,15 +10,12 @@
 
 import type { NailDesignSpec } from './nailDesigns';
 
-// Natural manicured look: warm pink-peach base + soft white French tip.
-// Keeps the gloss the makeNailMaterial recipe gives (clearcoat 0.9) so the
-// nails read as a fresh manicure rather than a flat color block. Both colors
-// are overridable from Sanity (handModel.nailColor / handModel.nailTipColor).
+// Solid white nails. The clearcoat in makeNailMaterial (0.9) keeps the
+// glossy manicured finish so it reads as polished white, not flat.
+// Overridable from Sanity via handModel.nailColor.
 export const DEFAULT_NAIL_DESIGN: NailDesignSpec = {
-    type: 'naturalManicure',
-    baseColor: '#e8c8b8', // warm pink-peach — neutral, complements the marble palette
-    tipColor: '#f5ede4',  // soft warm white — tip sits just brighter than the base
-    tipStart: 0.62,
+    type: 'solid',
+    color: '#ffffff',
 };
 
 // Every design spec that should be preloaded during the loading screen.

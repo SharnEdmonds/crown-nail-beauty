@@ -25,7 +25,7 @@ const DEFAULTS = {
     color: '#e8b89e',
     roughness: 0.85,
     metalness: 0.0,
-    nailColor: '#d4a5a5',
+    nailColor: '#ffffff',
     nailRoughness: 0.08,
     nailMetalness: 0.2,
     desktopStartPosition: { x: 2, y: -1, z: 0 },
@@ -120,18 +120,15 @@ export default function HandScene({ config }: HandSceneProps) {
         };
     }, [config]);
 
-    // Build the nail design spec live from Sanity. If only the base color is
-    // overridden, the default tip color still applies — and vice versa — so
-    // partial CMS edits never produce a broken-looking nail.
+    // Solid nail color. Defaults to the DEFAULT_NAIL_DESIGN color (white),
+    // overridable from Sanity via handModel.nailColor.
     const nailDesign = useMemo<NailDesignSpec>(() => {
-        const fallback = DEFAULT_NAIL_DESIGN as Extract<NailDesignSpec, { type: 'naturalManicure' }>;
+        const fallback = DEFAULT_NAIL_DESIGN as Extract<NailDesignSpec, { type: 'solid' }>;
         return {
-            type: 'naturalManicure',
-            baseColor: cfg.nailColor,
-            tipColor: cfg.nailTipColor ?? fallback.tipColor,
-            tipStart: fallback.tipStart,
+            type: 'solid',
+            color: cfg.nailColor ?? fallback.color,
         };
-    }, [cfg.nailColor, cfg.nailTipColor]);
+    }, [cfg.nailColor]);
 
     useLayoutEffect(() => {
         if (!handRef.current) return;
