@@ -92,8 +92,9 @@ export default function PortfolioGallery({ section }: PortfolioGalleryProps) {
             />
 
             <div className="container mx-auto px-6">
-                {/* Header */}
-                <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10 md:mb-14">
+                {/* Header — matches the featured frame width so the counter
+                    sits at the right edge of the image, not the viewport. */}
+                <div className="max-w-4xl mx-auto flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10 md:mb-14">
                     <div>
                         <span className="text-xs tracking-[0.3em] uppercase text-brushed-gold mb-3 block">
                             Portfolio
@@ -110,9 +111,12 @@ export default function PortfolioGallery({ section }: PortfolioGalleryProps) {
                     </div>
                 </div>
 
-                {/* Featured image — single full-res render at any time */}
+                {/* Featured image — single full-res render at any time.
+                    Capped at 4xl + auto margins so the frame fits comfortably
+                    on desktop without dominating the viewport. Click opens the
+                    full-screen lightbox. */}
                 <div
-                    className="relative w-full aspect-[16/9] bg-warm-black overflow-hidden cursor-pointer group"
+                    className="relative w-full max-w-4xl mx-auto aspect-[16/9] bg-warm-black overflow-hidden cursor-pointer group"
                     onMouseEnter={() => setIsHovering(true)}
                     onMouseLeave={() => setIsHovering(false)}
                     onFocus={() => setIsHovering(true)}
@@ -158,17 +162,17 @@ export default function PortfolioGallery({ section }: PortfolioGalleryProps) {
                     </div>
                 </div>
 
-                {/* Progress line — 1px gold, fills with index */}
-                <div className="relative h-px bg-clean-white/10 mt-6 overflow-hidden">
+                {/* Progress line — 1px gold, fills with index. Matches featured frame width. */}
+                <div className="relative h-px bg-clean-white/10 mt-6 overflow-hidden max-w-4xl mx-auto">
                     <div
                         className="absolute inset-y-0 left-0 bg-brushed-gold transition-[width] duration-500 ease-out"
                         style={{ width: `${progressPct}%` }}
                     />
                 </div>
 
-                {/* Thumbnail row */}
+                {/* Thumbnail row — aligned with featured frame */}
                 <div
-                    className="mt-6 flex gap-3 overflow-x-auto scrollbar-hide pb-2"
+                    className="mt-6 max-w-4xl mx-auto flex gap-3 overflow-x-auto scrollbar-hide pb-2 justify-center"
                     onMouseEnter={() => setIsHovering(true)}
                     onMouseLeave={() => setIsHovering(false)}
                 >

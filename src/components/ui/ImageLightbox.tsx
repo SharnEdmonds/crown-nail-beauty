@@ -102,10 +102,12 @@ export default function ImageLightbox({ images, currentIndex, onClose, onNext, o
 
                     <motion.div
                         key={currentIndex}
-                        className="relative w-[90vw] h-[80vh] max-w-5xl"
-                        initial={{ scale: 0.9, opacity: 0 }}
+                        // Fill the viewport with safe padding for the close/prev/next/counter chrome.
+                        // No max-width cap so wide displays use the whole screen.
+                        className="relative w-screen h-screen px-4 py-20 md:px-20 md:py-16"
+                        initial={{ scale: 0.95, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
-                        exit={{ scale: 0.9, opacity: 0 }}
+                        exit={{ scale: 0.95, opacity: 0 }}
                         transition={{ duration: 0.3 }}
                         onClick={(e) => e.stopPropagation()}
                         drag={onNext || onPrev ? 'x' : false}
@@ -117,7 +119,7 @@ export default function ImageLightbox({ images, currentIndex, onClose, onNext, o
                             src={images[currentIndex].src}
                             alt={images[currentIndex].alt}
                             fill
-                            sizes="90vw"
+                            sizes="100vw"
                             className="object-contain pointer-events-none select-none"
                             priority
                             draggable={false}
