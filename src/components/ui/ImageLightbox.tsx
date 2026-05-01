@@ -42,18 +42,25 @@ export default function ImageLightbox({ images, currentIndex, onClose, onNext, o
         else if (e.key === 'ArrowLeft' && onPrev) onPrev();
     }, [onClose, onNext, onPrev]);
 
+    // Body-scroll lock + keyboard listener while open. Split into two effects
+    // so the body-overflow side effect only fires on isOpen changes, not on
+    // every re-render caused by a new handleKeyDown identity (which happens
+    // any time the parent re-renders since onNext/onPrev are inline arrows).
     useEffect(() => {
-        if (isOpen) {
-            setScrollLocked(true);
-            document.addEventListener('keydown', handleKeyDown);
-            document.body.style.overflow = 'hidden';
-        }
+        if (!isOpen) return;
+        setScrollLocked(true);
+        document.body.style.overflow = 'hidden';
         return () => {
             setScrollLocked(false);
-            document.removeEventListener('keydown', handleKeyDown);
             document.body.style.overflow = '';
         };
-    }, [isOpen, handleKeyDown, setScrollLocked]);
+    }, [isOpen, setScrollLocked]);
+
+    useEffect(() => {
+        if (!isOpen) return;
+        document.addEventListener('keydown', handleKeyDown);
+        return () => document.removeEventListener('keydown', handleKeyDown);
+    }, [isOpen, handleKeyDown]);
 
     const handleDragEnd = (_e: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
         if (info.offset.x < -SWIPE_THRESHOLD && onNext) onNext();
@@ -69,9 +76,13 @@ export default function ImageLightbox({ images, currentIndex, onClose, onNext, o
                     role="dialog"
                     aria-label="Image lightbox"
                     className="fixed inset-0 z-[100] flex items-center justify-center bg-crown-black/95 backdrop-blur-sm"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
+                    initial={{ opacity: 0, pointerEvents: 'none' }}
+                    animate={{ opacity: 1, pointerEvents: 'auto' }}
+                    // pointerEvents: 'none' on exit so the fading overlay doesn't
+                    // swallow clicks against the page beneath it during the
+                    // ~300ms exit animation. Without this, users perceive the
+                    // page as frozen while the lightbox closes.
+                    exit={{ opacity: 0, pointerEvents: 'none' }}
                     onClick={onClose}
                 >
                     {/* Top Right Close */}
